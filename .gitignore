@@ -1,5 +1,11 @@
-# .gitignore
-data/
+# Escludi tutti i dati
+data/raw/
+data/processed/
+data/chunks/
+data/embeddings/
+
+# Escludi l'ambiente e le credenziali
 .env
+venv/
 __pycache__/
-*.ipynb_checkpoints/
+.DS_Store
