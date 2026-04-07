@@ -1,4 +1,5 @@
 # Escludi tutti i dati
+data/
 data/raw/
 data/processed/
 data/chunks/
