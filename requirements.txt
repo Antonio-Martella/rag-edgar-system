@@ -1,0 +1,6 @@
+sec-edgar-downloader
+beautifulsoup4
+pandas
+tqdm
+python-dotenv
+langchain-text-splitters
