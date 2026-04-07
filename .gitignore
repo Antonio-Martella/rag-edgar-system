@@ -1,9 +1,15 @@
 # Escludi tutti i dati
+data/raw/*
+!data/raw/.gitkeep
 
-data/raw/
-data/processed/
-data/chunks/
-data/embeddings/
+data/processed/*
+!data/processed/.gitkeep
+
+data/chunks/*
+!data/chunks/.gitkeep
+
+data/embeddings/*
+!data/embeddings/.gitkeep
 
 # Escludi l'ambiente e le credenziali
 .env
