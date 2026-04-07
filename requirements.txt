@@ -3,7 +3,12 @@ beautifulsoup4
 pandas
 tqdm
 python-dotenv
+#2
 langchain-text-splitters
 sentence-transformers
 faiss-cpu
 numpy
+# 3
+transformers 
+accelerate 
+bitsandbytes 
