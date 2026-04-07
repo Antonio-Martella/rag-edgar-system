@@ -52,11 +52,11 @@ class LLMGenerator:
 
         # Genera la risposta 
         outputs = self.pipe(
-            prompt,                        # Il testo di input da cui generare la risposta
+            text_inputs=prompt,            # Il testo di input da cui generare la risposta
             max_new_tokens=max_new_tokens, # Limita il numero di token generati per la risposta
             do_sample=True,                # Abilita la generazione casuale per rendere le risposte più varie e naturali
             temperature=0.1,               # Controlla la creatività della risposta (valori più bassi rendono le risposte più deterministiche)
-            top_p=0.9                      # 
+            top_p=0.9                      # Controlla la diversità della risposta limitando la scelta dei token ai più probabili (valori più bassi rendono le risposte più conservative)
         )
         
         # Puliamo l'output per restituire solo la risposta
