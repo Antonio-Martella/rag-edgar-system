@@ -10,4 +10,4 @@ class Embedder:
         """
         Transforms a string or a list of strings into vectors.
         """
-        return self.model.encode(sentences=text_list, show_progress_bar=True)
+        return self.model.encode(sentences=text_list, show_progress_bar=False)

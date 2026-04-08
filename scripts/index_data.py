@@ -42,6 +42,7 @@ def run_indexing(ticker="TSLA", report_type="10-K"):
     index_filename = f"{ticker.lower()}_{report_type.lower()}_index.bin"
     index_path = Path(config.EMBEDDINGS_DIR) / index_filename
     storage.save(str(index_path))
+    print(f"💾 FAISS index saved to: {index_path}")
 
     # Quick search test (optional, but useful for verification)
     print("\n🔍 Running quick search test...")

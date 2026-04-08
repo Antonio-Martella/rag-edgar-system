@@ -3,43 +3,47 @@ from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndB
 from src.utils import config
 
 class LLMGenerator:
-    def __init__(self, model_id=config.LLM_MODEL_ID):
+    def __init__(self, model_id=config.LLM_MODEL):
         """
-        Inizializza l'LLM con configurazione 4-bit per risparmiare VRAM.
+        Initializes the LLM with a 4-bit configuration to save VRAM.
         """
-        print(f"--- Caricamento LLM: {model_id} ---")
+
+        print(f"--- Loading LLM: {model_id} ---")
         
-        # Configurazione per la compressione del modello per risparmiare VRAM
+        # Configuration for model compression to save VRAM
         bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,                    # Abilita la quantizzazione a 4 bit del modello per ridurre l'uso di VRAM
-            bnb_4bit_use_double_quant=True,       # Abilita la doppia quantizzazione per migliorare la precisione del modello quantizzato
-            bnb_4bit_quant_type="nf4",            # Utilizza il formato di quantizzazione NF4, che è più efficiente per i modelli di linguaggio
-            bnb_4bit_compute_dtype=torch.bfloat16 # È il formato con cui il computer fa i calcoli. È molto veloce sulle GPU moderne.
+            load_in_4bit=True,                    # Enables 4-bit quantization of the model to reduce VRAM usage
+            bnb_4bit_use_double_quant=True,       # Enables double quantization to improve the precision of the quantized model
+            bnb_4bit_quant_type="nf4",            # Use the NF4 quantization format, which is more efficient for language models
+            bnb_4bit_compute_dtype=torch.bfloat16 # This is the format in which the computer does calculations. It's very fast on modern GPUs
         )
 
-        # Carica il tokenizer associato al modello specificato
+        # Load the tokenizer associated with the specified model
         self.tokenizer = AutoTokenizer.from_pretrained(model_id) 
 
-        # Carica il modello con la configurazione di quantizzazione specificata, assegnandolo automaticamente alla GPU disponibile
+        # Load the model with the specified quantization configuration, assigning it automatically to the available GPU
         self.model = AutoModelForCausalLM.from_pretrained( 
             model_id,
-            quantization_config=bnb_config, # Applica la configurazione di quantizzazione al modello
+            quantization_config=bnb_config, # Apply the quantization configuration to the model
             device_map="auto"
         )
         
-        # Pipeline di generazione testo
+        # Text generation pipeline
         self.pipe = pipeline(
-            task="text-generation",  # Specifica che vogliamo utilizzare il modello per la generazione di testo
-            model=self.model,        # Utilizza il modello caricato con la configurazione di quantizzazione
-            tokenizer=self.tokenizer # Utilizza il tokenizer associato al modello per convertire il testo in input in token e viceversa
+            task="text-generation",  # Specifies that we want to use the template for text generation
+            model=self.model,        # Use the loaded template with the quantization configuration
+            tokenizer=self.tokenizer # Use the tokenizer associated with the model to convert input text to tokens and vice versa
         )
 
     def generate_answer(self, query, context_chunks, max_new_tokens=512):
-        """Costruisce il prompt e genera la risposta finale."""
-        # Combina i chunk di contesto in un unico testo da inserire nel prompt
+        """
+        Constructs the prompt and generates the final answer.
+        """
+
+        # Combine context chunks into a single text to be inserted into the prompt
         context = "\n\n".join(context_chunks)
         
-        # Prompt Template: Istruiamo l'IA a essere un analista serio
+        # Prompt Template: Let's train AI to be a serious analyst
         prompt = f"""<s>[INST] You are a professional financial analyst. 
         Use the following context from SEC 10-K filings to answer the question. 
         If the answer is not in the context, say you don't know. Do not hallucinate.
@@ -53,17 +57,17 @@ class LLMGenerator:
 
         ANSWER:"""
 
-        # Genera la risposta 
+        # Generate the response
         outputs = self.pipe(
-            text_inputs=prompt,            # Il testo di input da cui generare la risposta
-            max_new_tokens=max_new_tokens, # Limita il numero di token generati per la risposta
-            do_sample=True,                # Abilita la generazione casuale per rendere le risposte più varie e naturali
-            temperature=0.1,               # Controlla la creatività della risposta (valori più bassi rendono le risposte più deterministiche)
-            top_p=0.9                      # Controlla la diversità della risposta limitando la scelta dei token ai più probabili (valori più bassi rendono le risposte più conservative)
+            text_inputs=prompt,            # The input text from which to generate the response
+            max_new_tokens=max_new_tokens, # Limits the number of tokens generated for the response
+            do_sample=True,                # Enables random sampling to make the responses more varied and natural
+            temperature=0.1,               # Controls the creativity of the response (lower values make responses more deterministic)
+            top_p=0.9                      # Controls the diversity of the response by limiting the choice of tokens to the most probable ones (lower values make responses more conservative)
         )
         
-        # Puliamo l'output per restituire solo la risposta
+        # Clean the output to return only the answer
         generated_text = outputs[0]["generated_text"]
 
-        # Estrae la risposta finale dal testo generato, rimuovendo eventuali parti del prompt e spazi bianchi
+        # Extract the final answer from the generated text, removing any parts of the prompt and whitespace
         return generated_text.split("ANSWER:")[-1].strip()

@@ -20,3 +20,11 @@ LLM_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
 # Specific file paths
 CHUNKS_JSON = CHUNKS_DIR / "tsla_10k_2025_chunks.json"
 FAISS_INDEX = EMBEDDINGS_DIR / "tsla_index.bin"
+
+def get_paths(ticker, report_type="10-K"):
+    """Funzione helper per ottenere i percorsi corretti dato un ticker."""
+    t = ticker.lower()
+    return {
+        "index": str(EMBEDDINGS_DIR / f"{t}_{report_type.lower()}_index.bin"),
+        "chunks": str(CHUNKS_DIR / f"{t}_{report_type.lower()}_chunks.json")
+    }
