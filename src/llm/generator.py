@@ -65,11 +65,12 @@ class LLMGenerator:
 
         # Generate the response
         outputs = self.pipe(
-            text_inputs=prompt,            # The input text from which to generate the response
-            max_new_tokens=max_new_tokens, # Limits the number of tokens generated for the response
-            do_sample=True,                # Enables random sampling to make the responses more varied and natural
-            temperature=0.1,               # Controls the creativity of the response (lower values make responses more deterministic)
-            top_p=0.9                      # Controls the diversity of the response by limiting the choice of tokens to the most probable ones (lower values make responses more conservative)
+            text_inputs=prompt,                        # The input text from which to generate the response
+            #max_new_tokens=max_new_tokens,             # Limits the number of tokens generated for the response
+            #pad_token_id=self.tokenizer.eos_token_id , # Ensures that the model knows when to stop generating text
+            do_sample=True,                            # Enables random sampling to make the responses more varied and natural
+            temperature=0.1,                           # Controls the creativity of the response (lower values make responses more deterministic)
+            top_p=0.9                                  # Controls the diversity of the response by limiting the choice of tokens to the most probable ones (lower values make responses more conservative)
         )
         
         # Clean the output to return only the answer
