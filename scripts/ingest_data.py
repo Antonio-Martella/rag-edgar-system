@@ -19,10 +19,10 @@ def run_ingestion(ticker="TSLA", report_type="10-K", data_after="2024-01-01"):
     # Download the document
     print(f"🚀 Starting ingestion process for: {ticker}")
     downloader = EdgarDownloader() # Automatically gets the SEC_USER_AGENT from the .env
-    downloader.fetch_10k(ticker, limit=1, date_after=data_after)
+    downloader.fetch_10k(format=report_type, ticker=ticker, limit=1, date_after=data_after)
 
     # Let's build the path based on the structure created by sec-edgar-downloader
-    base_path = Path(config.RAW_DATA_DIR) / "sec-edgar-filings" / ticker / report_type
+    base_path = Path(config.RAW_DATA_DIR) / "sec-edgar-filings" / ticker / report_type 
     
     # Find the full-submission.txt file (there is usually only one folder for the most recent filing)
     try:
