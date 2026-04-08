@@ -17,6 +17,7 @@ def run_ingestion(ticker="TSLA", report_type="10-K", data_after="2024-01-01"):
     data_after = input("Enter date after (e.g. 2024-01-01): ") or data_after
 
     # Download the document
+    print(f"{60}*")
     print(f"🚀 Starting ingestion process for: {ticker}")
     downloader = EdgarDownloader() # Automatically gets the SEC_USER_AGENT from the .env
     downloader.fetch_10k(format=report_type, ticker=ticker, limit=1, date_after=data_after)
