@@ -11,7 +11,10 @@ data/chunks/*
 data/embeddings/*
 !data/embeddings/.gitkeep
 
-# Escludi l'ambiente e le credenziali
+models/*
+!models/.gitkeep
+
+# Exclude environment and credentials
 .env
 venv/
 __pycache__/
