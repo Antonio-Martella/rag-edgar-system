@@ -9,13 +9,13 @@ class EdgarDownloader:
     def __init__(self, download_path=config.RAW_DATA_DIR):
         self.user_agent = os.getenv("SEC_USER_AGENT")
         if not self.user_agent:
-            raise ValueError("❌ SEC_USER_AGENT non trovato!")
+            raise ValueError("❌ SEC_USER_AGENT not found in environment variables. Please set it in your .env file.")
         
         self.dl = Downloader("MyCompany", self.user_agent, download_path)
 
-    def fetch_10k(self, ticker, limit=1, date_after="2023-01-01"):
+    def fetch_10k(self, format="10-K", ticker=None, limit=1, date_after="2023-01-01"):
         """
-        Scarica i documenti 10-K per un dato ticker.
+        Downloads the 10-K documents for a given ticker.
         """
-        print(f"📥 Scaricando in: {config.RAW_DATA_DIR}")
-        self.dl.get("10-K", ticker, limit=limit, after=date_after)
+        print(f"📥 Downloading to: {config.RAW_DATA_DIR}")
+        self.dl.get(form=format, ticker_or_cik=ticker, limit=limit, after=date_after)

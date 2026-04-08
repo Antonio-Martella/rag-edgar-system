@@ -14,8 +14,8 @@ for path in [RAW_DATA_DIR, CHUNKS_DIR, EMBEDDINGS_DIR]:
     path.mkdir(parents=True, exist_ok=True)
 
 # Configurazione Modelli 
-EMBEDDING_MODEL_ID = "all-MiniLM-L6-v2"
-LLM_MODEL_ID = "mistralai/Mistral-7B-Instruct-v0.2"
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+LLM_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
 
 # Percorsi file specifici 
 CHUNKS_JSON = CHUNKS_DIR / "tsla_10k_2025_chunks.json"
