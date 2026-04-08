@@ -3,12 +3,18 @@ from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndB
 from src.utils import config
 
 class LLMGenerator:
-    def __init__(self, model_id=config.LLM_MODEL):
+    def __init__(self, model_path=config.LOCAL_LLM_PATH):
         """
         Initializes the LLM with a 4-bit configuration to save VRAM.
         """
+        
+        print(f"--- Loading Local LLM: {model_path} ---")
 
-        print(f"--- Loading LLM: {model_id} ---")
+        if not model_path.exists():
+            raise FileNotFoundError(
+                f"❌ Model not found in {model_path}. "
+                "Please make sure you have successfully executed 'python3 scripts/setup_models.py'."
+            )
         
         # Configuration for model compression to save VRAM
         bnb_config = BitsAndBytesConfig(
@@ -19,11 +25,11 @@ class LLMGenerator:
         )
 
         # Load the tokenizer associated with the specified model
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id) 
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path) 
 
         # Load the model with the specified quantization configuration, assigning it automatically to the available GPU
         self.model = AutoModelForCausalLM.from_pretrained( 
-            model_id,
+            model_path,
             quantization_config=bnb_config, # Apply the quantization configuration to the model
             device_map="auto"
         )
