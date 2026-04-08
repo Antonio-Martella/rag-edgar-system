@@ -3,35 +3,32 @@ from bs4 import BeautifulSoup
 
 def clean_sec_text(raw_html):
     """
-    Rimuove i tag HTML, gli script e gli stili CSS da un documento SEC.
+    Removes HTML tags, scripts, and CSS styles from a SEC document.
     """
-    # Usiamo lxml come parser perché è molto veloce con file grandi (6MB+)
+
+    # We use lxml as parser because it is very fast with large files (6MB+)
     soup = BeautifulSoup(raw_html, "lxml")
-    
-    # Rimuoviamo elementi che non contengono testo utile alla lettura
+    # We remove elements that do not contain text useful for reading
     for script_or_style in soup(["script", "style"]):
         script_or_style.decompose()
-
-    # Estraiamo il testo separando i blocchi con uno spazio
+    # We extract the text by separating the blocks with a space
     text = soup.get_text(separator=" ")
-
-    # Pulizia iniziale: rimuovi spazi multipli e whitespace ai bordi
+    # Initial cleanup: remove multiple spaces and whitespace at edges
     text = re.sub(r'\s+', ' ', text).strip()
     
     return text
 
 def refined_clean(text):
     """
-    Rimuove il rumore specifico dei documenti SEC (tag XBRL e ID tecnici).
+    Removes SEC-specific noise (XBRL tags and technical IDs).
     """
-    # Rimuove tag tecnici come us-gaap, srt, dei, ecc.
+
+    # Removes technical tags like us-gaap, srt, dei, etc.
     text = re.sub(r'\b(us-gaap|srt|dei|iso4217):\S+', '', text)
-    
-    # Rimuove sequenze numeriche lunghe (spesso ID di filing o CIK isolati)
-    # Esempio: 0001318605
+    # Removes long numeric sequences (often filing or CIK IDs)
+    # Example: 0001318605
     text = re.sub(r'\b\d{10}\b', '', text) 
-    
-    # Pulizia finale degli spazi bianchi risultanti
+    # Final cleanup of resulting whitespace
     text = re.sub(r'\s+', ' ', text).strip()
     
     return text
