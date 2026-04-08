@@ -1,9 +1,12 @@
 import torch
 from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from src.utils import config
 
 class LLMGenerator:
-    def __init__(self, model_id="mistralai/Mistral-7B-Instruct-v0.2"):
-        """Inizializza l'LLM con configurazione 4-bit per risparmiare VRAM."""
+    def __init__(self, model_id=config.LLM_MODEL_ID):
+        """
+        Inizializza l'LLM con configurazione 4-bit per risparmiare VRAM.
+        """
         print(f"--- Caricamento LLM: {model_id} ---")
         
         # Configurazione per la compressione del modello per risparmiare VRAM

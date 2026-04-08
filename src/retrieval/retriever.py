@@ -1,5 +1,4 @@
 import json
-import os
 from src.embedding.embedder import Embedder
 from src.embedding.storage import VectorStorage
 

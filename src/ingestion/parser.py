@@ -35,12 +35,3 @@ def refined_clean(text):
     text = re.sub(r'\s+', ' ', text).strip()
     
     return text
-
-
-if __name__ == "__main__":
-    test_html = "<html><body><h1>Tesla 10-K</h1><p>us-gaap:Cash 1000</p></body></html>"
-    print("Test di pulizia:")
-    raw = clean_sec_text(test_html)
-    print(f"Dopo BeautifulSoup: {raw}")
-    final = refined_clean(raw)
-    print(f"Dopo refined_clean: {final}")
