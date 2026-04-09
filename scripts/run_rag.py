@@ -5,72 +5,65 @@ from src.llm.generator import LLMGenerator
 from src.utils import config
 
 def main():
-
     print("🚀 Welcome to the Edgar RAG Multi-Analyst (Local Version)!")
 
-    # Uploading the LLM from local storage (already quantized for efficiency)
     print("🧠 Initializing LLM (Mistral-7B) from local storage...")
     try:
         generator = LLMGenerator()
     except Exception as e:
-        print(f"❌ Error loading LLM: {e}. Did you run setup_models.py?")
+        print(f"❌ Error loading LLM: {e}.")
         return
 
-    # Creating a loop to allow users to select different tickers and ask questions without restarting the program
     while True:
-
         print("\n" + "="*50)
-
-        # Dynamic ticker and report selection, with file control
         ticker = input("Which company do you want to analyze? (e.g., TSLA, AMZN, AAPL) or 'exit': ").strip().upper() or "TSLA"
 
-        # If the user types 'exit', we break the loop and end the program gracefully
-        if ticker == 'exit':
+        if ticker == 'EXIT':
             break
         
-        # Ask for report type, with a default value of 10-K
-        report_type = input("What type of report? (e.g., 10-K, 10-Q) [default 10-K]: ").strip().upper() or "10-K"
-        
-        # Dynamic file checking for each ticker/report
+        report_type = input("What type of report? [default 10-K]: ").strip().upper() or "10-K"
         paths = config.get_paths(ticker, report_type) 
         
-        # Check if data files exist
         if not os.path.exists(paths["index"]) or not os.path.exists(paths["chunks"]):
-            print(f"❌ Error: Local data not found for {ticker} ({report_type}).")
-            print(f"   Please run ingestion and indexing for this ticker first.")
+            print(f"❌ Error: Local data not found for {ticker}.")
             continue 
 
-        # If files exist, we proceed to load the retriever and start the chat loop
-        print(f"📂 Loading FAISS index and chunks for {ticker}...")
+        print(f"📂 Loading FAISS index for {ticker}...")
         retriever = Retriever(paths["index"], paths["chunks"])
+        
+        # Let's remember the conversation (let's choose the last 3 questions and answers to avoid saturating the prompt)
+        chat_history = [] 
+        MAX_HISTORY = 3         # memory length
         
         print(f"✅ Analyst ready for {ticker}!")
         
-        # Chat cycle per il ticker selezionato
+        # Main interaction loop for the selected company
         while True:
-            # User input for questions, with an option to switch ticker or exit
-            query = input(f"\n[{ticker.upper()}] Question (type 'switch' to change company): ")
 
-            # If the user types 'exit', we break the loop and end the program gracefully
+            # Ask the user for a question about the company
+            query = input(f"\n[{ticker}] Question (type 'switch' to change company): ")
+
+            # If the user types 'exit', we exit the entire program. If they type 'switch', we break out of this loop and go back to selecting a company, which will reset the chat history.
             if query.lower() == 'exit':
-                print("Goodbye!")
                 sys.exit() 
-            
-            # If the user types 'switch', we break the inner loop to allow selecting a different ticker
             if query.lower() == 'switch':
-                break 
+                break                       # By leaving here, chat_history will be reset to the next ticker
             
-            # Search for relevant chunks in the FAISS index and generate an answer using the LLM
+            # Search for relevant context chunks using the retriever
             print("🔍 Searching context...")
-            chunks = retriever.search(query, k=5)
+            chunks = retriever.search(query, k=20) # Retrieve the top 10 most relevant chunks from the index based on the user's query
             
-            # If no relevant chunks are found, we can skip the generation step and inform the user
+            # Generate the answer using the LLM, passing the retrieved context and the conversation history
             print("✍️ Generating answer...")
-            answer = generator.generate_answer(query, chunks)
+            answer = generator.generate_answer(query, chunks, history=chat_history)
             
-            # Display the answer in a clear format
             print(f"\n[Analista]: {answer}\n")
             print("-" * 50)
+
+            # Update the conversation history with the new question and answer, and ensure we only keep the last MAX_HISTORY interactions to avoid saturating the prompt
+            chat_history.append((query, answer))
+            if len(chat_history) > MAX_HISTORY:
+                chat_history.pop(0) # Remove the oldest interaction if we exceed the maximum history length
 
 if __name__ == "__main__":
     main()
