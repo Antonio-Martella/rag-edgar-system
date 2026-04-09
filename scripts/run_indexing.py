@@ -44,18 +44,5 @@ def run_indexing(ticker="TSLA", report_type="10-K"):
     storage.save(str(index_path))
     print(f"💾 FAISS index saved to: {index_path}")
 
-    # Quick search test (optional, but useful for verification)
-    print("\n🔍 Running quick search test...")
-    query = "What are the main risks mentioned regarding cyberattacks?"
-    query_vector = embedder.encode([query])
-    distances, indices = storage.index.search(query_vector, 3) # top 3
-    
-    print("\n"+60*"=")
-    print(f"Top result found in chunk index: \033[34m{indices[0][0]} (Distance: {distances[0][0]:.4f})\033[0m")
-    print(f"Query: \033[31m{query}\033[0m")
-    print(f"Answer: \033[92m{chunks[indices[0][0]]}\033[0m") 
-    print(f"✅ Indexing completed successfully!")
-    print(60*f"=")
-
 if __name__ == "__main__":
     run_indexing()
