@@ -1,62 +1,44 @@
 [
   {
     "id": 1,
-    "question": "What was the total revenue reported by Tesla for the fiscal year ended December 31, 2024, and how does it compare to the previous year?",
-    "answer": "Tesla reported total revenue of $97.69 billion for the fiscal year 2024, representing a modest 1% increase compared to $96.77 billion in fiscal year 2023.",
-    "category": "Financial Performance"
+    "question": "What were the total Automotive revenues for the fiscal year 2024, and how do they compare to 2023?",
+    "answer": "The RAG should extract the exact automotive revenue figure for 2024 from the consolidated financial statements and compare it directly with the 2023 column.",
+    "category": "Financial Tables"
   },
   {
     "id": 2,
-    "question": "How much revenue did Tesla generate from the sale of regulatory credits in 2024?",
-    "answer": "In 2024, Tesla generated $2.76 billion in revenue from the sale of regulatory credits, an increase from the $1.79 billion recorded in 2023.",
-    "category": "Revenue Streams"
+    "question": "What are the primary risk factors associated with the global supply chain and battery supply mentioned in the report?",
+    "answer": "Tesla highlights its reliance on third-party suppliers for battery cells and critical raw materials (such as lithium and nickel), along with risks related to geopolitical tensions and logistical disruptions.",
+    "category": "Risk Factors (Item 1A)"
   },
   {
     "id": 3,
-    "question": "What was Tesla's GAAP net income attributable to common stockholders for the full year 2024?",
-    "answer": "Tesla's GAAP net income for 2024 was $7.091 billion, which represents a 52.7% decrease compared to the $14.997 billion reported in 2023.",
-    "category": "Profitability"
+    "question": "How much did Tesla invest in Research and Development (R&D) during the fiscal year 2024?",
+    "answer": "The RAG must retrieve the exact R&D expense from the Consolidated Statements of Operations for the year 2024, accurately distinguishing it from SG&A expenses.",
+    "category": "Financial Tables"
   },
   {
     "id": 4,
-    "question": "How many total vehicles did Tesla deliver to customers in 2024?",
-    "answer": "Tesla delivered a total of 1,789,226 vehicles in 2024, a slight decrease of approximately 1% from the 1,808,581 vehicles delivered in 2023.",
-    "category": "Operational Metrics"
+    "question": "How does management explain the changes in Gross Margin throughout 2024?",
+    "answer": "According to the MD&A section, gross margin fluctuations were primarily driven by vehicle pricing strategies (including price reductions), changes in the product mix, and overall production costs.",
+    "category": "Management Discussion (MD&A)"
   },
   {
     "id": 5,
-    "question": "Which Tesla vehicle model was the best-selling vehicle globally in 2024?",
-    "answer": "The Model Y was the best-selling vehicle of any kind globally for the full year 2024.",
-    "category": "Product Performance"
+    "question": "What is the total number of vehicles delivered by Tesla in 2024?",
+    "answer": "The system should report the total delivery volume for 2024, successfully distinguishing between the Model 3/Y lineup and other models (Model S/X/Cybertruck).",
+    "category": "Operational Metrics"
   },
   {
     "id": 6,
-    "question": "What was the total energy storage deployment in 2024, and what was the growth rate compared to the prior year?",
-    "answer": "Tesla deployed 31.4 GWh of energy storage in 2024, representing an increase of approximately 113.3% compared to the 14.7 GWh deployed in 2023.",
-    "category": "Energy Segment"
+    "question": "Regarding executive compensation and RSUs, what was the weighted-average grant date fair value per share granted specifically in 2024?",
+    "answer": "The RAG must extract the specific value associated exclusively with 2024 (e.g., $223.98), demonstrating its ability to avoid confusing it with the 2023 or 2025 values found in the same paragraph.",
+    "category": "Executive Compensation"
   },
   {
     "id": 7,
-    "question": "How much did Tesla spend on capital expenditures (CapEx) during the fiscal year 2024?",
-    "answer": "Tesla's capital expenditures in 2024 amounted to $11.34 billion, reflecting its continued investment in manufacturing capacity and AI infrastructure.",
-    "category": "Investments"
-  },
-  {
-    "id": 8,
-    "question": "What was the total amount of cash, cash equivalents, and investments held by Tesla at the end of 2024?",
-    "answer": "Tesla ended the 2024 fiscal year with $36.56 billion in cash, cash equivalents, and investments, an increase from $29.09 billion at the end of 2023.",
-    "category": "Liquidity"
-  },
-  {
-    "id": 9,
-    "question": "By what percentage did Tesla increase its AI training compute capacity in 2024?",
-    "answer": "Tesla increased its AI training compute capacity by over 400% during the course of 2024 to support its FSD and autonomous driving initiatives.",
-    "category": "Technology and R&D"
-  },
-  {
-    "id": 10,
-    "question": "What is the primary risk mentioned regarding single-source suppliers for vehicle components?",
-    "answer": "Tesla notes a significant risk regarding dependence on single-source suppliers, stating that any inability of these suppliers to deliver components at acceptable prices or volumes could lead to production delays or increased costs.",
-    "category": "Risk Factors"
+    "question": "What are Tesla's forward-looking statements regarding new Gigafactories or the expansion of manufacturing capacity?",
+    "answer": "Tesla discusses optimization plans for existing factories (like Texas and Berlin) and potential future developments or capital expenditures for next-generation vehicle platforms.",
+    "category": "Business Strategy"
   }
 ]

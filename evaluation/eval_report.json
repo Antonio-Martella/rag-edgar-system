@@ -1,64 +1,46 @@
 {
-    "overall_accuracy": "30.0%",
+    "overall_accuracy": "42.857142857142854%",
     "details": [
         {
-            "question": "What was the total revenue reported by Tesla for the fiscal year ended December 31, 2024, and how does it compare to the previous year?",
-            "expected": "Tesla reported total revenue of $97.69 billion for the fiscal year 2024, representing a modest 1% increase compared to $96.77 billion in fiscal year 2023.",
-            "generated": "The total revenue reported by Tesla for the fiscal year ended December 31, 2024, was $97,690 million. Compared to the previous year, there was a decrease in total revenue from $96,773 million in 2023.",
+            "question": "What were the total Automotive revenues for the fiscal year 2024, and how do they compare to 2023?",
+            "expected": "The RAG should extract the exact automotive revenue figure for 2024 from the consolidated financial statements and compare it directly with the 2023 column.",
+            "generated": "I cannot find this information in the documents as the provided context only covers the fiscal years 2022 and 2023.",
             "verdict": "FAIL"
         },
         {
-            "question": "How much revenue did Tesla generate from the sale of regulatory credits in 2024?",
-            "expected": "In 2024, Tesla generated $2.76 billion in revenue from the sale of regulatory credits, an increase from the $1.79 billion recorded in 2023.",
-            "generated": "2,763 million dollars. (From the context provided, the revenue from the sale of regulatory credits in 2024 is explicitly stated as 2,763 million dollars in the table under the heading \"Automotive regulatory credits\" in the section \"Consolidated Statements of Operations\".)",
+            "question": "What are the primary risk factors associated with the global supply chain and battery supply mentioned in the report?",
+            "expected": "Tesla highlights its reliance on third-party suppliers for battery cells and critical raw materials (such as lithium and nickel), along with risks related to geopolitical tensions and logistical disruptions.",
+            "generated": "The primary risk factors associated with the global supply chain mentioned in the report include:\n        1. Component shortages from single-source direct suppliers or multiple potential sources due to unexpected changes in business conditions, materials pricing, labor issues, wars, trade policies, natural disasters, health epidemics, trade and shipping disruptions, port congestions, cyberattacks, and other factors beyond the company's or its suppliers' control.\n        2. Inaccurate forecasting and effective allocation of production from suppliers, insolvency, or other challenges that may reduce the company's access to components and require it to search for new suppliers.\n        3. Unavailability of any component or supplier, which could result in production delays, idle manufacturing facilities, product design changes, loss of access to important technology and tools, and impact the company's capacity expansion and ability to fulfill customer contracts.\n        4. Fluctuating prices and unstable availability of raw materials such as lithium, nickel, cobalt, and other metals used in battery cells, which may impact the company's access to cells and growth, and increase costs if not recouped through increased prices.\n        5. Mishandling of lithium-ion cells and battery modules and packs, which may cause disruptions to the operation of facilities and harm the company's brand and business.\n        6. Difficulties in accurately forecasting, purchasing, warehousing, and transporting components at high volumes to manufacturing facilities and servicing locations internationally, which may result in unexpected production disruption, storage, transportation, and write-off costs.\n        7. Inability to meet projected construction timelines, costs, and production ramps at new factories, or generate and maintain demand for products manufactured there.",
             "verdict": "PASS"
         },
         {
-            "question": "What was Tesla's GAAP net income attributable to common stockholders for the full year 2024?",
-            "expected": "Tesla's GAAP net income for 2024 was $7.091 billion, which represents a 52.7% decrease compared to the $14.997 billion reported in 2023.",
-            "generated": "The GAAP net income attributable to common stockholders for Tesla in the full year 2024 was $7,091 million.",
+            "question": "How much did Tesla invest in Research and Development (R&D) during the fiscal year 2024?",
+            "expected": "The RAG must retrieve the exact R&D expense from the Consolidated Statements of Operations for the year 2024, accurately distinguishing it from SG&A expenses.",
+            "generated": "The context does not provide information about Tesla's R&D investment during the fiscal year 2024.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "How does management explain the changes in Gross Margin throughout 2024?",
+            "expected": "According to the MD&A section, gross margin fluctuations were primarily driven by vehicle pricing strategies (including price reductions), changes in the product mix, and overall production costs.",
+            "generated": "Management explains that the decrease in gross margin for both the automotive and automotive & services and other segments in the year ended December 31, 2023, as compared to the year ended December 31, 2022, was primarily due to the decrease in automotive gross margin. The decrease in automotive gross margin was caused by a lower average selling price on vehicles, partially offset by the favorable change in the average combined cost per unit of vehicles and IRA manufacturing credits earned. In contrast, the energy generation and storage segment experienced an increase in gross margin due to improvements in Megapack gross margin from lower average cost per MWh and a higher proportion of Megapack within the segment, as well as a margin benefit from IRA manufacturing credits earned.",
             "verdict": "PASS"
         },
         {
-            "question": "How many total vehicles did Tesla deliver to customers in 2024?",
-            "expected": "Tesla delivered a total of 1,789,226 vehicles in 2024, a slight decrease of approximately 1% from the 1,808,581 vehicles delivered in 2023.",
-            "generated": "The context does not provide information about the total number of vehicles Tesla delivered to customers in 2024.",
+            "question": "What is the total number of vehicles delivered by Tesla in 2024?",
+            "expected": "The system should report the total delivery volume for 2024, successfully distinguishing between the Model 3/Y lineup and other models (Model S/X/Cybertruck).",
+            "generated": "I cannot find this information in the documents.",
             "verdict": "FAIL"
         },
         {
-            "question": "Which Tesla vehicle model was the best-selling vehicle globally in 2024?",
-            "expected": "The Model Y was the best-selling vehicle of any kind globally for the full year 2024.",
-            "generated": "Based on the provided context, the best-selling Tesla vehicle globally in 2024 was the Model 3 with total revenues of $72,480 million.",
+            "question": "Regarding executive compensation and RSUs, what was the weighted-average grant date fair value per share granted specifically in 2024?",
+            "expected": "The RAG must extract the specific value associated exclusively with 2024 (e.g., $223.98), demonstrating its ability to avoid confusing it with the 2023 or 2025 values found in the same paragraph.",
+            "generated": "I cannot find this information in the documents. The context does not provide the weighted-average grant date fair value per share granted specifically in 2024.",
             "verdict": "FAIL"
         },
         {
-            "question": "What was the total energy storage deployment in 2024, and what was the growth rate compared to the prior year?",
-            "expected": "Tesla deployed 31.4 GWh of energy storage in 2024, representing an increase of approximately 113.3% compared to the 14.7 GWh deployed in 2023.",
-            "generated": "I cannot find this information in the documents regarding the total energy storage deployment in 2024 or the growth rate compared to the prior year. The documents only provide information about the energy storage deployment in 2025 and the comparison between 2025 and 2024.",
-            "verdict": "FAIL"
-        },
-        {
-            "question": "How much did Tesla spend on capital expenditures (CapEx) during the fiscal year 2024?",
-            "expected": "Tesla's capital expenditures in 2024 amounted to $11.34 billion, reflecting its continued investment in manufacturing capacity and AI infrastructure.",
-            "generated": "The context does not provide information about Tesla's capital expenditures (CapEx) during the fiscal year 2024.",
-            "verdict": "FAIL"
-        },
-        {
-            "question": "What was the total amount of cash, cash equivalents, and investments held by Tesla at the end of 2024?",
-            "expected": "Tesla ended the 2024 fiscal year with $36.56 billion in cash, cash equivalents, and investments, an increase from $29.09 billion at the end of 2023.",
-            "generated": "According to the provided context, the total cash and cash equivalents held by Tesla at the end of 2024 was $16,139 million. However, the context also shows that there were restricted cash amounts included in prepaid expenses and other current assets and other non-current assets. Therefore, the total amount of cash, cash equivalents, and investments held by Tesla at the end of 2024 would be the sum of the cash and cash equivalents ($16,139 million), the restricted cash included in prepaid expenses and other current assets (494 million), and the restricted cash included in other non-current assets (404 million). Thus, the total amount of cash, cash equivalents, and investments held by Tesla at the end of 2024 was $16,637 million ($16,139 + 494 + 404).",
-            "verdict": "FAIL"
-        },
-        {
-            "question": "By what percentage did Tesla increase its AI training compute capacity in 2024?",
-            "expected": "Tesla increased its AI training compute capacity by over 400% during the course of 2024 to support its FSD and autonomous driving initiatives.",
-            "generated": "The text does not provide information about the percentage increase in Tesla's AI training compute capacity in 2024.",
-            "verdict": "FAIL"
-        },
-        {
-            "question": "What is the primary risk mentioned regarding single-source suppliers for vehicle components?",
-            "expected": "Tesla notes a significant risk regarding dependence on single-source suppliers, stating that any inability of these suppliers to deliver components at acceptable prices or volumes could lead to production delays or increased costs.",
-            "generated": "The primary risk mentioned regarding single-source suppliers for vehicle components is that their inability to deliver necessary components in a timely manner at prices, quality levels and volumes acceptable to Tesla, or Tesla's inability to efficiently manage these components from these suppliers, could have a material adverse effect on Tesla's business, prospects, financial condition and operating results.",
+            "question": "What are Tesla's forward-looking statements regarding new Gigafactories or the expansion of manufacturing capacity?",
+            "expected": "Tesla discusses optimization plans for existing factories (like Texas and Berlin) and potential future developments or capital expenditures for next-generation vehicle platforms.",
+            "generated": "Tesla intends to further increase cost-competitiveness in their significant markets by strategically adding local manufacturing. They announced the location of their next Gigafactory in Monterrey, Mexico, and continue to expand production capacity at their existing facilities.",
             "verdict": "PASS"
         }
     ]
