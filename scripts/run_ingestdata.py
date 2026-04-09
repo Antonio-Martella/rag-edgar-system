@@ -13,7 +13,7 @@ def run_ingestion(ticker="TSLA", report_type="10-K", data_after="2024-01-01"):
 
     # Allows you to override parameters via input prompts, but defaults to the function arguments if left blank
     ticker = input("Enter ticker (e.g. TSLA): ").upper() or ticker
-    report_type = input("Enter report type (e.g. 10-K): ") or report_type
+    report_type = input("Enter report type (e.g. 10-K): ").upper() or report_type
     data_after = input("Enter date after (e.g. 2024-01-01): ") or data_after
 
     # Download the document
