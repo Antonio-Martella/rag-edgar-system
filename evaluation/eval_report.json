@@ -1,0 +1,62 @@
+[
+    {
+        "question": "What was the total revenue reported by Tesla for the fiscal year ended December 31, 2024, and how does it compare to the previous year?",
+        "expected": "Tesla reported total revenue of $97.69 billion for the fiscal year 2024, representing a modest 1% increase compared to $96.77 billion in fiscal year 2023.",
+        "generated": "The total revenue reported by Tesla for the fiscal year ended December 31, 2024 was $77.07 billion. Compared to the previous year, there was a decrease of $1.21 billion or 5.2%.",
+        "passed": false
+    },
+    {
+        "question": "How much revenue did Tesla generate from the sale of regulatory credits in 2024?",
+        "expected": "In 2024, Tesla generated $2.76 billion in revenue from the sale of regulatory credits, an increase from the $1.79 billion recorded in 2023.",
+        "generated": "1,008 million dollars. (This information is directly stated in the context under the heading \"Energy Generation and Storage Segment\" and \"Services and other revenue\".)",
+        "passed": false
+    },
+    {
+        "question": "What was Tesla's GAAP net income attributable to common stockholders for the full year 2024?",
+        "expected": "Tesla's GAAP net income for 2024 was $7.091 billion, which represents a 52.7% decrease compared to the $14.997 billion reported in 2023.",
+        "generated": "7,091 (millions)",
+        "passed": false
+    },
+    {
+        "question": "How many total vehicles did Tesla deliver to customers in 2024?",
+        "expected": "Tesla delivered a total of 1,789,226 vehicles in 2024, a slight decrease of approximately 1% from the 1,808,581 vehicles delivered in 2023.",
+        "generated": "Based on the context provided, Tesla delivered 3,216 vehicles to customers in 2024.",
+        "passed": false
+    },
+    {
+        "question": "Which Tesla vehicle model was the best-selling vehicle globally in 2024?",
+        "expected": "The Model Y was the best-selling vehicle of any kind globally for the full year 2024.",
+        "generated": "I cannot find this information in the documents.",
+        "passed": false
+    },
+    {
+        "question": "What was the total energy storage deployment in 2024, and what was the growth rate compared to the prior year?",
+        "expected": "Tesla deployed 31.4 GWh of energy storage in 2024, representing an increase of approximately 113.3% compared to the 14.7 GWh deployed in 2023.",
+        "generated": "The total energy storage deployment in 2024 was 29.021 GWh. The growth rate compared to the prior year was not explicitly mentioned in the context. However, the text states that energy storage deployments can vary meaningfully quarter to quarter, and that in 2025, 46.7 GWh of energy storage products were deployed. Therefore, it's not possible to determine the exact growth rate between 2023 and 2024 based on the provided context.",
+        "passed": false
+    },
+    {
+        "question": "How much did Tesla spend on capital expenditures (CapEx) during the fiscal year 2024?",
+        "expected": "Tesla's capital expenditures in 2024 amounted to $11.34 billion, reflecting its continued investment in manufacturing capacity and AI infrastructure.",
+        "generated": "The context states that Tesla spent $11.34 billion on capital expenditures during the fiscal year 2024.",
+        "passed": false
+    },
+    {
+        "question": "What was the total amount of cash, cash equivalents, and investments held by Tesla at the end of 2024?",
+        "expected": "Tesla ended the 2024 fiscal year with $36.56 billion in cash, cash equivalents, and investments, an increase from $29.09 billion at the end of 2023.",
+        "generated": "16,924 (millions)",
+        "passed": false
+    },
+    {
+        "question": "By what percentage did Tesla increase its AI training compute capacity in 2024?",
+        "expected": "Tesla increased its AI training compute capacity by over 400% during the course of 2024 to support its FSD and autonomous driving initiatives.",
+        "generated": "I cannot find this information in the documents.",
+        "passed": false
+    },
+    {
+        "question": "What is the primary risk mentioned regarding single-source suppliers for vehicle components?",
+        "expected": "Tesla notes a significant risk regarding dependence on single-source suppliers, stating that any inability of these suppliers to deliver components at acceptable prices or volumes could lead to production delays or increased costs.",
+        "generated": "The primary risk mentioned regarding single-source suppliers for vehicle components is that their inability to deliver necessary components in a timely manner at prices, quality levels, and volumes acceptable to the company, or the company's inability to efficiently manage these components from these suppliers, could have a material adverse effect on the company's business, prospects, financial condition, and operating results.",
+        "passed": false
+    }
+]
