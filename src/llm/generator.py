@@ -39,14 +39,26 @@ class LLMGenerator:
         Constructs the prompt and generates the final answer.
         """
 
-        # Combine context chunks into a single text to be inserted into the prompt
-        context = "\n\n".join(context_chunks)
+        context_items = []
+    
+        for c in context_chunks:
+            if isinstance(c, dict):
+                # Se è un dizionario, iniettiamo i metadati nel testo per l'LLM
+                year = c.get('metadata', {}).get('year', 'N/A')
+                ticker = c.get('metadata', {}).get('ticker', 'N/A')
+                content = c.get('content', '')
+                context_items.append(f"[Source: {ticker} FY{year}]\n{content}")
+            else:
+                # Se è una stringa, la aggiungiamo così com'è
+                context_items.append(str(c))
+
+        context_text = "\n\n---\n\n".join(context_items)
 
         # Prepare the conversation history in a readable format for the prompt. We will format it as a simple dialogue
         history_str = ""
-        if history:
-            for user_q, bot_a in history:
-                history_str += f"User: {user_q}\nAssistant: {bot_a}\n"
+        #if history:
+        #    for user_q, bot_a in history:
+        #        history_str += f"User: {user_q}\nAssistant: {bot_a}\n"
         
         # Prompt Template: Let's train AI to be a serious analyst
         prompt = f"""<s>[INST] <<SYS>>
@@ -61,7 +73,7 @@ class LLMGenerator:
         {history_str if history_str else "No previous history."}
 
         CONTEXT:
-        {context}
+        {context_text}
 
 
         QUESTION:

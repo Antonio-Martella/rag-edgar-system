@@ -8,6 +8,7 @@ root_path = Path(__file__).resolve().parent.parent
 sys.path.append(str(root_path))
 
 from src.retrieval.retriever import Retriever
+from src.retrieval.reranker import RAGReranker
 from src.llm.generator import LLMGenerator
 from src.utils import config
 
@@ -16,21 +17,21 @@ def ask_judge(generator, question, expected, generated):
     Usa l'LLM per confrontare la risposta generata con quella attesa.
     """
     judge_prompt = f"""<s>[INST] <<SYS>>
-    You are an impartial financial auditor. Compare the "Generated Answer" against the "Expected Answer" for the given question.
-    Determine if the Generated Answer is factually correct and contains the key numerical data from the Expected Answer.
+                        You are an impartial financial auditor. Compare the "Generated Answer" against the "Expected Answer" for the given question.
+                        Determine if the Generated Answer is factually correct and contains the key numerical data from the Expected Answer.
 
-    Rules:
-    - Ignore formatting differences (e.g., "$7B" vs "7,000 million" is a PASS).
-    - If the Generated Answer contains the correct numbers but extra text, it's a PASS.
-    - If the numbers are different or the answer says "I don't know", it's a FAIL.
-    - Answer ONLY with the word "PASS" or "FAIL".
-    <</SYS>>
+                        Rules:
+                        - Ignore formatting differences (e.g., "$7B" vs "7,000 million" is a PASS).
+                        - If the Generated Answer contains the correct numbers but extra text, it's a PASS.
+                        - If the numbers are different or the answer says "I don't know", it's a FAIL.
+                        - Answer ONLY with the word "PASS" or "FAIL".
+                        <</SYS>>
 
-    Question: {question}
-    Expected Answer: {expected}
-    Generated Answer: {generated}
+                        uestion: {question}
+                        Expected Answer: {expected}
+                        Generated Answer: {generated}
 
-    Verdict (PASS/FAIL): [/INST]"""
+                        Verdict (PASS/FAIL): [/INST]"""
 
     # Usiamo il metodo di generazione del nostro oggetto generator
     # Nota: usiamo pochi token perché ci serve solo una parola
@@ -51,6 +52,7 @@ def run_evaluation():
     ticker = "tsla"
     paths = config.get_paths(ticker, "10-K")
     retriever = Retriever(paths["index"], paths["chunks"])
+    reranker = RAGReranker() 
     generator = LLMGenerator()
     
     final_results = []
@@ -63,8 +65,9 @@ def run_evaluation():
         print(f"\n❓ Question: {query}")
         
         # 1. Retrieval & Generation
-        chunks = retriever.search(query, k=15) 
-        generated = generator.generate_answer(query, chunks)
+        chunks = retriever.search(query, k=40) 
+        refined_chunks = reranker.rerank(query, chunks, top_n=5)
+        generated = generator.generate_answer(query, refined_chunks)
         
         # 2. Judging
         verdict = ask_judge(generator, query, expected, generated)

@@ -1,5 +1,5 @@
 import torch
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, CrossEncoder
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from src.utils import config
 
@@ -15,21 +15,24 @@ def setup():
     else:
         print("✔️ Embedding already present locally.")
 
+    # Download and Save Reranker Model
+    if not config.LOCAL_RERANKER_PATH.exists():
+        print(f"📥 Downloading Reranker: {config.RERANKER_MODEL_ID}...")
+        reranker = CrossEncoder(config.RERANKER_MODEL_ID)
+        reranker.save(str(config.LOCAL_RERANKER_PATH))
+        print(f"✅ Reranker saved in {config.LOCAL_RERANKER_PATH}")
+    else:
+        print("✔️ Reranker already present locally.")
+
     # Download and Save LLM (Tokenizer and Model)
     if not config.LOCAL_LLM_PATH.exists():
         print(f"📥 Downloading LLM: {config.LLM_MODEL_ID} (This might take a while...)")
-        
-        # Download the tokenizer
         tokenizer = AutoTokenizer.from_pretrained(config.LLM_MODEL_ID)
         tokenizer.save_pretrained(str(config.LOCAL_LLM_PATH))
-        
-        # Download the model
-        # NOTE: To save it already quantized, a specific procedure is needed,
-        # here we save the base weights. Quantization will happen at loading.
         model = AutoModelForCausalLM.from_pretrained(
             config.LLM_MODEL_ID,
-            torch_dtype=torch.float16, # Standard compressed format
-            device_map="cpu" # Download the model
+            torch_dtype=torch.float16,
+            device_map="cpu" 
         )
         model.save_pretrained(str(config.LOCAL_LLM_PATH))
         print(f"✅ LLM saved in {config.LOCAL_LLM_PATH}")
