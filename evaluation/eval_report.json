@@ -1,47 +1,125 @@
 {
-    "overall_accuracy": "85.71428571428571%",
+    "overall_accuracy": "40.0%",
     "details": [
         {
-            "question": "What were the total Automotive revenues for the fiscal year 2024, and how do they compare to 2023?",
-            "expected": "The RAG should extract the exact automotive revenue figure for 2024 from the consolidated financial statements and compare it directly with the 2023 column.",
-            "generated": "According to the context provided, the total Automotive revenues for the fiscal year 2024 were $77,070 million. To find out how they compare to 2023, the context states that the total Automotive revenues for the fiscal year 2023 were $82,419 million. Therefore, the total Automotive revenues for the fiscal year 2024 were $5,349 million lower than in 2023.",
+            "question": "What were Tesla's total revenues for the fiscal year 2024?",
+            "expected": "Tesla's total revenues for the fiscal year 2024 were $97,690 million (or $97.69 billion).",
+            "generated": "According to the context provided, Tesla's total revenues for the fiscal year 2024 were $97.69 billion.",
             "verdict": "PASS"
         },
         {
-            "question": "What are the primary risk factors associated with the global supply chain and battery supply mentioned in the report?",
-            "expected": "Tesla highlights its reliance on third-party suppliers for battery cells and critical raw materials (such as lithium and nickel), along with risks related to geopolitical tensions and logistical disruptions.",
-            "generated": "1. Reduced availability or increased prices of raw materials such as lithium, nickel, and other metals used in battery cells, which could impact access to cells and growth, and potentially harm the brand, growth, prospects, and operating results.\n        2. Issues or delays in developing, launching, and ramping the production of battery cells and packs at new factories.\n        3. Dependence on single suppliers for certain components and systems, which could lead to production risks due to disruptions in their supply.\n        4. Compliance with regulatory requirements, procurement and maintenance of construction, environmental and operational licenses and permitting, supply chain constraints, hiring, training, and retention of qualified employees, and bringing production equipment and processes online at new factories.\n        5. Unfavorable tariffs and transportation costs, which could limit the affordability of vehicles for customers in local markets.\n        6. Inability to generate and maintain demand for vehicles and energy products manufactured at new factories.",
-            "verdict": "PASS"
-        },
-        {
-            "question": "How much did Tesla invest in Research and Development (R&D) during the fiscal year 2024?",
-            "expected": "The RAG must retrieve the exact R&D expense from the Consolidated Statements of Operations for the year 2024, accurately distinguishing it from SG&A expenses.",
-            "generated": "The context does not provide the exact amount invested by Tesla in Research and Development (R&D) during the fiscal year 2024. However, it mentions that R&D expense was $6,89 million in 2023 and $832 million in 2024. Therefore, the difference between these two amounts can be considered as Tesla's investment in R&D during the fiscal year 2024.\n\n        1,833 million = 832 million (2024) - 689 million (2023)\n\n        Thus, Tesla invested approximately $1,833 million in Research and Development (R&D) during the fiscal year 2024.",
-            "verdict": "PASS"
-        },
-        {
-            "question": "How does management explain the changes in Gross Margin throughout 2024?",
-            "expected": "According to the MD&A section, gross margin fluctuations were primarily driven by vehicle pricing strategies (including price reductions), changes in the product mix, and overall production costs.",
-            "generated": "According to the context provided, the gross margin for total automotive decreased from 18.4% to 17.8% in the year ended December 31, 2025 as compared to the year ended December 31, 2024 primarily due to a decrease in regulatory credits revenue as well as changes in automotive sales revenue and cost of automotive sales revenue. For the total automotive & services and other segment, the gross margin decreased from 16.9% to 16.2% in the same period primarily due to a decrease in regulatory credits revenue, partially offset by an improvement in services and other margins.\n\n        Regarding the Energy Generation and Storage Segment, the gross margin increased from 26.2% to 29.8% in the year ended December 31, 2025 as compared to the year ended December 31, 2024 primarily due to the changes in energy generation and storage revenue and cost of energy generation and storage revenue. Specifically, the increase in energy generation and storage revenue was primarily from increases in Megapack and Powerwall deployments, while the cost of energy generation and storage revenue benefited from manufacturing credits earned.\n\n        However, there is no explicit mention of the changes in gross margin for the year 2024 compared to 2023 in the context provided.",
+            "question": "How much revenue did the Automotive segment generate in 2024?",
+            "expected": "The Automotive segment generated approximately $77 billion in revenues in 2024.",
+            "generated": "The Automotive segment generated $87,604 million in revenue in 2024.",
             "verdict": "FAIL"
         },
         {
-            "question": "What is the total number of vehicles delivered by Tesla in 2024?",
-            "expected": "The system should report the total delivery volume for 2024, successfully distinguishing between the Model 3/Y lineup and other models (Model S/X/Cybertruck).",
-            "generated": "1.64 million vehicles were delivered by Tesla in 2024 based on the information provided in the context.",
+            "question": "What was the revenue for the Energy Generation and Storage segment in 2024?",
+            "expected": "The Energy Generation and Storage segment revenue rose to $10 billion in 2024.",
+            "generated": "The revenue for the Energy Generation and Storage segment in 2024 was $10,086 million.",
             "verdict": "PASS"
         },
         {
-            "question": "Regarding executive compensation and RSUs, what was the weighted-average grant date fair value per share granted specifically in 2024?",
-            "expected": "The RAG must extract the specific value associated exclusively with 2024 (e.g., $223.98), demonstrating its ability to avoid confusing it with the 2023 or 2025 values found in the same paragraph.",
-            "generated": "The weighted-average grant date fair value per share granted specifically in 2024 was $223.98.",
+            "question": "How many consumer vehicles did Tesla produce and deliver in 2024?",
+            "expected": "In 2024, Tesla produced approximately 1,773,000 consumer vehicles and delivered approximately 1,789,000 consumer vehicles.",
+            "generated": "The text does not provide information on how many consumer vehicles Tesla produced and delivered in 2024.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "What was the total volume of energy storage products deployed by Tesla in 2024?",
+            "expected": "Tesla deployed 31.4 GWh of energy storage products during 2024.",
+            "generated": "4,924 million dollars worth of energy storage systems were deployed by Tesla in 2024.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "What was Tesla's total gross margin in 2024, and how did it compare to 2023?",
+            "expected": "Tesla's total gross margin in 2024 was 17.9%, a slight decrease from 18.2% in 2023.",
+            "generated": "The total gross margin for Tesla in 2024 was 17.9%. This represents a decrease from the total gross margin in 2023, which was 18.2%.",
             "verdict": "PASS"
         },
         {
-            "question": "What are Tesla's forward-looking statements regarding new Gigafactories or the expansion of manufacturing capacity?",
-            "expected": "Tesla discusses optimization plans for existing factories (like Texas and Berlin) and potential future developments or capital expenditures for next-generation vehicle platforms.",
-            "generated": "Tesla plans to ramp six new production lines across vehicle, Bots, energy storage and battery manufacturing in 2026. They are also focusing on exploring additional opportunities to develop bespoke and scalable solutions to optimize cost, functionality, efficiency and safety. However, the construction and ramp of these factories are subject to uncertainties including regulatory requirements, procurement and maintenance of construction, environmental and operational licenses and permitting, supply chain constraints, hiring, training and retention of qualified employees, and bringing production equipment and processes online with the capability to manufacture high-quality units at scale. Additionally, they intend to establish and ramp production of their proprietary battery cells and packs at these new factories and incorporate sequential design and manufacturing changes into vehicles and energy products manufactured at each new factory. Any issues or delays in meeting projected timelines, costs, capital efficiency and production capacity for these new factories could harm their business, prospects, operating results and financial condition, and potentially affect their ability to meet demand for their services, such as Robotaxi, which are dependent upon the production and deployment of Tesla vehicles.",
+            "question": "What was Tesla's Net Income for the fiscal year 2024?",
+            "expected": "Tesla's Net Income for 2024 was $7,153 million (or $7.15 billion).",
+            "generated": "The context provides the net income for the fiscal year 2025 as $3,855. However, it does not provide the net income for the fiscal year 2024. Therefore, I cannot find this information in the documents.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "How much Income from Operations did Tesla report in 2024?",
+            "expected": "Tesla reported an Income from Operations of $7,076 million ($7.08 billion) in 2024.",
+            "generated": "7,076 million dollars.",
             "verdict": "PASS"
+        },
+        {
+            "question": "What were the basic and diluted Net Income Per Share (EPS) for Tesla in 2024?",
+            "expected": "In 2024, the Basic Net Income Per Share was $2.23, and the Diluted Net Income Per Share was $2.04.",
+            "generated": "The basic Net Income Per Share (EPS) for Tesla in 2024 was $2.04, and the diluted Net Income Per Share (EPS) for Tesla in 2024 was $1.08.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "How much cash did Tesla generate from operating activities in 2024?",
+            "expected": "Tesla generated $14.92 billion in cash flows from operating activities in 2024.",
+            "generated": "The text states that net cash provided by operating activities for Tesla was $14,923 million in 2024.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What were Tesla's capital expenditures in 2024, and what were the primary drivers?",
+            "expected": "Capital expenditures increased to $11.34 billion in 2024, primarily driven by AI-related projects and global factory expansion.",
+            "generated": "Tesla's capital expenditures in 2024 were $11.34 billion. The primary drivers for these capital expenditures were not explicitly stated in the context provided. However, it can be inferred that they were used for manufacturing capacity expansion, manufacturing optimization, cost reductions, operational efficiencies, and research and development.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was the balance of Tesla's cash, cash equivalents, and investments at the end of 2024?",
+            "expected": "Tesla ended 2024 with $36.56 billion in cash, cash equivalents, and investments.",
+            "generated": "The balance of Tesla's cash, cash equivalents, and investments at the end of 2024 was $36,563 million.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was the lowest average cost of goods per vehicle reached by Tesla in 2024?",
+            "expected": "Tesla reached its lowest average cost of goods per vehicle ever at less than $35,000 in 2024.",
+            "generated": "The lowest average cost of goods per vehicle reached by Tesla in 2024 was $7,830 million.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "By how much did Tesla increase its AI training compute in 2024?",
+            "expected": "Tesla increased its AI training compute by over 400% in 2024.",
+            "generated": "According to the context provided, Tesla expanded Cortex, its training cluster at Gigafactory Texas, in 2025 and announced a new collaboration with Samsung to manufacture advanced semiconductors for AI inference and training in the US. However, there is no mention of any specific increase in AI training compute capacity in 2024. Therefore, I cannot find this information in the documents.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "Which Tesla vehicle model was identified as the best-selling vehicle globally in 2024?",
+            "expected": "The Model Y was the best-selling vehicle, of any kind, globally for the full year 2024.",
+            "generated": "The text does not provide information on which Tesla vehicle model was the best-selling vehicle globally in 2024.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "Which key executive in the Powertrain and Energy Engineering department departed Tesla in April 2024?",
+            "expected": "Drew Baglino, the former Senior Vice President of Powertrain and Energy Engineering, departed Tesla in April 2024.",
+            "generated": "I cannot find this information in the documents.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "What was the revenue generated by the Services and Other segment in 2024?",
+            "expected": "The Services and Other segment revenues rose to $10.5 billion in 2024.",
+            "generated": "10,534 million.\n\n        EXPLANATION:\n        According to the context provided, the Services and Other segment revenue for the year ended December 31, 2024 was 10,534 million.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was the gross profit margin for the Services and Other segment in 2024?",
+            "expected": "The Services and Other segment had a gross profit margin of 5.8% in 2024.",
+            "generated": "16.9%",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "How much did Tesla's total assets and total liabilities amount to by the end of 2024?",
+            "expected": "By the end of 2024, Tesla's balance sheet showed approximately $106.6 billion in total assets and $43 billion in total liabilities.",
+            "generated": "According to the provided context, Tesla's total assets amounted to $122,070 million and total liabilities amounted to $48,390 million by the end of 2024.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "What was the year-over-year percentage growth for energy storage deployed in 2024?",
+            "expected": "The 31.4 gigawatt hours of energy storage deployed in 2024 represented an increase of 113.3% compared to the prior year.",
+            "generated": "20%\n\n        EXPLANATION:\n        According to the text, the year-over-year percentage growth for energy storage deployed in 2025 was 27%. However, no information about the percentage growth in 2024 was given in the text. Therefore, based on the instructions, I can only answer questions using the information provided in the context, and I cannot perform calculations or make assumptions. Since the exact percentage growth for energy storage deployed in 2024 is not mentioned in the text, I cannot find this information in the documents.",
+            "verdict": "FAIL"
         }
     ]
 }

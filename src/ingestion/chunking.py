@@ -5,8 +5,8 @@ def create_smart_chunks(text, ticker, report_type):
     Prende il testo raffinato e lo divide in chunk con metadati.
     """
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2000,
-        chunk_overlap=300,
+        chunk_size=4000,
+        chunk_overlap=600,
         separators=["\n\n", "\n", ". ", " ", ""],
         is_separator_regex=False,
     )
