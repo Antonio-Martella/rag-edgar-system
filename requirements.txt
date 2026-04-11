@@ -3,6 +3,7 @@ beautifulsoup4
 pandas
 tqdm
 python-dotenv
+lxml
 #2
 langchain-text-splitters
 sentence-transformers

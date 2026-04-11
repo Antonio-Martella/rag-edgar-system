@@ -17,7 +17,7 @@ for path in [RAW_DATA_DIR, CHUNKS_DIR, EMBEDDINGS_DIR, MODELS_DIR]:
     path.mkdir(parents=True, exist_ok=True)
 
 # Model Configuration
-EMBEDDING_MODEL_ID = "all-MiniLM-L6-v2"
+EMBEDDING_MODEL_ID = "nomic-ai/nomic-embed-text-v1.5"
 RERANKER_MODEL_ID = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 LLM_MODEL_ID = "mistralai/Mistral-7B-Instruct-v0.2"
 
