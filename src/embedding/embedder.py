@@ -9,7 +9,7 @@ class Embedder:
         if not config.LOCAL_EMBEDDING_PATH.exists():
              raise FileNotFoundError(f"❌ Model not found in {model_path}. Run setup_models.py!")
              
-        self.model = SentenceTransformer(model_path)
+        self.model = SentenceTransformer(model_path, trust_remote_code=True)
         self.dimension = self.model.get_sentence_embedding_dimension()
 
     def encode(self, text_list):

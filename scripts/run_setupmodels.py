@@ -9,7 +9,7 @@ def setup():
     # Download and Save Embedding Model
     if not config.LOCAL_EMBEDDING_PATH.exists():
         print(f"📥 Downloading Embedding: {config.EMBEDDING_MODEL_ID}...")
-        model = SentenceTransformer(config.EMBEDDING_MODEL_ID)
+        model = SentenceTransformer(config.EMBEDDING_MODEL_ID, trust_remote_code=True)
         model.save(str(config.LOCAL_EMBEDDING_PATH))
         print(f"✅ Embedding saved in {config.LOCAL_EMBEDDING_PATH}")
     else:
