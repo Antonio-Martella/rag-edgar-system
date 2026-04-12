@@ -49,13 +49,11 @@ def run_evaluation():
     gt_path = root_path / "evaluation" / f"test_queries{date}.json"
     with open(gt_path, "r") as f:
         ground_truth = json.load(f)
-
     ticker = "tsla"
     paths = config.get_paths(ticker, "10-K")
     retriever = Retriever(paths["index"], paths["chunks"])
     reranker = RAGReranker() 
     generator = LLMGenerator()
-    
     final_results = []
     passes = 0
 

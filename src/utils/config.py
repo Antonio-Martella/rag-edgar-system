@@ -30,12 +30,12 @@ LOCAL_LLM_PATH = MODELS_DIR / LLM_MODEL_ID
 #CHUNKS_JSON = CHUNKS_DIR / "tsla_10k_2025_chunks.json"
 #FAISS_INDEX = EMBEDDINGS_DIR / "tsla_index.bin"
 
-def get_paths(ticker, report_type="10-K"):
+def get_paths(ticker, report_type="10-K", date="2023"):
     """
     Helper per ottenere i percorsi dei file dati per un ticker specifico.
     """
     t = ticker.lower()
     return {
-        "index": str(EMBEDDINGS_DIR / f"{t}_{report_type.lower()}_index.bin"),
-        "chunks": str(CHUNKS_DIR / f"{t}_{report_type.lower()}_chunks.json")
+        "index": str(EMBEDDINGS_DIR / f"{t}_{report_type.lower()}_{date}_index.bin"),
+        "chunks": str(CHUNKS_DIR / f"{t}_{report_type.lower()}_chunks_{date}.json")
     }
