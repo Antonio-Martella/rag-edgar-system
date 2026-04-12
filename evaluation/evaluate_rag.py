@@ -27,7 +27,7 @@ def ask_judge(generator, question, expected, generated):
                         - Answer ONLY with the word "PASS" or "FAIL".
                         <</SYS>>
 
-                        uestion: {question}
+                        Question: {question}
                         Expected Answer: {expected}
                         Generated Answer: {generated}
 
@@ -64,10 +64,10 @@ def run_evaluation():
         
         print(f"\n❓ Question: {query}")
         
-        # 1. Retrieval & Generation
+        # 1. Retrieval & Generation 
         chunks = retriever.search(query, k=40) 
-        refined_chunks = reranker.rerank(query, chunks, top_n=5)
-        generated = generator.generate_answer(query, refined_chunks)
+        refined_chunks = reranker.rerank(query, chunks, top_n=40)
+        generated = generator.generate_answer(query, refined_chunks[:15])
         
         # 2. Judging
         verdict = ask_judge(generator, query, expected, generated)

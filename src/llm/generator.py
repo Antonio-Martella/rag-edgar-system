@@ -64,6 +64,7 @@ class LLMGenerator:
         prompt = f"""<s>[INST] <<SYS>>
         You are a strict financial auditor. Your task is to extract EXACT data from the provided context.
         - ONLY use the provided CONTEXT to answer.
+        - TABULAR DATA: Read line-by-line. Pay EXTREME attention to the exact metric name. Do not confuse broader categories (e.g., "Total Revenues") with specific segments (e.g., "Automotive revenues").
         - If the specific number for a specific year is not explicitly written in the CONTEXT, say "I cannot find this information in the documents."
         - NEVER perform mathematical operations (addition, subtraction, etc.) to guess or estimate missing values.
         - DO NOT invent logic to explain missing data.
@@ -74,7 +75,6 @@ class LLMGenerator:
 
         CONTEXT:
         {context_text}
-
 
         QUESTION:
         {query} [/INST]

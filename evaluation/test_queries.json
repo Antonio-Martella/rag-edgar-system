@@ -1,122 +1,122 @@
 [
   {
     "id": 1,
-    "question": "What were Tesla's total revenues for the fiscal year 2024?",
-    "answer": "Tesla's total revenues for the fiscal year 2024 were $97,690 million (or $97.69 billion).",
-    "category": "Financial Tables - Revenue"
+    "question": "What were Tesla's total recognized revenues for the fiscal year 2025?",
+    "answer": "$94.83 billion.",
+    "category": "Financial Results"
   },
   {
     "id": 2,
-    "question": "How much revenue did the Automotive segment generate in 2024?",
-    "answer": "The Automotive segment generated approximately $77 billion in revenues in 2024.",
-    "category": "Financial Tables - Revenue"
+    "question": "By how much did Tesla's total revenues decrease in 2025 compared to the prior year?",
+    "answer": "Total revenues decreased by $2.86 billion.",
+    "category": "Financial Results"
   },
   {
     "id": 3,
-    "question": "What was the revenue for the Energy Generation and Storage segment in 2024?",
-    "answer": "The Energy Generation and Storage segment revenue rose to $10 billion in 2024.",
-    "category": "Financial Tables - Revenue"
+    "question": "What was Tesla's net income attributable to common stockholders in 2025?",
+    "answer": "$3.79 billion.",
+    "category": "Financial Results"
   },
   {
     "id": 4,
-    "question": "How many consumer vehicles did Tesla produce and deliver in 2024?",
-    "answer": "In 2024, Tesla produced approximately 1,773,000 consumer vehicles and delivered approximately 1,789,000 consumer vehicles.",
-    "category": "Operational Metrics"
+    "question": "By how much did the net income attributable to common stockholders decrease in 2025 compared to 2024?",
+    "answer": "It decreased by $3.30 billion compared to the prior year.",
+    "category": "Financial Results"
   },
   {
     "id": 5,
-    "question": "What was the total volume of energy storage products deployed by Tesla in 2024?",
-    "answer": "Tesla deployed 31.4 GWh of energy storage products during 2024.",
+    "question": "How many gigawatt-hours (GWh) of energy storage products did Tesla deploy in 2025?",
+    "answer": "46.7 GWh.",
     "category": "Operational Metrics"
   },
   {
     "id": 6,
-    "question": "What was Tesla's total gross margin in 2024, and how did it compare to 2023?",
-    "answer": "Tesla's total gross margin in 2024 was 17.9%, a slight decrease from 18.2% in 2023.",
-    "category": "Financial Tables - Margins"
+    "question": "What was the total automotive revenue for Tesla in 2025?",
+    "answer": "$69,526 million (or approximately $69.5 billion).",
+    "category": "Revenue Segments"
   },
   {
     "id": 7,
-    "question": "What was Tesla's Net Income for the fiscal year 2024?",
-    "answer": "Tesla's Net Income for 2024 was $7,153 million (or $7.15 billion).",
-    "category": "Financial Tables - Profitability"
+    "question": "How much revenue did the Energy Generation and Storage segment generate in 2025?",
+    "answer": "$12,771 million (or approximately $12.8 billion).",
+    "category": "Revenue Segments"
   },
   {
     "id": 8,
-    "question": "How much Income from Operations did Tesla report in 2024?",
-    "answer": "Tesla reported an Income from Operations of $7,076 million ($7.08 billion) in 2024.",
-    "category": "Financial Tables - Profitability"
+    "question": "What was Tesla's diluted earnings per share (EPS) attributable to common stockholders in 2025?",
+    "answer": "$1.08.",
+    "category": "Financial Results"
   },
   {
     "id": 9,
-    "question": "What were the basic and diluted Net Income Per Share (EPS) for Tesla in 2024?",
-    "answer": "In 2024, the Basic Net Income Per Share was $2.23, and the Diluted Net Income Per Share was $2.04.",
-    "category": "Financial Tables - EPS"
+    "question": "How many consumer vehicles did Tesla produce in 2025?",
+    "answer": "Approximately 1.66 million (or exactly 1,654,667).",
+    "category": "Operational Metrics"
   },
   {
     "id": 10,
-    "question": "How much cash did Tesla generate from operating activities in 2024?",
-    "answer": "Tesla generated $14.92 billion in cash flows from operating activities in 2024.",
-    "category": "Financial Tables - Cash Flow"
+    "question": "How many consumer vehicles did Tesla deliver in 2025?",
+    "answer": "Approximately 1.64 million.",
+    "category": "Operational Metrics"
   },
   {
     "id": 11,
-    "question": "What were Tesla's capital expenditures in 2024, and what were the primary drivers?",
-    "answer": "Capital expenditures increased to $11.34 billion in 2024, primarily driven by AI-related projects and global factory expansion.",
-    "category": "Financial Tables - Cash Flow"
+    "question": "What was the total operating cash flow (net cash provided by operating activities) for Tesla in 2025?",
+    "answer": "$14.7 billion.",
+    "category": "Cash Flow"
   },
   {
     "id": 12,
-    "question": "What was the balance of Tesla's cash, cash equivalents, and investments at the end of 2024?",
-    "answer": "Tesla ended 2024 with $36.56 billion in cash, cash equivalents, and investments.",
-    "category": "Financial Tables - Balance Sheet"
+    "question": "What was Tesla's free cash flow in 2025?",
+    "answer": "$6.2 billion.",
+    "category": "Cash Flow"
   },
   {
     "id": 13,
-    "question": "What was the lowest average cost of goods per vehicle reached by Tesla in 2024?",
-    "answer": "Tesla reached its lowest average cost of goods per vehicle ever at less than $35,000 in 2024.",
-    "category": "MD&A - Operational Highlights"
+    "question": "What was the total balance of cash and investments at the end of 2025?",
+    "answer": "$44.1 billion.",
+    "category": "Balance Sheet"
   },
   {
     "id": 14,
-    "question": "By how much did Tesla increase its AI training compute in 2024?",
-    "answer": "Tesla increased its AI training compute by over 400% in 2024.",
-    "category": "MD&A - Technology & FSD"
+    "question": "In what month and year did Tesla launch its Robotaxi service, the autonomous ride-hailing platform?",
+    "answer": "June 2025.",
+    "category": "Business Strategy"
   },
   {
     "id": 15,
-    "question": "Which Tesla vehicle model was identified as the best-selling vehicle globally in 2024?",
-    "answer": "The Model Y was the best-selling vehicle, of any kind, globally for the full year 2024.",
-    "category": "Business Overview"
+    "question": "What are the names of the next-generation industrial storage products introduced by Tesla in 2025?",
+    "answer": "Megapack 3 and Megablock.",
+    "category": "Product Development"
   },
   {
     "id": 16,
-    "question": "Which key executive in the Powertrain and Energy Engineering department departed Tesla in April 2024?",
-    "answer": "Drew Baglino, the former Senior Vice President of Powertrain and Energy Engineering, departed Tesla in April 2024.",
-    "category": "Executive Officers"
+    "question": "In addition to ramping up facilities in Shanghai and Lathrop, where did Tesla begin construction of a new Megafactory in 2025?",
+    "answer": "Near Houston, Texas.",
+    "category": "Manufacturing Capacity"
   },
   {
     "id": 17,
-    "question": "What was the revenue generated by the Services and Other segment in 2024?",
-    "answer": "The Services and Other segment revenues rose to $10.5 billion in 2024.",
-    "category": "Financial Tables - Revenue"
+    "question": "What was the total value of Tesla's assets at the end of the fiscal year 2025?",
+    "answer": "Approximately $137.8 billion.",
+    "category": "Balance Sheet"
   },
   {
     "id": 18,
-    "question": "What was the gross profit margin for the Services and Other segment in 2024?",
-    "answer": "The Services and Other segment had a gross profit margin of 5.8% in 2024.",
-    "category": "Financial Tables - Margins"
+    "question": "What was Tesla's total equity at the end of 2025?",
+    "answer": "Approximately $82.14 billion.",
+    "category": "Balance Sheet"
   },
   {
     "id": 19,
-    "question": "How much did Tesla's total assets and total liabilities amount to by the end of 2024?",
-    "answer": "By the end of 2024, Tesla's balance sheet showed approximately $106.6 billion in total assets and $43 billion in total liabilities.",
-    "category": "Financial Tables - Balance Sheet"
+    "question": "What was Tesla's GAAP operating income for the fiscal year 2025?",
+    "answer": "$4.4 billion (or approximately $4.36 billion).",
+    "category": "Financial Results"
   },
   {
     "id": 20,
-    "question": "What was the year-over-year percentage growth for energy storage deployed in 2024?",
-    "answer": "The 31.4 gigawatt hours of energy storage deployed in 2024 represented an increase of 113.3% compared to the prior year.",
-    "category": "MD&A - Operational Highlights"
+    "question": "As of late 2025, approximately how many Supercharger stations did Tesla operate worldwide?",
+    "answer": "About 7,900 stations.",
+    "category": "Infrastructure"
   }
 ]
