@@ -12,10 +12,11 @@ def run_indexing(ticker="TSLA", report_type="10-K"):
 
     ticker = input("Enter ticker (e.g. TSLA): ").upper() or ticker
     report_type = input("Enter report type (e.g. 10-K): ") or report_type
-    
+    date = input("Enter report date (e.g. 2023): ") or "2023"
+
     # Loading chunks saved by ingestion
     # We build the filename based on the ticker, e.g.: tsla_10k_chunks.json
-    chunks_filename = f"{ticker.lower()}_{report_type.lower()}_chunks.json"
+    chunks_filename = f"{ticker.lower()}_{report_type.lower()}_chunks_{date}.json"
     chunks_path = Path(config.CHUNKS_DIR) / chunks_filename
     
     if not chunks_path.exists():
@@ -39,7 +40,7 @@ def run_indexing(ticker="TSLA", report_type="10-K"):
 
     # Saving the index
     # We build the index filename, e.g.: tsla_10k_index.bin
-    index_filename = f"{ticker.lower()}_{report_type.lower()}_index.bin"
+    index_filename = f"{ticker.lower()}_{report_type.lower()}_{date}_index.bin"
     index_path = Path(config.EMBEDDINGS_DIR) / index_filename
     storage.save(str(index_path))
     print(f"💾 FAISS index saved to: {index_path}")

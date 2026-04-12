@@ -44,8 +44,9 @@ def ask_judge(generator, question, expected, generated):
 
 def run_evaluation():
     print("🧪 Starting RAG Evaluation with LLM-as-a-Judge...")
+    date = input("Enter report date (e.g. 2023): ") or "2023"
     
-    gt_path = root_path / "evaluation" / "test_queries.json"
+    gt_path = root_path / "evaluation" / f"test_queries{date}.json"
     with open(gt_path, "r") as f:
         ground_truth = json.load(f)
 
@@ -92,7 +93,7 @@ def run_evaluation():
         "details": final_results
     }
     
-    with open(root_path / "evaluation" / "eval_report.json", "w") as f:
+    with open(root_path / "evaluation" / f"eval_report_{date}.json", "w") as f:
         json.dump(report, f, indent=4)
     
     print(f"\n📊 Evaluation complete! Accuracy: {accuracy}%")
