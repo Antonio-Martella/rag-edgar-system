@@ -1,6 +1,7 @@
 import torch
 from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from src.utils import config
+from .model import get_quantization_config
 
 class LLMGenerator:
     def __init__(self, model_path=config.LOCAL_LLM_PATH):
@@ -15,14 +16,6 @@ class LLMGenerator:
                 f"❌ Model not found in {model_path}. "
                 "Please make sure you have successfully executed 'python3 scripts/setup_models.py'."
             )
-        
-        # Configuration for model compression to save VRAM
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,                    # Enables 4-bit quantization of the model to reduce VRAM usage
-            bnb_4bit_use_double_quant=True,       # Enables double quantization to improve the precision of the quantized model
-            bnb_4bit_quant_type="nf4",            # Use the NF4 quantization format, which is more efficient for language models
-            bnb_4bit_compute_dtype=torch.bfloat16 # This is the format in which the computer does calculations. It's very fast on modern GPUs
-        )
 
         # Load the tokenizer associated with the specified model
         self.tokenizer = AutoTokenizer.from_pretrained(model_path) 
@@ -30,7 +23,7 @@ class LLMGenerator:
         # Load the model with the specified quantization configuration, assigning it automatically to the available GPU
         self.model = AutoModelForCausalLM.from_pretrained( 
             model_path,
-            quantization_config=bnb_config, # Apply the quantization configuration to the model
+            quantization_config=get_quantization_config(), 
             device_map="auto"
         )
 
