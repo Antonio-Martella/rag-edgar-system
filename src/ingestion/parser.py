@@ -2,24 +2,26 @@ import re
 from bs4 import BeautifulSoup
 
 
-def extract_pure(raw_submission: str) -> str:
+def extract_pure(raw_submission: str, report_type: str = "10-K") -> str:
     """
-    Isolates the primary 10-K document from a full SEC submission.
-
-    Filters the raw content to extract only the text between
-    the <TEXT> tags of the section identified as <TYPE>10-K, discarding attachments,
-    base64 images, and secondary XML documents in the submission file.
-
-    Args:
-        raw_submission (str): The full text content of the submission (.txt).
-
-    Returns:
-        str: The HTML/text content of the 10-K report only.
+    Isolates the primary document (10-K, 10-Q, etc.) from a full SEC submission.
     """
-    # We use a regex to find the 10-K section and capture only the main text 
-    match = re.search(r'<DOCUMENT>\s*<TYPE>10-K.*?(<TEXT>.*?</TEXT>)', raw_submission, re.IGNORECASE | re.DOTALL)
+    # We look for the <DOCUMENT> tag that contains the specified report type (e.g., 10-K) 
+    # and extract the content of its <TEXT> tag. This is done using a regular expression 
+    # that searches for the pattern of a document with the specified type and captures the text content within it.
+    pattern = rf'<DOCUMENT>\s*<TYPE>{re.escape(report_type)}.*?(<TEXT>.*?</TEXT>)'
+    # The re.IGNORECASE flag allows us to match the report type regardless of case (e.g., "10-K", "10-k", "10-K ", etc.), 
+    # and the re.DOTALL flag allows the dot (.) in the regex to match newline characters.
+    match = re.search(pattern, raw_submission, re.IGNORECASE | re.DOTALL)
     if match:
         return match.group(1)
+    # If we don't find a match for the specified report type, we can attempt a fallback by looking for any <TEXT> tag in the submission, 
+    # which might contain the main content of the report. This is a more lenient search that doesn't require a specific report type, 
+    # but it can help us extract content from submissions that don't strictly follow the expected format.
+    fallback_match = re.search(r'<TEXT>(.*?)</TEXT>', raw_submission, re.IGNORECASE | re.DOTALL)
+    if fallback_match:
+        return fallback_match.group(1)
+        
     return raw_submission
 
 
