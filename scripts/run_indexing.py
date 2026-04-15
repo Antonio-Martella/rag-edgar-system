@@ -17,6 +17,7 @@ def run_indexing(ticker="TSLA", report_type="10-K"):
     # Loading chunks saved by ingestion
     # We build the filename based on the ticker, e.g.: tsla_10k_chunks.json
     chunks_filename = f"{ticker.lower()}_{report_type.lower()}_chunks_{date}.json"
+    print(chunks_filename)
     chunks_path = Path(config.CHUNKS_DIR) / chunks_filename
     
     if not chunks_path.exists():
