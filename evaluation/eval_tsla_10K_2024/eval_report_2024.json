@@ -1,0 +1,125 @@
+{
+    "overall_accuracy": "90.0%",
+    "details": [
+        {
+            "question": "What was Tesla's global employee headcount as of December 31, 2024?",
+            "expected": "As of December 31, 2024, Tesla's employee headcount worldwide was 125,665.",
+            "generated": "125,665\n\n        EXPLANATION:\n        According to the provided text, Tesla's global employee headcount as of December 31, 2024 was 125,665.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was the amount of unused letters of credit outstanding as of December 31, 2024?",
+            "expected": "As of December 31, 2024, Tesla had $448 million of unused letters of credit outstanding.",
+            "generated": "$448 million",
+            "verdict": "PASS"
+        },
+        {
+            "question": "In how many U.S. states were Tesla's insurance products currently available according to the 2024 report?",
+            "expected": "Tesla's insurance products are currently available in 12 states.",
+            "generated": "According to the 2024 report, Tesla's insurance products were currently available in 12 U.S. states.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "Which primary manufacturing facilities are owned by Tesla rather than leased?",
+            "expected": "Tesla owns Gigafactory Texas, Fremont Factory, Gigafactory Nevada, and Gigafactory Berlin-Brandenburg.",
+            "generated": "According to the provided context, the following primary manufacturing facilities are owned by Tesla:\n        1. Gigafactory Texas in Austin, Texas\n        2. Fremont Factory in Fremont, California\n        3. Gigafactory Nevada in Sparks, Nevada\n        4. Gigafactory Berlin-Brandenburg in Grunheide, Germany\n        5. Gigafactory Shanghai in Shanghai, China (no explicit statement but it is listed as owned in a previous filing)\n\n        Therefore, the answer is: Gigafactory Texas, Fremont Factory, Gigafactory Nevada, Gigafactory Berlin-Brandenburg, and Gigafactory Shanghai.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "Where is the Gigafactory Berlin-Brandenburg located?",
+            "expected": "It is located in Grunheide, Germany.",
+            "generated": "The Gigafactory Berlin-Brandenburg is located in Grunheide, Germany.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What percentage of Tesla's US employees identified as veterans or active-duty military personnel as of December 31, 2024?",
+            "expected": "2.3% of Tesla's employees in the US are veterans or active-duty military personnel.",
+            "generated": "2.3% of Tesla's US employees identified as veterans or active-duty military personnel as of December 31, 2024.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What percentage of Tesla's US employees identified as individuals with disabilities as of December 31, 2024?",
+            "expected": "3.3% of Tesla's US employees identified as individuals with disabilities.",
+            "generated": "3.3% of Tesla's US employees identified as individuals with disabilities as of December 31, 2024.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "How many Tesla employees worldwide advanced their careers within the Company in 2024?",
+            "expected": "In 2024, over 13,000 of Tesla's employees worldwide took advantage of opportunities to advance their career.",
+            "generated": "13,000 Tesla employees worldwide advanced their careers within the Company in 2024.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "Approximately how many university and community college students does Tesla hire globally for internships every year?",
+            "expected": "Tesla hires approximately 4,000 university and community college students globally for internships every year.",
+            "generated": "Approximately 4,000 university and community college students are hired globally by Tesla every year for internships.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What is the name of Tesla's semiannual employee survey and what was its global participation rate?",
+            "expected": "The survey is called Pulse, and it generated 86% global participation.",
+            "generated": "Pulse, the name of Tesla's semiannual employee survey, had a global participation rate of 86%.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "To what standard was Tesla's Information Security Management System certified as of 2024?",
+            "expected": "It has been certified to conform to the requirements of ISO/IEC 27001:2013.",
+            "generated": "Tesla's Information Security Management System was certified to conform to the requirements of ISO/IEC 27001:2013 as of 2024.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "In what year did Tesla launch its insurance product using real-time driving behavior?",
+            "expected": "Tesla launched its insurance product using real-time driving behavior in 2021.",
+            "generated": "I cannot find this information in the documents.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "Under the SUNY Foundation agreement, how much is Tesla obligated to spend or incur in the State of New York over an initial 10-year period?",
+            "expected": "Tesla is obligated to spend or incur $5.00 billion in combined capital, operational expenses, costs of goods sold and other costs in the State of New York.",
+            "generated": "Tesla is obligated to spend or incur $5.00 billion in the State of New York over an initial 10-year period.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What percentage of Tesla's managers have been promoted from internal, non-managerial positions?",
+            "expected": "More than two-thirds (68%) of Tesla's managers have been promoted from internal, non-managerial positions.",
+            "generated": "68% of Tesla's managers have been promoted from internal, non-managerial positions.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What percentage of Tesla's management team has been with the company for over five years?",
+            "expected": "45% of Tesla's management team has been with the company for over five years.",
+            "generated": "45% of Tesla's management team has been with the company for over five years.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "Which program offers exiting military service members corporate industry experience during their transition?",
+            "expected": "The Military Fellowship Program, run in partnership with the U.S. Chamber of Commerce Foundation\u2019s Hire Our Heroes.",
+            "generated": "Tesla's Military Fellowship Program",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "How many participants does Tesla plan to hire for its Manufacturing Development Program in 2025?",
+            "expected": "In 2025, Tesla plans to hire over 1,000 participants across its factories.",
+            "generated": "Tesla plans to hire over 1,000 participants for its Manufacturing Development Program in 2025.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What program offers Tesla employees access to tuition-free and partially funded learning opportunities?",
+            "expected": "The Education Assistance Program.",
+            "generated": "Tesla's Education Assistance Program offers employees access to tuition-free and partially funded learning opportunities.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "How many actively enrolled learners received funding through the Education Assistance Program since its launch in February 2024?",
+            "expected": "The program has provided funding to 5,436 actively enrolled learners.",
+            "generated": "5,436 actively enrolled learners have received funding through the Education Assistance Program since its launch in February 2024.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "Where are Tesla's two Megafactories located according to the primary manufacturing facilities table?",
+            "expected": "Megafactory Shanghai is located in Shanghai, China, and Megafactory Lathrop is located in Lathrop, California.",
+            "generated": "Megafactory Shanghai and Megafactory Lathrop are Tesla's two Megafactories mentioned in the primary manufacturing facilities table. However, the table does not specify whether they are owned or leased. Therefore, I cannot determine their ownership status based on the given context alone.",
+            "verdict": "PASS"
+        }
+    ]
+}

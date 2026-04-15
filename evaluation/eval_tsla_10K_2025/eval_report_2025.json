@@ -1,0 +1,125 @@
+{
+    "overall_accuracy": "90.0%",
+    "details": [
+        {
+            "question": "What were Tesla's total recognized revenues for the fiscal year 2025?",
+            "expected": "$94.83 billion.",
+            "generated": "Tesla recognized a total of $94,827 million in revenues during the fiscal year 2025.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "By how much did Tesla's total revenues decrease in 2025 compared to the prior year?",
+            "expected": "Total revenues decreased by $2.86 billion.",
+            "generated": "Tesla's total revenues decreased $2,863 million, or 3%, in 2025 compared to the prior year.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was Tesla's net income attributable to common stockholders in 2025?",
+            "expected": "$3.79 billion.",
+            "generated": "According to the provided context, Tesla's net income attributable to common stockholders in 2025 was $3,794 million.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "By how much did the net income attributable to common stockholders decrease in 2025 compared to 2024?",
+            "expected": "It decreased by $3.30 billion compared to the prior year.",
+            "generated": "The net income attributable to common stockholders decreased by $3,337 million in 2025 compared to 2024, according to the provided context.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "How many gigawatt-hours (GWh) of energy storage products did Tesla deploy in 2025?",
+            "expected": "46.7 GWh.",
+            "generated": "46.7 GWh",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was the total automotive revenue for Tesla in 2025?",
+            "expected": "$69,526 million (or approximately $69.5 billion).",
+            "generated": "The total automotive revenue for Tesla in 2025 was $69,526 million.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "How much revenue did the Energy Generation and Storage segment generate in 2025?",
+            "expected": "$12,771 million (or approximately $12.8 billion).",
+            "generated": "The Energy Generation and Storage segment generated $12,771 million in revenue in 2025.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was Tesla's diluted earnings per share (EPS) attributable to common stockholders in 2025?",
+            "expected": "$1.08.",
+            "generated": "According to the provided context, the diluted weighted average shares used in computing net income per share of common stock attributable to common stockholders in 2025 was $3,528 million. To calculate diluted EPS, divide net income used in computing diluted net income per share ($3,794 million) by the diluted weighted average shares ($3,528 million). However, the exact diluted EPS figure is not explicitly stated in the context. Therefore, I cannot find this information in the documents.",
+            "verdict": "FAIL"
+        },
+        {
+            "question": "How many consumer vehicles did Tesla produce in 2025?",
+            "expected": "Approximately 1.66 million (or exactly 1,654,667).",
+            "generated": "1.66 million consumer vehicles were produced by Tesla in 2025.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "How many consumer vehicles did Tesla deliver in 2025?",
+            "expected": "Approximately 1.64 million.",
+            "generated": "1.64 million consumer vehicles were delivered by Tesla in 2025.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was the total operating cash flow (net cash provided by operating activities) for Tesla in 2025?",
+            "expected": "$14.7 billion.",
+            "generated": "The total operating cash flow (net cash provided by operating activities) for Tesla in 2025 was $14,747 million.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was Tesla's free cash flow in 2025?",
+            "expected": "$6.2 billion.",
+            "generated": "Tesla's cash flows provided by operating activities were $14.75 billion in 2025, and capital expenditures amounted to $8.53 billion. Therefore, free cash flow in 2025 was $14.75 billion - $8.53 billion = $6.22 billion.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was the total balance of cash and investments at the end of 2025?",
+            "expected": "$44.1 billion.",
+            "generated": "The total balance of cash and investments at the end of 2025 was $44.06 billion.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "In what month and year did Tesla launch its Robotaxi service, the autonomous ride-hailing platform?",
+            "expected": "June 2025.",
+            "generated": "Tesla launched its Robotaxi service, an autonomous ride-hailing platform, in June 2025.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What are the names of the next-generation industrial storage products introduced by Tesla in 2025?",
+            "expected": "Megapack 3 and Megablock.",
+            "generated": "Megapack 3 and Megablock",
+            "verdict": "PASS"
+        },
+        {
+            "question": "In addition to ramping up facilities in Shanghai and Lathrop, where did Tesla begin construction of a new Megafactory in 2025?",
+            "expected": "Near Houston, Texas.",
+            "generated": "Tesla began construction of a new Megafactory near Houston, Texas, in 2025.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was the total value of Tesla's assets at the end of the fiscal year 2025?",
+            "expected": "Approximately $137.8 billion.",
+            "generated": "The total value of Tesla's assets at the end of the fiscal year 2025 was $137,806 million.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was Tesla's total equity at the end of 2025?",
+            "expected": "Approximately $82.14 billion.",
+            "generated": "According to the provided context, Tesla's total stockholders\u2019 equity at the end of 2025 was $82,137 million.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What was Tesla's GAAP operating income for the fiscal year 2025?",
+            "expected": "$4.4 billion (or approximately $4.36 billion).",
+            "generated": "Tesla's GAAP operating income for the fiscal year 2025 was $4,355 million.",
+            "verdict": "PASS"
+        },
+        {
+            "question": "What is Tesla's expected capital expenditure for the year 2026?",
+            "expected": "Tesla expects capital expenditures to exceed $20 billion in 2026, driven by AI initiatives, compute infrastructure, and expansion of manufacturing and R&D facilities.",
+            "generated": "The text does not provide information on Tesla's expected capital expenditure for the year 2026.",
+            "verdict": "FAIL"
+        }
+    ]
+}

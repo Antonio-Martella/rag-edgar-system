@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "question": "What was Tesla's global employee headcount as of December 31, 2024?",
+    "answer": "As of December 31, 2024, Tesla's employee headcount worldwide was 125,665.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 2,
+    "question": "What was the amount of unused letters of credit outstanding as of December 31, 2024?",
+    "answer": "As of December 31, 2024, Tesla had $448 million of unused letters of credit outstanding.",
+    "category": "Financial Results"
+  },
+  {
+    "id": 3,
+    "question": "In how many U.S. states were Tesla's insurance products currently available according to the 2024 report?",
+    "answer": "Tesla's insurance products are currently available in 12 states.",
+    "category": "Business Strategy"
+  },
+  {
+    "id": 4,
+    "question": "Which primary manufacturing facilities are owned by Tesla rather than leased?",
+    "answer": "Tesla owns Gigafactory Texas, Fremont Factory, Gigafactory Nevada, and Gigafactory Berlin-Brandenburg.",
+    "category": "Properties"
+  },
+  {
+    "id": 5,
+    "question": "Where is the Gigafactory Berlin-Brandenburg located?",
+    "answer": "It is located in Grunheide, Germany.",
+    "category": "Properties"
+  },
+  {
+    "id": 6,
+    "question": "What percentage of Tesla's US employees identified as veterans or active-duty military personnel as of December 31, 2024?",
+    "answer": "2.3% of Tesla's employees in the US are veterans or active-duty military personnel.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 7,
+    "question": "What percentage of Tesla's US employees identified as individuals with disabilities as of December 31, 2024?",
+    "answer": "3.3% of Tesla's US employees identified as individuals with disabilities.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 8,
+    "question": "How many Tesla employees worldwide advanced their careers within the Company in 2024?",
+    "answer": "In 2024, over 13,000 of Tesla's employees worldwide took advantage of opportunities to advance their career.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 9,
+    "question": "Approximately how many university and community college students does Tesla hire globally for internships every year?",
+    "answer": "Tesla hires approximately 4,000 university and community college students globally for internships every year.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 10,
+    "question": "What is the name of Tesla's semiannual employee survey and what was its global participation rate?",
+    "answer": "The survey is called Pulse, and it generated 86% global participation.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 11,
+    "question": "To what standard was Tesla's Information Security Management System certified as of 2024?",
+    "answer": "It has been certified to conform to the requirements of ISO/IEC 27001:2013.",
+    "category": "Cybersecurity"
+  },
+  {
+    "id": 12,
+    "question": "In what year did Tesla launch its insurance product using real-time driving behavior?",
+    "answer": "Tesla launched its insurance product using real-time driving behavior in 2021.",
+    "category": "Business Strategy"
+  },
+  {
+    "id": 13,
+    "question": "Under the SUNY Foundation agreement, how much is Tesla obligated to spend or incur in the State of New York over an initial 10-year period?",
+    "answer": "Tesla is obligated to spend or incur $5.00 billion in combined capital, operational expenses, costs of goods sold and other costs in the State of New York.",
+    "category": "Commitments and Contingencies"
+  },
+  {
+    "id": 14,
+    "question": "What percentage of Tesla's managers have been promoted from internal, non-managerial positions?",
+    "answer": "More than two-thirds (68%) of Tesla's managers have been promoted from internal, non-managerial positions.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 15,
+    "question": "What percentage of Tesla's management team has been with the company for over five years?",
+    "answer": "45% of Tesla's management team has been with the company for over five years.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 16,
+    "question": "Which program offers exiting military service members corporate industry experience during their transition?",
+    "answer": "The Military Fellowship Program, run in partnership with the U.S. Chamber of Commerce Foundation’s Hire Our Heroes.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 17,
+    "question": "How many participants does Tesla plan to hire for its Manufacturing Development Program in 2025?",
+    "answer": "In 2025, Tesla plans to hire over 1,000 participants across its factories.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 18,
+    "question": "What program offers Tesla employees access to tuition-free and partially funded learning opportunities?",
+    "answer": "The Education Assistance Program.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 19,
+    "question": "How many actively enrolled learners received funding through the Education Assistance Program since its launch in February 2024?",
+    "answer": "The program has provided funding to 5,436 actively enrolled learners.",
+    "category": "Human Capital"
+  },
+  {
+    "id": 20,
+    "question": "Where are Tesla's two Megafactories located according to the primary manufacturing facilities table?",
+    "answer": "Megafactory Shanghai is located in Shanghai, China, and Megafactory Lathrop is located in Lathrop, California.",
+    "category": "Properties"
+  }
+]

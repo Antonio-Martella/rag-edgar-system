@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "question": "What were Tesla's total recognized revenues for the fiscal year 2025?",
+    "answer": "$94.83 billion.",
+    "category": "Financial Results"
+  },
+  {
+    "id": 2,
+    "question": "By how much did Tesla's total revenues decrease in 2025 compared to the prior year?",
+    "answer": "Total revenues decreased by $2.86 billion.",
+    "category": "Financial Results"
+  },
+  {
+    "id": 3,
+    "question": "What was Tesla's net income attributable to common stockholders in 2025?",
+    "answer": "$3.79 billion.",
+    "category": "Financial Results"
+  },
+  {
+    "id": 4,
+    "question": "By how much did the net income attributable to common stockholders decrease in 2025 compared to 2024?",
+    "answer": "It decreased by $3.30 billion compared to the prior year.",
+    "category": "Financial Results"
+  },
+  {
+    "id": 5,
+    "question": "How many gigawatt-hours (GWh) of energy storage products did Tesla deploy in 2025?",
+    "answer": "46.7 GWh.",
+    "category": "Operational Metrics"
+  },
+  {
+    "id": 6,
+    "question": "What was the total automotive revenue for Tesla in 2025?",
+    "answer": "$69,526 million (or approximately $69.5 billion).",
+    "category": "Revenue Segments"
+  },
+  {
+    "id": 7,
+    "question": "How much revenue did the Energy Generation and Storage segment generate in 2025?",
+    "answer": "$12,771 million (or approximately $12.8 billion).",
+    "category": "Revenue Segments"
+  },
+  {
+    "id": 8,
+    "question": "What was Tesla's diluted earnings per share (EPS) attributable to common stockholders in 2025?",
+    "answer": "$1.08.",
+    "category": "Financial Results"
+  },
+  {
+    "id": 9,
+    "question": "How many consumer vehicles did Tesla produce in 2025?",
+    "answer": "Approximately 1.66 million (or exactly 1,654,667).",
+    "category": "Operational Metrics"
+  },
+  {
+    "id": 10,
+    "question": "How many consumer vehicles did Tesla deliver in 2025?",
+    "answer": "Approximately 1.64 million.",
+    "category": "Operational Metrics"
+  },
+  {
+    "id": 11,
+    "question": "What was the total operating cash flow (net cash provided by operating activities) for Tesla in 2025?",
+    "answer": "$14.7 billion.",
+    "category": "Cash Flow"
+  },
+  {
+    "id": 12,
+    "question": "What was Tesla's free cash flow in 2025?",
+    "answer": "$6.2 billion.",
+    "category": "Cash Flow"
+  },
+  {
+    "id": 13,
+    "question": "What was the total balance of cash and investments at the end of 2025?",
+    "answer": "$44.1 billion.",
+    "category": "Balance Sheet"
+  },
+  {
+    "id": 14,
+    "question": "In what month and year did Tesla launch its Robotaxi service, the autonomous ride-hailing platform?",
+    "answer": "June 2025.",
+    "category": "Business Strategy"
+  },
+  {
+    "id": 15,
+    "question": "What are the names of the next-generation industrial storage products introduced by Tesla in 2025?",
+    "answer": "Megapack 3 and Megablock.",
+    "category": "Product Development"
+  },
+  {
+    "id": 16,
+    "question": "In addition to ramping up facilities in Shanghai and Lathrop, where did Tesla begin construction of a new Megafactory in 2025?",
+    "answer": "Near Houston, Texas.",
+    "category": "Manufacturing Capacity"
+  },
+  {
+    "id": 17,
+    "question": "What was the total value of Tesla's assets at the end of the fiscal year 2025?",
+    "answer": "Approximately $137.8 billion.",
+    "category": "Balance Sheet"
+  },
+  {
+    "id": 18,
+    "question": "What was Tesla's total equity at the end of 2025?",
+    "answer": "Approximately $82.14 billion.",
+    "category": "Balance Sheet"
+  },
+  {
+    "id": 19,
+    "question": "What was Tesla's GAAP operating income for the fiscal year 2025?",
+    "answer": "$4.4 billion (or approximately $4.36 billion).",
+    "category": "Financial Results"
+  },
+  {
+    "id": 20,
+    "question": "What is Tesla's expected capital expenditure for the year 2026?",
+    "answer": "Tesla expects capital expenditures to exceed $20 billion in 2026, driven by AI initiatives, compute infrastructure, and expansion of manufacturing and R&D facilities.",
+    "category": "Infrastructure"
+  }
+]
