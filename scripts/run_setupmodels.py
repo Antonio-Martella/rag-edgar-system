@@ -6,6 +6,13 @@ from src.utils import config
 def setup():
     print("🚀 Starting local environment setup...")
 
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_quant_type="nf4"
+    )
+
     # Download and Save Embedding Model
     if not config.LOCAL_EMBEDDING_PATH.exists():
         print(f"📥 Downloading Embedding: {config.EMBEDDING_MODEL_ID}...")
@@ -27,12 +34,17 @@ def setup():
     # Download and Save LLM (Tokenizer and Model)
     if not config.LOCAL_LLM_PATH.exists():
         print(f"📥 Downloading LLM: {config.LLM_MODEL_ID} (This might take a while...)")
-        tokenizer = AutoTokenizer.from_pretrained(config.LLM_MODEL_ID)
+        tokenizer = AutoTokenizer.from_pretrained(
+            config.LLM_MODEL_ID,
+            token=config.HF_TOKEN
+        )
         tokenizer.save_pretrained(str(config.LOCAL_LLM_PATH))
         model = AutoModelForCausalLM.from_pretrained(
             config.LLM_MODEL_ID,
+            quantization_config=bnb_config,
             torch_dtype=torch.float16,
-            device_map="cpu" 
+            token=config.HF_TOKEN,
+            device_map="auto" 
         )
         model.save_pretrained(str(config.LOCAL_LLM_PATH))
         print(f"✅ LLM saved in {config.LOCAL_LLM_PATH}")

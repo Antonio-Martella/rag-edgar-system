@@ -1,9 +1,5 @@
-# Escludi tutti i dati
 data/raw/*
 !data/raw/.gitkeep
-
-data/processed/*
-!data/processed/.gitkeep
 
 data/chunks/*
 !data/chunks/.gitkeep

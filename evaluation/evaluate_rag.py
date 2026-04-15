@@ -46,11 +46,13 @@ def run_evaluation():
     print("🧪 Starting RAG Evaluation with LLM-as-a-Judge...")
     date = input("Enter report date (e.g. 2023): ") or "2023"
     
-    gt_path = root_path / "evaluation" / f"test_queries{date}.json"
+    gt_path = root_path / "evaluation" / f"eval_tsla_10K_{date}" / f"test_queries_{date}.json"
+    
     with open(gt_path, "r") as f:
         ground_truth = json.load(f)
+
     ticker = "tsla"
-    paths = config.get_paths(ticker, "10-K")
+    paths = config.get_paths(ticker = ticker, report_type = "10-K", date=date)
     retriever = Retriever(paths["index"], paths["chunks"])
     reranker = RAGReranker() 
     generator = LLMGenerator()
@@ -64,9 +66,10 @@ def run_evaluation():
         print(f"\n❓ Question: {query}")
         
         # 1. Retrieval & Generation 
-        chunks = retriever.search(query, k=40) 
+        chunks = retriever.search(query, k=40)  # Recupera i top 15 chunk
         refined_chunks = reranker.rerank(query, chunks, top_n=40)
-        generated = generator.generate_answer(query, refined_chunks[:15])
+        #print(chunks)  # Debug: mostra i primi 3 chunk raffinati
+        generated = generator.generate_answer(query, refined_chunks[:10])
         
         # 2. Judging
         verdict = ask_judge(generator, query, expected, generated)
@@ -91,7 +94,7 @@ def run_evaluation():
         "details": final_results
     }
     
-    with open(root_path / "evaluation" / f"eval_report_{date}.json", "w") as f:
+    with open(root_path / "evaluation" / f"eval_tsla_10K_{date}" / f"eval_report_{date}.json", "w") as f:
         json.dump(report, f, indent=4)
     
     print(f"\n📊 Evaluation complete! Accuracy: {accuracy}%")
