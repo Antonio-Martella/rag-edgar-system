@@ -2,6 +2,19 @@ import torch
 from sentence_transformers import CrossEncoder
 from src.utils import config
 
+def setup_reranker_model() -> None:
+    """
+    Download and save the reranker model locally if it doesn't exist.
+    """
+    # Check if the reranker model is already downloaded and saved locally, if not, download and save it.
+    if not config.LOCAL_RERANKER_PATH.exists():
+        print(f"📥 Downloading Reranker: {config.RERANKER_MODEL_ID}...")
+        reranker = CrossEncoder(config.RERANKER_MODEL_ID)
+        reranker.save(str(config.LOCAL_RERANKER_PATH))
+        print(f"✅ Reranker saved in {config.LOCAL_RERANKER_PATH}")
+    else:
+        print("✔️ Reranker already present locally.")
+
 class RAGReranker:
     def __init__(self, model_path=config.LOCAL_RERANKER_PATH):
         """
@@ -20,8 +33,6 @@ class RAGReranker:
             self.model = CrossEncoder(model_to_load, device=self.device)
         except Exception as e:
             raise RuntimeError(f"❌ Error loading Reranker: {e}")
-
-    # src/retrieval/reranker.py
 
     def rerank(self, query, chunks, top_n=5):
         if not chunks:
