@@ -16,36 +16,43 @@ def setup_reranker_model() -> None:
         print("✔️ Reranker already present locally.")
 
 class RAGReranker:
-    def __init__(self, model_path=config.LOCAL_RERANKER_PATH):
+    """
+    This class is responsible for re-ranking the candidates retrieved by FAISS.
+    It uses a CrossEncoder model to score the relevance of each candidate with respect to the query.
+    The candidates are expected to be in their original form (dictionaries) so that we can maintain all the metadata and structure for the final output.
+    The Reranker will return the top N candidates sorted by their relevance score, but it will return the original dictionary objects, not just the text,
+    to preserve all the information for downstream use.
+    """
+    def __init__(self, model_path = config.LOCAL_RERANKER_PATH):
         """
         Initialize the Reranker by loading it from the local path.
         If the local path doesn't exist, try using the model ID (fallback).
         """
-        # Determine the device (cuda if available, otherwise cpu)
+        # Set the device for the model (GPU if available, otherwise CPU)
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        
-        # Check if the local path exists, otherwise use the remote ID
-        model_to_load = str(model_path) if model_path.exists() else config.RERANKER_MODEL_ID
-        
+        # Determine the model to load: prefer local path, but fallback to model ID if local file is missing
+        model_to_load = model_path if model_path.exists() else config.RERANKER_MODEL_ID
         print(f"--- Loading Reranker: {model_to_load} on {self.device} ---")
-        
+        # Try to load the model, and handle any exceptions that may occur during loading
         try:
             self.model = CrossEncoder(model_to_load, device=self.device)
         except Exception as e:
             raise RuntimeError(f"❌ Error loading Reranker: {e}")
 
-    def rerank(self, query, chunks, top_n=5):
+    def rerank(self, query: str, chunks: list, top_n: int = 5) -> list:
+        """
+        Re-rank the candidate chunks based on their relevance to the query.
+        """
+        # If there are no chunks to rerank, return an empty list immediately
         if not chunks:
             return []
-
-        # Estraiamo il testo per il modello, ma manteniamo i riferimenti agli oggetti
+        # Prepare the input for the CrossEncoder: we need pairs of (query, chunk_text).
         texts_to_score = [c['content'] if isinstance(c, dict) else c for c in chunks]
+        # Let's create the pairs (query, text) for the CrossEncoder
         pairs = [[query, text] for text in texts_to_score]
-
+        # Get the relevance scores from the model for each pair
         scores = self.model.predict(pairs)
-        
-        # Uniamo l'oggetto originale (dict) con il suo score
+        # Now we have the scores, we need to sort the chunks based on these scores.
         scored_chunks = sorted(zip(chunks, scores), key=lambda x: x[1], reverse=True)
 
-        # Restituiamo i top_n oggetti ORIGINALI (dizionari)
         return [chunk for chunk, score in scored_chunks[:top_n]]
