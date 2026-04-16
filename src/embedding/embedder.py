@@ -16,15 +16,26 @@ def setup_embedding_model() -> None:
 
 
 class Embedder:
-    def __init__(self, model_path=str(config.LOCAL_EMBEDDING_PATH)):
-
+    """
+    A class to generate vector embeddings from text using a local SentenceTransformer model.
+     - The model is loaded from a local path specified in the config, which should be set up running run_setupmodels.py.
+     - The encode method takes a list of texts and returns their corresponding embeddings as a NumPy array.
+     - The dimension of the embeddings is determined by the model and can be accessed via the dimension attribute.
+    """
+    def __init__(self, model_path: str = str(config.LOCAL_EMBEDDING_PATH)):
         print(f"Loading LOCAL Embedding Model: {model_path} ---")
         # Check that the model exists locally before loading it (avoids slow errors)
         if not config.LOCAL_EMBEDDING_PATH.exists():
              raise FileNotFoundError(f"❌ Model not found in {model_path}. Run setup_models.py!")
-             
+        # Load the model from the local path
         self.model = SentenceTransformer(model_path, trust_remote_code=True)
-        self.dimension = self.model.get_sentence_embedding_dimension()
+        # Try to get the embedding dimension from the model, if not available, compute it using a dummy input
+        try:
+            self.dimension = self.model[1].word_embedding_dimension
+        except (IndexError, AttributeError):
+            dummy_embedding = self.model.encode("", show_progress_bar=False)
+            self.dimension = dummy_embedding.shape[0]
 
-    def encode(self, text_list):
+    def encode(self, text_list: list) -> 'np.ndarray':
+        # Generate embeddings for a list of texts using the loaded model and return them as a NumPy array.
         return self.model.encode(text_list, show_progress_bar=False)
