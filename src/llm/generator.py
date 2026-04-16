@@ -1,26 +1,26 @@
 import torch
-from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer
 from src.utils import config
-from .model import get_quantization_config
+from src.llm.model import get_quantization_config
+from src.llm.prompt import build_rag_messages
 
 class LLMGenerator:
     def __init__(self, model_path=config.LOCAL_LLM_PATH):
         """
         Initializes the LLM with a 4-bit configuration to save VRAM.
         """
-        
         print(f"--- Loading Local LLM: {model_path} ---")
 
         if not model_path.exists():
             raise FileNotFoundError(
                 f"❌ Model not found in {model_path}. "
-                "Please make sure you have successfully executed 'python3 scripts/setup_models.py'."
+                "Please make sure you have successfully executed 'python3 scripts/run_setupmodels.py'."
             )
 
-        # Load the tokenizer associated with the specified model
+        # Load the tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(model_path) 
 
-        # Load the model with the specified quantization configuration, assigning it automatically to the available GPU
+        # Load the model with the specified quantization configuration
         self.model = AutoModelForCausalLM.from_pretrained( 
             model_path,
             quantization_config=get_quantization_config(), 
@@ -29,69 +29,34 @@ class LLMGenerator:
 
     def generate_answer(self, query, context_chunks, history=None, max_new_tokens=1024):
         """
-        Constructs the prompt and generates the final answer.
+        Constructs the prompt dynamically and generates the final answer.
         """
+        # Build the structured messages (System, History, User) ready to be formatted by the tokenizer of any model.
+        messages = build_rag_messages(query, context_chunks, history)
 
-        context_items = []
-    
-        for c in context_chunks:
-            if isinstance(c, dict):
-                # Se è un dizionario, iniettiamo i metadati nel testo per l'LLM
-                year = c.get('metadata', {}).get('year', 'N/A')
-                ticker = c.get('metadata', {}).get('ticker', 'N/A')
-                content = c.get('content', '')
-                context_items.append(f"[Source: {ticker} FY{year}]\n{content}")
-            else:
-                # Se è una stringa, la aggiungiamo così com'è
-                context_items.append(str(c))
+        # Format the messages into a single prompt string using the tokenizer's chat template, without tokenizing yet, and adding the generation prompt at the end.
+        prompt = self.tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True  # <-- This will add the appropriate generation prompt (e.g., "Assistant:") at the end of the formatted messages, which is important for guiding the model to generate the answer in the correct format.
+        )
 
-        context_text = "\n\n---\n\n".join(context_items)
-
-        # Prepare the conversation history in a readable format for the prompt. We will format it as a simple dialogue
-        history_str = ""
-        #if history:
-        #    for user_q, bot_a in history:
-        #        history_str += f"User: {user_q}\nAssistant: {bot_a}\n"
-        
-        # Prompt Template: Let's train AI to be a serious analyst
-        prompt = f"""<s>[INST] <<SYS>>
-        You are a strict financial auditor. Your task is to extract EXACT data from the provided context.
-        - ONLY use the provided CONTEXT to answer.
-        - TABULAR DATA: Read line-by-line. Pay EXTREME attention to the exact metric name. Do not confuse broader categories (e.g., "Total Revenues") with specific segments (e.g., "Automotive revenues").
-        - If the specific number for a specific year is not explicitly written in the CONTEXT, say "I cannot find this information in the documents."
-        - NEVER perform mathematical operations (addition, subtraction, etc.) to guess or estimate missing values.
-        - DO NOT invent logic to explain missing data.
-        <</SYS>>
-
-        CONVERSATION HISTORY:
-        {history_str if history_str else "No previous history."}
-
-        CONTEXT:
-        {context_text}
-
-        QUESTION:
-        {query} [/INST]
-
-        ANSWER:"""
-
-        # Tokenize the prompt and move it to the same device as the model
+        # Tokenize the prompt and move it to the GPU
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
 
         # Generate the response
         with torch.no_grad():
             output_ids = self.model.generate(
-                **inputs,                                  # The input text from which to generate the response
-                max_new_tokens=max_new_tokens,             # Limits the number of tokens generated for the response
-                pad_token_id=self.tokenizer.eos_token_id,  # Ensures that the model knows when to stop generating text
-                do_sample=True,                            # Enables random sampling to make the responses more varied and natural
-                temperature=0.1,                           # Controls the creativity of the response (lower values make responses more deterministic)
-                top_p=0.9,                                 # Controls the diversity of the response by limiting the choice of tokens to the most probable ones (lower values make responses more conservative)
-                num_return_sequences=1,                    # Specifies that we want to generate only one response for each input prompt
-                repetition_penalty=1.1,                    # Penalizes the model for repeating the same tokens, which helps to reduce redundan
+                **inputs,
+                max_new_tokens=max_new_tokens,
+                pad_token_id=self.tokenizer.eos_token_id,
+                do_sample=True,
+                temperature=0.1, 
+                top_p=0.9,
+                repetition_penalty=1.1,
             )
         
-        # Extract only the generated tokens (the response) by removing the input prompt tokens from the output
+        # Extract only the generated tokens by removing the input prompt length
         generated_tokens = output_ids[0][len(inputs["input_ids"][0]):]
 
-        # Decode the generated tokens back into text, removing any special tokens and extra whitespace
         return self.tokenizer.decode(generated_tokens, skip_special_tokens=True).strip()
