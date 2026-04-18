@@ -26,10 +26,17 @@ def setup_llm() -> None:
             token=config.HF_TOKEN
         )
         tokenizer.save_pretrained(str(config.LOCAL_LLM_PATH))
-        # Load the model with quantization and save it locally
+        
+        # If quantization is enabled, get the quantization config, otherwise load in full precision
+        if config.QUANTIZATION_SWITCH:
+            quantization_config = get_quantization_config()
+        else:
+            quantization_config = None 
+
+        # Load the model with the quantization configuration (if any)
         model = AutoModelForCausalLM.from_pretrained(
             config.LLM_MODEL_ID,
-            quantization_config=get_quantization_config(),
+            quantization_config=quantization_config,
             torch_dtype=torch.float16,
             token=config.HF_TOKEN,
             device_map="auto" 
