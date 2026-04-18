@@ -16,3 +16,5 @@ transformers
 accelerate 
 bitsandbytes 
 torch
+# 4
+streamlit
