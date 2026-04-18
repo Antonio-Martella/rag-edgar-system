@@ -1,5 +1,7 @@
+# DATA
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/sec-edgar-filings/TSLA
 
 data/chunks/*
 !data/chunks/.gitkeep
@@ -7,8 +9,15 @@ data/chunks/*
 data/embeddings/*
 !data/embeddings/.gitkeep
 
-models/*
-!models/.gitkeep
+# MODELS
+models/EMBEDDING*
+!models/EMBEDDING/.gitkeep
+
+models/LLM*
+!models/LLM/.gitkeep
+
+models/RERANKER*
+!models/RERANKER/.gitkeep
 
 # Exclude environment and credentials
 .env
