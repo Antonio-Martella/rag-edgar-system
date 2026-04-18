@@ -2,23 +2,21 @@ import streamlit as st
 import sys
 from pathlib import Path
 
-# --- CONFIGURAZIONE PATH CRITICA ---
-# Siccome app.py è in /frontend, il root del progetto è due livelli sopra
+# Path Configuration
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(PROJECT_ROOT))
 
-# Ora possiamo importare i nostri moduli senza errori
 from src.rag.service import RAGService
 from frontend.components import render_sidebar
 
-# --- CONFIGURAZIONE PAGINA ---
+# --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Edgar Analyst AI", page_icon="📈", layout="wide")
 st.title("🤖 Edgar RAG Multi-Analyst")
-st.markdown("Interroga i bilanci SEC (Form 10-K) con Llama/Mistral e Reranking.")
+st.markdown("Query SEC financial statements (Form 10-K) with Mistral and Reranking.")
 
-# --- INIZIALIZZAZIONE STATO ---
+# --- STATE INITIALIZATION ---
 if "rag_app" not in st.session_state:
-    with st.spinner("Inizializzazione del motore LLM (può richiedere un minuto)..."):
+    with st.spinner("LLM engine initialization (may take several minutes)..."):
         st.session_state.rag_app = RAGService()
         
 if "messages" not in st.session_state:
@@ -27,31 +25,31 @@ if "messages" not in st.session_state:
 if "company_loaded" not in st.session_state:
     st.session_state.company_loaded = False
 
-# --- RENDER DELL'INTERFACCIA ---
-# 1. Disegna la sidebar chiamando il componente
+# --- INTERFACE RENDERING ---
+# Draw the sidebar by calling the component
 render_sidebar()
 
-# 2. Gestione della Chat
+# Chat Management
 if not st.session_state.company_loaded:
-    st.info("👈 Usa la barra laterale per selezionare e caricare il bilancio di un'azienda.")
+    st.info("👈 Use the sidebar to select and upload a company's financial statement.")
 else:
-    # Mostra la cronologia
+    # Show history
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    # Input della chat
-    if prompt := st.chat_input("Fai una domanda sul bilancio..."):
+    # Chat input
+    if prompt := st.chat_input("❓ Ask a question about the budget..."):
         
-        # Mostra la domanda a schermo
+        # Show the question on the screen
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Genera la risposta
+        # Generate the response
         with st.chat_message("assistant"):
-            with st.spinner("Ricerca vettoriale, Reranking e generazione in corso..."):
-                # Passiamo solo gli ultimi 3 messaggi come history
+            with st.spinner("🧠 I'm thinking..."):
+                # We only pass the last 3 messages as history
                 history_for_rag = [
                     (st.session_state.messages[i]["content"], st.session_state.messages[i+1]["content"])
                     for i in range(0, len(st.session_state.messages)-1, 2)
@@ -60,5 +58,5 @@ else:
                 response = st.session_state.rag_app.ask(query=prompt, history=history_for_rag)
                 st.markdown(response)
         
-        # Salva la risposta
+        # Save the answer
         st.session_state.messages.append({"role": "assistant", "content": response})
