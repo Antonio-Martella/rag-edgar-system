@@ -1,57 +1,56 @@
 import streamlit as st
 
-# Importiamo le tue pipeline per l'automazione!
-# (Assicurati che i percorsi e i nomi delle classi corrispondano ai tuoi file reali)
-from src.ingestion.pipeline import run_ingestion_pipeline
+from src.ingestion import run_ingestion_pipeline
 from src.embedding import run_embedding_pipeline 
 
 def render_sidebar():
-    """Disegna la barra laterale e gestisce il caricamento/creazione dei dati."""
+    """
+    Designs the sidebar and manages data loading/creation.
+    """
     with st.sidebar:
-        st.header("⚙️ Configurazione Dati")
+        st.header("⚙️ Data Configuration for 10-K reports")
         
-        # Input utente
-        ticker = st.text_input("Ticker Azienda (es. TSLA, AAPL):", value="TSLA").upper()
-        year = st.text_input("Anno Fiscale:", value="2025")
+        # User input
+        ticker = st.text_input("Company Ticker (e.g. TSLA, AAPL):", value="TSLA").upper()
+        year = st.text_input("Fiscal year:", value="2025")
         
         st.markdown("---")
         
-        # Pulsante di caricamento e Auto-Pipeline
-        if st.button("Carica Dati nel RAG", type="primary", use_container_width=True):
+        # Load Button and Auto-Pipeline
+        if st.button("Load Data into RAG", type="primary", use_container_width=True):
             
-            # Proviamo prima a caricare i dati se esistono già
+            # Let's try to load the data first if it already exists
             try:
-                with st.spinner(f"Cerco i dati locali per {ticker} ({year})..."):
-                    # 🟢 FIX ERRORE: Passiamo gli argomenti esplicitamente con il loro nome!
+                with st.spinner(f"Looking for local data for {ticker} ({year})..."):
+                    # Let's pass arguments explicitly by name!
                     st.session_state.rag_app.load_company_data(ticker=ticker, year=year, report_type="10-K")
                     
                 st.session_state.company_loaded = True
                 st.session_state.messages = [] 
-                st.success(f"✅ Analista pronto per {ticker}!")
-                
-            except Exception as e: # Se i dati non esistono, parte l'automazione!
-                st.warning(f"⚠️ Dati non trovati in locale. Avvio auto-pipeline per {ticker}...")
+                st.success(f"✅ Analyst ready for {ticker}!")
+
+            # If the data doesn't exist, automation starts!
+            except Exception as e: 
+                st.warning(f"⚠️ Data not found locally. Starting auto-pipeline for {ticker}...")
                 
                 try:
-                    # 1. Fase di Ingestion (Download, Parse, Chunk)
-                    with st.spinner("📥 Scaricamento da SEC e Chunking in corso... (potrebbe volerci un po')"):
-                        # Inserisci qui la chiamata esatta alla tua classe di ingestion
+                    # Ingestion Phase (Download, Parse, Chunk)
+                    with st.spinner("📥 Downloading from SEC and Chunking... (may take a while)"):
+                        # Enter the exact call to your ingestion class here
                         ingestion = run_ingestion_pipeline(ticker=ticker, year=year, report_type="10-K")
-                        #ingestion.run(ticker=ticker, year=year, report_type="10-K")
                     
-                    # 2. Fase di Embedding (Vector Storage FAISS)
-                    with st.spinner("🧠 Creazione Indice Vettoriale (FAISS)..."):
-                        # Inserisci qui la chiamata esatta alla tua classe di embedding
+                    # Embedding Phase (Vector Storage FAISS)
+                    with st.spinner("🧠 Vector Index Creation (FAISS)..."):
+                        # Enter the exact call to your embedding class here
                         embedding = run_embedding_pipeline(ticker=ticker, year=year, report_type="10-K")
-                        #embedding.run(ticker=ticker, year=year, report_type="10-K")
                     
-                    # 3. Ricarichiamo il RAG ora che i dati esistono!
-                    with st.spinner("🔄 Caricamento nel motore RAG..."):
+                    # Let's reload the RAG now that the data exists!
+                    with st.spinner("🔄 Loading into the RAG engine..."):
                         st.session_state.rag_app.load_company_data(ticker=ticker, year=year, report_type="10-K")
                         
                     st.session_state.company_loaded = True
                     st.session_state.messages = []
-                    st.success(f"🎉 Pipeline completata! Analista pronto per {ticker}!")
+                    st.success(f"🎉 Pipeline complete! Analyst ready for {ticker}!")
                     
                 except Exception as pipeline_error:
-                    st.error(f"❌ Errore critico durante la creazione dei dati: {pipeline_error}")
+                    st.error(f"❌ Critical error while creating data: {pipeline_error}")
