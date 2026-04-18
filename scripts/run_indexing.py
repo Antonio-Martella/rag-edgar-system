@@ -12,8 +12,8 @@ def main():
     print("🚀 =======================================\n")
     # Prompt the user for ticker, year, and report type with defaults
     ticker = input("📈 Enter the Ticker (e.g. TSLA):").strip().upper() or "TSLA"
-    year = input("📅 Enter the fiscal year (e.g. 2025): ").strip() or "2025"
     report_type = input("📄 Enter the report type (e.g. 10-K): ").strip().upper() or "10-K"
+    year = input("📅 Enter the fiscal year (e.g. 2025): ").strip() or "2025"
     # Run the embedding pipeline and handle any exceptions that may occur
     try:
         run_embedding_pipeline(ticker, year, report_type)
