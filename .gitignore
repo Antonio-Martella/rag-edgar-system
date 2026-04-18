@@ -1,5 +1,5 @@
 # DATA
-data/raw/*
+data/raw/**
 !data/raw/.gitkeep
 
 !data/raw/sec-edgar-filings/
