@@ -1,6 +1,6 @@
 import re
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-
+from src.utils import config
 
 def create_chunks(text: str, ticker: str, report_type: str, fiscal_year: int = None) -> list:
     """
@@ -14,8 +14,8 @@ def create_chunks(text: str, ticker: str, report_type: str, fiscal_year: int = N
 
     # Define a text splitter that prioritizes splitting at section boundaries, then by paragraphs, and finally by sentences.
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2000,  # <-- Adjust the chunk size as needed, ensuring it is large enough to capture meaningful sections but not too large to exceed model limits. 
-        chunk_overlap=400,  # <-- Adjust the overlap to ensure that important context is retained across chunks, especially around section boundaries.
+        chunk_size = config.LEN_CHUNKS,  # <-- Adjust the chunk size as needed, ensuring it is large enough to capture meaningful sections but not too large to exceed model limits. 
+        chunk_overlap = config.OVERLAP_CHUNKS,  # <-- Adjust the overlap to ensure that important context is retained across chunks, especially around section boundaries.
         separators=["\n[SECTION:", "\n\n", "\n", ". ", " "],  # <-- Prioritize splitting at section headers, then by paragraphs, and finally by sentences.
         is_separator_regex=False, 
     )
