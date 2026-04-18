@@ -3,101 +3,139 @@ import json
 import re
 from pathlib import Path
 
-# Aggiungiamo la root del progetto al path
+# Path
 root_path = Path(__file__).resolve().parent.parent
 sys.path.append(str(root_path))
 
-from src.retrieval.retriever import Retriever
-from src.retrieval.reranker import RAGReranker
-from src.llm.generator import LLMGenerator
-from src.utils import config
+from src.rag import RAGService
 
-def ask_judge(generator, question, expected, generated):
+def ask_judge(generator: RAGService, question: str, expected: str, generated: str) -> str:
     """
-    Usa l'LLM per confrontare la risposta generata con quella attesa.
+    Use the LLM (Mistral) to compare the generated response with the expected one.
     """
-    judge_prompt = f"""<s>[INST] <<SYS>>
-                        You are an impartial financial auditor. Compare the "Generated Answer" against the "Expected Answer" for the given question.
-                        Determine if the Generated Answer is factually correct and contains the key numerical data from the Expected Answer.
+    system_prompt = """You are an impartial financial auditor. Compare the "Generated Answer" against the "Expected Answer" for the given question.
+    Determine if the Generated Answer is factually correct and contains the key numerical data from the Expected Answer.
 
-                        Rules:
-                        - Ignore formatting differences (e.g., "$7B" vs "7,000 million" is a PASS).
-                        - If the Generated Answer contains the correct numbers but extra text, it's a PASS.
-                        - If the numbers are different or the answer says "I don't know", it's a FAIL.
-                        - Answer ONLY with the word "PASS" or "FAIL".
-                        <</SYS>>
+    Rules:
+    - Ignore formatting differences (e.g., "$7B" vs "7,000 million" is a PASS).
+    - If the Generated Answer contains the correct numbers but extra text, it's a PASS.
+    - If the numbers are different or the answer says "I don't know", it's a FAIL.
+    - Answer ONLY with the word "PASS" or "FAIL"."""
 
-                        Question: {question}
-                        Expected Answer: {expected}
-                        Generated Answer: {generated}
+    user_prompt = f"Question: {question}\nExpected Answer: {expected}\nGenerated Answer: {generated}\n\nVerdict (PASS/FAIL):"
 
-                        Verdict (PASS/FAIL): [/INST]"""
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ]
 
-    # Usiamo il metodo di generazione del nostro oggetto generator
-    # Nota: usiamo pochi token perché ci serve solo una parola
-    inputs = generator.tokenizer(judge_prompt, return_tensors="pt").to(generator.model.device)
+    # Tokenize the prompt without adding generation tokens, and generate a short verdict (max_new_tokens=5) with low temperature to ensure deterministic output. We check if "PASS" is in the verdict to return PASS or FAIL.
+    prompt = generator.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    inputs = generator.tokenizer(prompt, return_tensors="pt").to(generator.model.device)
+    
+    # Generate the verdict with max_new_tokens=5 and low temperature for deterministic output
     output = generator.model.generate(**inputs, max_new_tokens=5, temperature=0.01)
     verdict = generator.tokenizer.decode(output[0][len(inputs["input_ids"][0]):], skip_special_tokens=True).strip().upper()
     
-    # Pulizia minima del verdetto
     return "PASS" if "PASS" in verdict else "FAIL"
 
-def run_evaluation():
-    print("🧪 Starting RAG Evaluation with LLM-as-a-Judge...")
-    date = input("Enter report date (e.g. 2023): ") or "2023"
+def run_evaluation_suite() -> None:
+    """
+    Run the automated evaluation suite for RAG on the test queries in the 'evaluation' folder.
+    For each test set (e.g., eval_tsla_10k_2023), it loads the corresponding data into the RAG, runs the queries, and uses the ask_judge function 
+    to evaluate the generated answers against the expected ones. Finally, it saves a report JSON with the overall accuracy and details for each question.
+    """
+
+    print("🧪 Starting AUTOMATED RAG Evaluation Suite...")
     
-    gt_path = root_path / "evaluation" / f"eval_tsla_10K_{date}" / f"test_queries_{date}.json"
-    
-    with open(gt_path, "r") as f:
-        ground_truth = json.load(f)
+    eval_dir = root_path / "evaluation"
+    if not eval_dir.exists():
+        print("❌ Error: Folder 'evaluation' not found.")
+        return
 
-    ticker = "tsla"
-    paths = config.get_paths(ticker = ticker, report_type = "10-K", date=date)
-    retriever = Retriever(paths["index"], paths["chunks"])
-    reranker = RAGReranker() 
-    generator = LLMGenerator()
-    final_results = []
-    passes = 0
+    # Initialize the RAG service once
+    rag_app = RAGService()
 
-    for item in ground_truth:
-        query = item["question"]
-        expected = item["answer"] 
+    # We scan all subfolders inside 'evaluation'
+    for test_folder in eval_dir.iterdir():
+        if not test_folder.is_dir() or not test_folder.name.startswith("eval_"):
+            continue
+
+        # Extract Ticker and Year from the folder name (e.g. eval_tsla_10k_2023)
+        match = re.search(r"eval_([a-zA-Z]+)_10[kK]_(\d{4})", test_folder.name)
+        if not match:
+            continue
+
+        ticker = match.group(1).upper()
+        year = match.group(2)
         
-        print(f"\n❓ Question: {query}")
+        test_file = test_folder / f"test_queries_{year}.json"
         
-        # 1. Retrieval & Generation 
-        chunks = retriever.search(query, k=40)  # Recupera i top 15 chunk
-        refined_chunks = reranker.rerank(query, chunks, top_n=40)
-        #print(chunks)  # Debug: mostra i primi 3 chunk raffinati
-        generated = generator.generate_answer(query, refined_chunks[:10])
+        if not test_file.exists():
+            print(f"⚠️ Skipping {ticker} {year}: file {test_file.name} not found.")
+            continue
+
+        print(f"\n" + "="*50)
+        print(f"🏢 EVALUATION IN PROGRESS: {ticker} - {year}")
+        print("="*50)
+
+        # Load company data into RAG (FAISS + Chunks)
+        try:
+            rag_app.load_company_data(ticker, year, report_type="10-K")
+        except Exception as e:
+            print(f"❌ Unable to load data for {ticker} {year}: {e}")
+            continue
+
+        # Load test queries
+        with open(test_file, "r", encoding="utf-8") as f:
+            ground_truth = json.load(f)
+
+        final_results = []
+        passes = 0
+
+        for item in ground_truth:
+            query = item["question"]
+            expected = item["answer"] # Based on your test_queries.json
+            
+            print(f"\n❓ Question: {query}")
+            
+            # Generation: Turn off history, expanded retrieval network (40), final k=10
+            generated = rag_app.ask(query, history=None, initial_k=20, final_k=10)
+            
+            # Evaluation
+            verdict = ask_judge(rag_app.generator, query, expected, generated)
+            
+            if verdict == "PASS": 
+                passes += 1
+
+            print(f"🤖 Answer: {generated[:100]}...")
+            print(f"⚖️ Verdict: {verdict}")
+
+            # Save the detail with the exact structure you requested
+            final_results.append({
+                "question": query,
+                "expected": expected,
+                "generated": generated,
+                "verdict": verdict
+            })
+
+        # Final calculation and JSON report creation
+        accuracy_val = round((passes / len(ground_truth)) * 100, 1)
         
-        # 2. Judging
-        verdict = ask_judge(generator, query, expected, generated)
+        report = {
+            "overall_accuracy": f"{accuracy_val}%",
+            "details": final_results
+        }
         
-        is_pass = (verdict == "PASS")
-        if is_pass: passes += 1
+        report_path = test_folder / f"eval_report_{year}.json"
+        
+        with open(report_path, "w", encoding="utf-8") as f:
+            json.dump(report, f, indent=4, ensure_ascii=False)
+        
+        print(f"\n✅ Completed {ticker} {year} | Accuracy: {accuracy_val}%")
+        print(f"💾 Report saved in: {report_path}")
 
-        print(f"🤖 Bot Answer: {generated[:100]}...")
-        print(f"⚖️ Judge Verdict: {verdict}")
-
-        final_results.append({
-            "question": query,
-            "expected": expected,
-            "generated": generated,
-            "verdict": verdict
-        })
-
-    # 3. Report
-    accuracy = (passes / len(ground_truth)) * 100
-    report = {
-        "overall_accuracy": f"{accuracy}%",
-        "details": final_results
-    }
-    
-    with open(root_path / "evaluation" / f"eval_tsla_10K_{date}" / f"eval_report_{date}.json", "w") as f:
-        json.dump(report, f, indent=4)
-    
-    print(f"\n📊 Evaluation complete! Accuracy: {accuracy}%")
+    print("\n🎉 ALL EVALUATIONS COMPLETED!")
 
 if __name__ == "__main__":
-    run_evaluation()
+    run_evaluation_suite()
