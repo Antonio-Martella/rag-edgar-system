@@ -7,7 +7,9 @@ from src.llm.prompt import build_rag_messages
 class LLMGenerator:
     def __init__(self, model_path=config.LOCAL_LLM_PATH):
         """
-        Initializes the LLM with a 4-bit configuration to save VRAM.
+        Initializes the LLMGenerator by loading the tokenizer and model from the specified local path.
+        It checks if the model exists locally and raises an error if not, prompting the user to run the setup_models.py script to download it. 
+        The model is loaded with the appropriate quantization configuration based on the QUANTIZATION_SWITCH in the config.
         """
         print(f"--- Loading Local LLM: {model_path} ---")
 
