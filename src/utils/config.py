@@ -19,13 +19,20 @@ RERANKER_MODEL_ID = "BAAI/bge-reranker-v2-m3"
 LLM_MODEL_ID = "mistralai/Mistral-7B-Instruct-v0.2"
 # ------------------------------------
 
+# Chunking configuration for the ingestion pipeline
+LEN_CHUNKS = 4000
+OVERLAP_CHUNKS = 800
+
+# Quantization switch for the LLM (set to True to enable 4-bit quantization, which reduces VRAM usage but may slightly impact performance)
+QUANTIZATION_SWITCH = False  
+
 # Local Models Folder
 MODELS_DIR = PROJECT_ROOT / "models"
 
 # Dynamic paths for locally saved models
-LOCAL_EMBEDDING_PATH = MODELS_DIR / EMBEDDING_MODEL_ID
-LOCAL_RERANKER_PATH = MODELS_DIR / RERANKER_MODEL_ID
-LOCAL_LLM_PATH = MODELS_DIR / LLM_MODEL_ID
+LOCAL_EMBEDDING_PATH = MODELS_DIR / "EMBEDDING" / EMBEDDING_MODEL_ID
+LOCAL_RERANKER_PATH = MODELS_DIR / "RERANKER" / RERANKER_MODEL_ID
+LOCAL_LLM_PATH = MODELS_DIR / "LLM" / LLM_MODEL_ID
 
 # Data Folders
 DATA_DIR = PROJECT_ROOT / "data"
