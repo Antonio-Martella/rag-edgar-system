@@ -51,4 +51,4 @@ This directory stores the mathematical representations of our chunks, allowing t
 
 * **The Embedding Logic**: An embedding model (configured in `src/utils/config.py `, downloaded via `scripts/run_setup_models.py` and stored in `models/EMBEDDING/`) converts human-readable text into high-dimensional numerical vectors. Instead of relying on exact keyword matches (like `Ctrl+F`), the vectors allow the system to understand the meaning and context of a query. For example, it understands that "revenue growth" and "sales increase" are mathematically close to each other.
 
-* **Storage**: The resulting vectors are indexed using FAISS (Facebook AI Similarity Search) and saved as binary files: `embeddings/TICKER/{ticker}_{year}_index.bin`. The RAG engine loads this `.bin` file into memory to quickly retrieve the most relevant chunks when a user asks a question.
+* **Storage**: The resulting vectors are indexed using FAISS (Facebook AI Similarity Search) and saved as binary files: `data/embeddings/ticker/ticker_type_year_index.bin`. The RAG engine loads this `.bin` file into memory to quickly retrieve the most relevant chunks when a user asks a question.
