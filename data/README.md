@@ -10,7 +10,7 @@ Below is a detailed breakdown of how data is structured and generated.
 This directory holds the unprocessed, raw SEC filings. 
 
 * **How it's generated:** Data is downloaded via the `run_ingestion_pipeline()` function inside `scripts/run_ingestion.py`.
-* **Structure:** The script creates subdirectories based on the stock ticker and the fiscal year (e.g., `raw/AAPL/AAPL-2023-.../`).
+* **Structure:** The script creates subdirectories based on the stock ticker, ticker type and the fiscal year (e.g., `data/raw/AAPL/10-K/...-23-.../`).
 * **Content:** Inside these folders, you will find `full-submission.txt` files. These contain the original, "dirty" HTML reports straight from the SEC Edgar database, prior to any parsing.
 
 ## 2. `chunks/` - The Processing & Context Stage
@@ -18,7 +18,7 @@ This directory contains the cleaned, parsed, and tokenized text ready for the LL
 
 * **How it's generated:** The raw HTML is processed by the `create_chunks(text, ticker, report_type, year)` function during the ingestion pipeline. 
 * **Data Cleaning:** Before chunking, all HTML tags are stripped. Crucially, **financial tables are parsed and linearized** to ensure the LLM can properly read rows and columns as continuous text.
-* **Storage:** Chunks are saved as JSON files grouped by ticker (e.g., `chunks/AAPL/AAPL_2023_chunks.json`).
+* **Storage:** Chunks are saved as JSON files grouped by ticker (e.g., `data/chunks/aapl/10-k_2023_chunks.json`).
 
 ### Chunk JSON Schema
 To preserve context during the RAG retrieval, each chunk gets a header injection and rich metadata. Here is the structure:
