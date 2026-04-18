@@ -4,7 +4,9 @@ from src.utils import config
 
 def get_quantization_config() -> BitsAndBytesConfig:
     """
-    Restituisce la configurazione standard per caricare i modelli in 4-bit.
+    Returns the quantization configuration for loading the LLM model based on the QUANTIZATION_SWITCH in the config.
+    If QUANTIZATION_SWITCH is True, it returns a BitsAndBytesConfig for 4-bit quantization. 
+    If False, it returns None, which means the model will be loaded in its original precision.
     """
     if config.QUANTIZATION_SWITCH:
         return BitsAndBytesConfig(
@@ -14,7 +16,7 @@ def get_quantization_config() -> BitsAndBytesConfig:
             bnb_4bit_quant_type="nf4"  # <-- Use NormalFloat4 quantization (can also be "fp4" or "int8" depending on the model and your needs)
             )
     else:
-        return None  # No quantization, load the model in its original precision
+        return None 
 
 def setup_llm() -> None:
     """
@@ -23,6 +25,7 @@ def setup_llm() -> None:
     # Check if the LLM model is already downloaded and saved locally, if not, download and save it.
     if not config.LOCAL_LLM_PATH.exists():
         print(f"📥 Downloading LLM: {config.LLM_MODEL_ID} (This might take a while...)")
+
         # Load the tokenizer and model with the specified quantization configuration
         tokenizer = AutoTokenizer.from_pretrained(
             config.LLM_MODEL_ID,
@@ -38,6 +41,7 @@ def setup_llm() -> None:
             token=config.HF_TOKEN,
             device_map="auto" 
         )
+        
         model.save_pretrained(str(config.LOCAL_LLM_PATH))
         print(f"✅ LLM saved in {config.LOCAL_LLM_PATH}")
     else:
