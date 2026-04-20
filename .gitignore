@@ -2,9 +2,9 @@
 data/raw/**
 !data/raw/.gitkeep
 
-!data/raw/sec-edgar-filings/
-!data/raw/sec-edgar-filings/TSLA/
-!data/raw/sec-edgar-filings/TSLA/10-K/
+#!data/raw/sec-edgar-filings/
+#!data/raw/sec-edgar-filings/TSLA/
+#!data/raw/sec-edgar-filings/TSLA/10-K/
 
 !data/raw/sec-edgar-filings/TSLA/10-K/0001628280-24-002390/full-submission.txt
 !data/raw/sec-edgar-filings/TSLA/10-K/0001628280-25-003063/full-submission.txt

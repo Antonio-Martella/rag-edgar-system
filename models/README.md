@@ -15,13 +15,13 @@ models/
 ## ⚙️ Come scaricare e configurare i modelli
 Il download dei modelli è completamente automatizzato tramite la libreria Hugging Face.
 
-1. Scaricare i modelli: Esegui lo script di setup dalla cartella principale del progetto:
+1. **Scaricare i modelli**: Esegui lo script di setup dalla cartella principale del progetto:
     ```bash
     python scripts/run_setup_model.py
     ```
     Nota: Il download iniziale può richiedere del tempo e scaricherà circa 16-17 GB se si sceglie di non quantizzare il modello LLM.
 
-2. Cambiare i modelli: I modelli da utilizzare non sono hard-coded, ma centralizzati. Se desideri testare un nuovo modello, ti basta modificare le seguenti variabili nel file `src/utils/config.py`:
+2. **Cambiare i modelli**: I modelli da utilizzare non sono hard-coded, ma centralizzati. Se desideri testare un nuovo modello, ti basta modificare le seguenti variabili nel file `src/utils/config.py`:
     ```python
     EMBEDDING_MODEL_ID = "nomic-ai/nomic-embed-text-v1.5"
     RERANKER_MODEL_ID = "BAAI/bge-reranker-v2-m3"
