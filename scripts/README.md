@@ -30,17 +30,17 @@ python scripts/run_setup_models.py
 ```
 * *Nota: Richiede una buona connessione internet (scarica fino a ~16GB di dati se la quantizzazione è disattivata).*
 
-### 2. `run_ingestion.py` (Estrazione Dati SEC)
-* **Cosa fa:** Si collega al database EDGAR della SEC (Securities and Exchange Commission) americana, cerca il Ticker aziendale richiesto (es. TSLA) per l'anno specifico e scarica il testo grezzo del bilancio finanziario ufficiale (Form 10-K).
-* **Quando usarlo:** Quando vuoi analizzare una nuova azienda o aggiungere un nuovo anno fiscale.
+### 2. `run_ingestion.py` (Estrazione Dati e Chunking)
+* **Cosa fa:** Si collega al database EDGAR della SEC (Securities and Exchange Commission), cerca il Ticker aziendale richiesto (es. TSLA) e scarica il testo del bilancio finanziario (Form 10-K). Oltre al download, si occupa del **Chunking**: "taglia" il documento grezzo in segmenti logici e navigabili, salvando i file elaborati (solitamente in formato `.json`) nella cartella `data/chunks/`.
+* **Quando usarlo:** Quando vuoi analizzare una nuova azienda o aggiungere un nuovo anno fiscale al tuo database locale.
 * **Esecuzione:** 
 ```bash
 python scripts/run_ingestion.py
 ```
 
 ### 3. `run_indexing.py` (Creazione del "Cervello" Vettoriale)
-* **Cosa fa:** Prende i testi grezzi scaricati dall'ingestion, li "taglia" in segmenti logici (Chunking), li converte in vettori matematici utilizzando il modello di Embedding (Nomic) e costruisce l'indice di ricerca ad altissima velocità (FAISS). Salva il risultato nella cartella `data/`.
-* **Quando usarlo:** Subito dopo aver scaricato un nuovo bilancio con l'ingestion.
+* **Cosa fa:** Prende i segmenti di testo (chunk) precedentemente preparati e salvati in `data/chunks/`, li converte in vettori matematici utilizzando il modello di Embedding (es. Nomic) e costruisce l'indice di ricerca ad altissima velocità (FAISS). Salva il database vettoriale finale nella cartella `data/embeddings/`.
+* **Quando usarlo:** Subito dopo aver eseguito l'ingestion di un nuovo documento, o se decidi di cambiare il tuo modello di Embedding e hai bisogno di ricreare i database vettoriali partendo dai chunk esistenti.
 * **Esecuzione:** 
 ```bash
 python scripts/run_indexing.py
