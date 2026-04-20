@@ -11,13 +11,13 @@ data/embeddings/*
 !data/embeddings/.gitkeep
 
 # MODELS
-models/EMBEDDING*
+models/EMBEDDING/*
 !models/EMBEDDING/.gitkeep
 
-models/LLM*
+models/LLM/*
 !models/LLM/.gitkeep
 
-models/RERANKER*
+models/RERANKER/*
 !models/RERANKER/.gitkeep
 !models/README.md
 
