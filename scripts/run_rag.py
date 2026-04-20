@@ -37,19 +37,39 @@ def main():
         MAX_HISTORY = 5
 
         while True:
-            query = input(f"\n[{ticker}] Question (or type 'switch' to change companies):").strip()
+            query = input(f"\n[{ticker}] Question (or type 'switch' to change companies): ").strip()
             
             if query.lower() == 'exit': sys.exit()
             if query.lower() == 'switch': break
             if not query: continue
 
-            print("⏳ Analysis in progress (Semantic Search + Generation)...")
+            print("⏳ Analysis in progress (Semantic Search + Generation + Evaluation)...")
             
-            answer = rag_app.ask(query, history=chat_history)
+            # 1. Receive the dictionary containing answer and evaluation
+            result = rag_app.ask(query, history=chat_history)
             
+            # 2. Unpack the data
+            answer = result.get("answer", "Generation error.")
+            eval_data = result.get("evaluation", {})
+            score = eval_data.get("score", 0)
+            reasoning = eval_data.get("reasoning", "No reasoning provided.")
+            
+            # 3. Print the generated answer
             print(f"\n💡 [Analyst Answer]:\n{answer}\n")
+            
+            # 4. Print the Judge's verdict
+            print("-" * 30)
+            if score >= 4:
+                print(f"✅ [Score: {score}/5] COMPLETENESS VERIFIED")
+                print(f"   Reasoning: {reasoning}")
+            elif score > 0:
+                print(f"⚠️ [Score: {score}/5] WARNING: POTENTIALLY INCOMPLETE RESPONSE")
+                print(f"   Reasoning: {reasoning}")
+            else:
+                print(f"❌ [Score: {score}/5] EVALUATION ERROR")
             print("-" * 50)
 
+            # 5. Save ONLY the text string to the chat history (to avoid confusing the LLM)
             chat_history.append((query, answer))
             if len(chat_history) > MAX_HISTORY:
                 chat_history.pop(0)

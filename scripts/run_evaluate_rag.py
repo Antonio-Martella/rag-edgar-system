@@ -99,23 +99,32 @@ def run_evaluation_suite() -> None:
             
             print(f"\n❓ Question: {query}")
             
-            # Generation: Turn off history, expanded retrieval network (40), final k=10
-            generated = rag_app.ask(query, history=None, initial_k=20, final_k=10)
+            # 1. RICEVI IL DIZIONARIO DAL RAG
+            result_dict = rag_app.ask(query, history=None, initial_k=20, final_k=10)
             
-            # Evaluation
+            # 2. SPACCHETTA IL DIZIONARIO
+            generated = result_dict.get("answer", "Error generating answer.")
+            internal_eval = result_dict.get("evaluation", {})
+            internal_score = internal_eval.get("score", 0)
+            
+            # 3. VALUTAZIONE CONTRO LA GROUND TRUTH (Pass/Fail)
             verdict = ask_judge(rag_app.generator, query, expected, generated)
             
             if verdict == "PASS": 
                 passes += 1
 
-            print(f"🤖 Answer: {generated[:100]}...")
-            print(f"⚖️ Verdict: {verdict}")
+            # 4. STAMPE A SCHERMO CORRETTE
+            clean_snippet = generated[:100].replace("\n", " ") # Pulisce gli a capo per il log
+            print(f"🤖 Answer: {clean_snippet}...")
+            print(f"📊 Completeness Score: {internal_score}/5")
+            print(f"⚖️ Ground Truth Verdict: {verdict}")
 
-            # Save the detail with the exact structure you requested
+            # 5. SALVATAGGIO NEL REPORT
             final_results.append({
                 "question": query,
                 "expected": expected,
                 "generated": generated,
+                "completeness_score_1_to_5": internal_score,
                 "verdict": verdict
             })
 

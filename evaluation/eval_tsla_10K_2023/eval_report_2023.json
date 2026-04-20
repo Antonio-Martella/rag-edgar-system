@@ -1,124 +1,144 @@
 {
-    "overall_accuracy": "80.0%",
+    "overall_accuracy": "90.0%",
     "details": [
         {
             "question": "What were Tesla's total revenues for the fiscal year 2023?",
             "expected": "$96.77 billion (or $96,773 million).",
             "generated": "Tesla's total revenues for the fiscal year 2023 were $96,773 million.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "How much revenue did the Automotive segment generate in 2023?",
             "expected": "$82.42 billion (or $82,419 million).",
             "generated": "The Automotive segment generated $82,419 million in revenue in 2023.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What was Tesla's net income attributable to common stockholders in 2023?",
             "expected": "$15.00 billion (or $14,997 million).",
             "generated": "The net income attributable to common stockholders for Tesla in 2023 was $14,997 million.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "How much revenue did the Energy Generation and Storage segment generate in 2023?",
             "expected": "$6,035 million.",
             "generated": "The Energy Generation and Storage segment generated $6,035 million in revenue in 2023.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "How many consumer vehicles did Tesla deliver in 2023?",
             "expected": "Approximately 1.81 million (exactly 1,808,581).",
             "generated": "Tesla delivered 1,808,581 consumer vehicles in 2023.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "How many consumer vehicles did Tesla produce in 2023?",
             "expected": "Approximately 1.85 million (exactly 1,845,985).",
             "generated": "Tesla produced 1,845,985 consumer vehicles in 2023.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What was the total volume of energy storage products deployed by Tesla in 2023?",
             "expected": "14.7 GWh.",
             "generated": "The total volume of energy storage products deployed by Tesla in 2023 was 14.72 GWh.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "How much revenue did Tesla generate specifically from automotive leasing in 2023?",
             "expected": "$2,120 million (or $2.12 billion).",
-            "generated": "The revenue from automotive leasing in 2023 was $1,860 million. (From the provided text: \"For the years ended December 31, 2023, 2022 and 2021, we recognized $1.86 billion, $1.75 billion and $1.25 billion of direct vehicle leasing revenue, respectively.\")",
-            "verdict": "FAIL"
+            "generated": "The revenue generated specifically from automotive leasing in 2023 was $2,120 million. (From the table in the context provided, under \"Automotive Segment\" section, \"Automotive Leasing\" column, for the year ended December 31, 2023).",
+            "completeness_score_1_to_5": 5,
+            "verdict": "PASS"
         },
         {
             "question": "How much cash did Tesla generate from operating activities in 2023?",
             "expected": "$13.26 billion (or $13,256 million).",
             "generated": "Net cash provided by operating activities in 2023 was $13,256 million.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What were Tesla's capital expenditures in 2023?",
             "expected": "$8.90 billion (or $8,900 million).",
             "generated": "Tesla's capital expenditures in 2023 were $8.90 billion.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What was Tesla's free cash flow in 2023?",
             "expected": "$4.36 billion (or $4,359 million).",
-            "generated": "Based on the information provided in the context, I cannot find this information in the documents. The context only provides information on net cash provided by operating activities, net cash used in investing activities, and net cash provided by financing activities. It does not provide information on free cash flow, which is defined as net cash provided by operating activities minus net cash used in investing activities.",
+            "generated": "To calculate free cash flow, you need to subtract capital expenditures from operating cash flow. According to the provided context, net cash provided by operating activities was $13,256 million and net cash used in investing activities was $(15,584) million. Therefore, free cash flow was $(2,328) million ($13,256 - $15,584).",
+            "completeness_score_1_to_5": 5,
             "verdict": "FAIL"
         },
         {
             "question": "What was the total balance of cash, cash equivalents, and investments at the end of 2023?",
             "expected": "$29.09 billion (or $29,094 million).",
             "generated": "The total balance of cash, cash equivalents, and investments at the end of 2023 was $29,094 million.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What was the basic earnings per share (EPS) attributable to common stockholders in 2023?",
             "expected": "$4.73.",
-            "generated": "The basic earnings per share (EPS) attributable to common stockholders in 2023 was $3.17 ($14,999 / 4,715).",
-            "verdict": "FAIL"
+            "generated": "To find the basic earnings per share (EPS) attributable to common stockholders in 2023, you need to look for the net income attributable to common stockholders and divide it by the weighted-average shares of common stock outstanding for the period. According to the document, the net income attributable to common stockholders in 2023 was $14,999 million. The weighted-average shares of common stock outstanding for the period can be found in the table titled \"Reconciliation of net income attributable to common stockholders to net income used in computing basic and diluted net income per share of common stock\" under the column labeled \"Weighted average shares used in computing net income per share of common stock, basic\". The value for 2023 was 3,174 million. Therefore, the basic EPS attributable to common stockholders in 2023 is:\n\n$14,999 million / $3,174 million = $4.71 per share",
+            "completeness_score_1_to_5": 5,
+            "verdict": "PASS"
         },
         {
             "question": "What was the diluted earnings per share (EPS) attributable to common stockholders in 2023?",
             "expected": "$4.30.",
             "generated": "The diluted earnings per share (EPS) attributable to common stockholders in 2023 was $5.533.",
+            "completeness_score_1_to_5": 5,
             "verdict": "FAIL"
         },
         {
             "question": "What was Tesla's total research and development (R&D) expense for the year ended December 31, 2023?",
             "expected": "$3,969 million.",
             "generated": "The total research and development (R&D) expense for Tesla for the year ended December 31, 2023 was $3,969 million.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "How much revenue did Tesla recognize from automotive regulatory credits in 2023?",
             "expected": "$1,790 million.",
             "generated": "Tesla recognized $1,790 million in revenue from automotive regulatory credits in 2023.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What was the revenue generated by the Services and Other segment in 2023?",
             "expected": "$8,319 million.",
             "generated": "The revenue generated by the Services and Other segment in 2023 was $8,319 million.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What was the total value of Tesla's assets at the end of the fiscal year 2023?",
             "expected": "$106.62 billion (or $106,618 million).",
             "generated": "The total value of Tesla's assets at the end of the fiscal year 2023 was $106,618 million.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What was Tesla's total liabilities at the end of 2023?",
             "expected": "$43.01 billion (or $43,009 million).",
             "generated": "The total liabilities of Tesla at the end of 2023 were $43,009 million.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "In what year did Tesla begin deliveries of the Cybertruck?",
             "expected": "2023.",
             "generated": "The first deliveries of the Cybertruck took place in November 2023.",
+            "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         }
     ]
