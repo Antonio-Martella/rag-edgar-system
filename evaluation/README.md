@@ -8,7 +8,7 @@ Prima di eseguire la valutazione, è fondamentale che l'ambiente locale sia conf
 Scarica il modello di embedding e il modello LLM (quantizzato in 4-bit) per l'esecuzione locale.
 
 ```bash
-python3 scripts/run_setupmodels.py
+python3 scripts/run_setup_models.py
 ```
 
 ### 2. Ingestion dei Dati (SEC)
