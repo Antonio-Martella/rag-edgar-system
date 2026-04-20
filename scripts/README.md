@@ -54,13 +54,14 @@ python scripts/run_indexing.py
 python scripts/run_rag.py
 ```
 
-### 5. `run_evaluate_rag.py` (Suite di Test Enterprise)
-* **Cosa fa:** Il banco di prova definitivo dell'architettura. Esegue un test automatizzato passando in rassegna dozzine di domande preimpostate (nella cartella `evaluation/`). 
-* **Caratteristiche Tecniche:** * Usa un'architettura a **Front-Loading**: carica l'artiglieria pesante (Modelli) una sola volta in VRAM.
+### 5. `run_evaluate_rag.py` (Suite di Test Enterprise & Benchmark)
+* **Cosa fa:** Il banco di prova definitivo dell'architettura. Esegue un test automatizzato passando in rassegna decine di domande preimpostate (presenti nella cartella `evaluation/`). 
+* **I Benchmark (SEC 10-K):** La suite di valutazione utilizza come *ground truth* (verità di base) i bilanci **10-K ufficiali della SEC per gli anni 2023, 2024 e 2025**. Testare il sistema su tre anni consecutivi di documenti finanziari massicci garantisce che il RAG sia robusto, affidabile e capace di gestire variazioni nel layout o nel linguaggio formale dei report nel corso del tempo.
+* **Caratteristiche Tecniche:** * Usa un'architettura a **Front-Loading**: carica l'artiglieria pesante (Modelli) una sola volta in VRAM (rimanendo stabile a ~21GB).
   * Esegue uno **Swap Istantaneo** dei database FAISS passando da un anno all'altro in millisecondi.
-  * Utilizza un doppio sistema di valutazione: registra il voto di completezza (1-5) del Giudice interno e usa l'LLM come "Giudice Esterno" per verificare l'accuratezza dei numeri contro la *ground truth*.
-  * Genera un report finale `.json` con l'accuratezza totale (es. 95%).
-* **Quando usarlo:** Per verificare che le modifiche al codice (o un cambio di LLM) non abbiano degradato le prestazioni (Regression Testing).
+  * Utilizza un **Doppio Sistema di Valutazione**: registra il voto di completezza (1-5) del Giudice interno per la trasparenza, e usa l'LLM come "Giudice Esterno" per verificare rigorosamente l'accuratezza dei numeri generati contro la *ground truth*.
+  * Genera un report finale `.json` per ogni anno con l'accuratezza totale (es. 95%).
+* **Quando usarlo:** Per verificare che le modifiche al codice (o un cambio di LLM) non abbiano degradato le prestazioni (Regression Testing) sui bilanci di riferimento.
 * **Esecuzione:** 
 ```bash 
 python scripts/run_evaluate_rag.py
