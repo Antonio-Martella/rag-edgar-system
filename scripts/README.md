@@ -1,0 +1,49 @@
+# 🛠️ Scripts Directory (La Sala Macchine)
+
+Questa directory contiene tutti gli script eseguibili per orchestrare il ciclo di vita dell'applicazione: dal download dei modelli di Intelligenza Artificiale, all'elaborazione dei bilanci finanziari (Form 10-K), fino all'esecuzione della chat e ai test di qualità.
+
+Tutti gli script sono progettati per essere eseguiti dalla **root principale** del progetto (non da dentro la cartella `scripts/`).
+
+---
+
+## 🛤️ Ordine di Esecuzione (Pipeline)
+
+Se stai avviando il progetto per la prima volta, l'ordine logico di esecuzione è il seguente:
+1. `run_setup_models.py` (Setup AI)
+2. `run_ingestion.py` (Download Dati)
+3. `run_indexing.py` (Creazione Vettori)
+4. `run_rag.py` (Chat) o `run_evaluate_rag.py` (Test)
+
+---
+
+## 📄 Dettaglio degli Script
+
+### 1. `run_setup_models.py` (Inizializzazione AI)
+* **Cosa fa:** Legge le variabili in `src/utils/config.py` e scarica i pesi dei modelli (LLM, Reranker, Embedding) da Hugging Face, salvandoli in locale nella cartella `models/`.
+* **Quando usarlo:** Solo la prima volta che cloni il repository o se decidi di cambiare un modello nel file di configurazione.
+* **Esecuzione:** `python scripts/run_setup_models.py`
+* *Nota: Richiede una buona connessione internet (scarica ~16GB di dati).*
+
+### 2. `run_ingestion.py` (Estrazione Dati SEC)
+* **Cosa fa:** Si collega al database EDGAR della SEC (Securities and Exchange Commission) americana, cerca il Ticker aziendale richiesto (es. TSLA) per l'anno specifico e scarica il testo grezzo del bilancio finanziario ufficiale (Form 10-K).
+* **Quando usarlo:** Quando vuoi analizzare una nuova azienda o aggiungere un nuovo anno fiscale.
+* **Esecuzione:** `python scripts/run_ingestion.py`
+
+### 3. `run_indexing.py` (Creazione del "Cervello" Vettoriale)
+* **Cosa fa:** Prende i testi grezzi scaricati dall'ingestion, li "taglia" in segmenti logici (Chunking), li converte in vettori matematici utilizzando il modello di Embedding (Nomic) e costruisce l'indice di ricerca ad altissima velocità (FAISS). Salva il risultato nella cartella `data/`.
+* **Quando usarlo:** Subito dopo aver scaricato un nuovo bilancio con l'ingestion.
+* **Esecuzione:** `python scripts/run_indexing.py`
+
+### 4. `run_rag.py` (Interfaccia a riga di comando - CLI)
+* **Cosa fa:** Avvia l'esperienza interattiva direttamente nel terminale, senza l'interfaccia web di Streamlit. Carica i modelli in VRAM (~21 GB), permette di scegliere l'azienda indicizzata e avvia il motore conversazionale. Include il **Self-Evaluating RAG**, mostrando in diretta il ragionamento e il punteggio (1-5) del Giudice interno per ogni risposta generata.
+* **Quando usarlo:** Per chattare rapidamente con l'Analista o per il debugging del backend.
+* **Esecuzione:** `python scripts/run_rag.py`
+
+### 5. `run_evaluate_rag.py` (Suite di Test Enterprise)
+* **Cosa fa:** Il banco di prova definitivo dell'architettura. Esegue un test automatizzato passando in rassegna dozzine di domande preimpostate (nella cartella `evaluation/`). 
+* **Caratteristiche Tecniche:** * Usa un'architettura a **Front-Loading**: carica l'artiglieria pesante (Modelli) una sola volta in VRAM.
+  * Esegue uno **Swap Istantaneo** dei database FAISS passando da un anno all'altro in millisecondi.
+  * Utilizza un doppio sistema di valutazione: registra il voto di completezza (1-5) del Giudice interno e usa l'LLM come "Giudice Esterno" per verificare l'accuratezza dei numeri contro la *ground truth*.
+  * Genera un report finale `.json` con l'accuratezza totale (es. 95%).
+* **Quando usarlo:** Per verificare che le modifiche al codice (o un cambio di LLM) non abbiano degradato le prestazioni (Regression Testing).
+* **Esecuzione:** `python scripts/run_evaluate_rag.py`
