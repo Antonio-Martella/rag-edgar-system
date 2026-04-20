@@ -31,8 +31,6 @@ data/embeddings/*
 !data/embeddings/tsla/10-k_2025_index.bin
 
 # MODELS
-models/README.md
-
 models/EMBEDDING*
 !models/EMBEDDING/.gitkeep
 
@@ -41,6 +39,7 @@ models/LLM*
 
 models/RERANKER*
 !models/RERANKER/.gitkeep
+!models/README.md
 
 # Exclude environment and credentials
 .env
