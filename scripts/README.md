@@ -54,15 +54,16 @@ python scripts/run_indexing.py
 python scripts/run_rag.py
 ```
 
-### 5. `run_evaluate_rag.py` (Suite di Test Enterprise & Benchmark)
-* **Cosa fa:** Il banco di prova definitivo dell'architettura. Esegue un test automatizzato passando in rassegna decine di domande preimpostate (presenti nella cartella `evaluation/`). 
-* **I Benchmark (SEC 10-K):** La suite di valutazione utilizza come *ground truth* (verità di base) i bilanci **10-K ufficiali della SEC per gli anni 2023, 2024 e 2025**. Testare il sistema su tre anni consecutivi di documenti finanziari massicci garantisce che il RAG sia robusto, affidabile e capace di gestire variazioni nel layout o nel linguaggio formale dei report nel corso del tempo.
-* **Caratteristiche Tecniche:** * Usa un'architettura a **Front-Loading**: carica l'artiglieria pesante (Modelli) una sola volta in VRAM (rimanendo stabile a ~21GB).
-  * Esegue uno **Swap Istantaneo** dei database FAISS passando da un anno all'altro in millisecondi.
-  * Utilizza un **Doppio Sistema di Valutazione**: registra il voto di completezza (1-5) del Giudice interno per la trasparenza, e usa l'LLM come "Giudice Esterno" per verificare rigorosamente l'accuratezza dei numeri generati contro la *ground truth*.
-  * Genera un report finale `.json` per ogni anno con l'accuratezza totale (es. 95%).
-* **Quando usarlo:** Per verificare che le modifiche al codice (o un cambio di LLM) non abbiano degradato le prestazioni (Regression Testing) sui bilanci di riferimento.
-* **Esecuzione:** 
+### 5. `run_evaluate_rag.py` (Suite di Test Enterprise)
+* **Cosa fa:** È il banco di prova definitivo dell'architettura. Esegue un test automatizzato (Regression Testing) passando in rassegna dozzine di domande preimpostate per verificare l'accuratezza del sistema sui bilanci 10-K di Tesla degli anni 2023, 2024 e 2025.
+* **Struttura dei Test:** Lo script legge e scrive all'interno della cartella `evaluation/`, che è strutturata rigorosamente in sottocartelle per anno (es. `eval_tsla_10-k_2023`, `eval_tsla_10-k_2024`, ecc.). Ogni cartella contiene:
+  * `test_queries_202X.json`: Il file di input che contiene la *ground truth* (le domande e le risposte esatte attese).
+  * `eval_report_202X.json`: Il file di output generato automaticamente da questo script a fine esecuzione, contenente il report dettagliato e la percentuale di accuratezza finale.
+* **Caratteristiche Tecniche:** * Usa un'architettura a **Front-Loading**: carica l'artiglieria pesante (Modelli) una sola volta in VRAM.
+  * Esegue uno **Swap Istantaneo** dei database FAISS passando da un anno all'altro in pochi millisecondi.
+  * Utilizza un **Doppio Giudice**: registra il voto di completezza (1-5) del Giudice Interno e usa l'LLM come "Giudice Esterno" per verificare l'accuratezza dei numeri generati contro la *ground truth*.
+* **Quando usarlo:** Per certificare le prestazioni del sistema, o per verificare che le modifiche al codice (es. un cambio di LLM o di chunking) non abbiano degradato la qualità delle risposte.
+* **Esecuzione:**
 ```bash 
 python scripts/run_evaluate_rag.py
 ```
