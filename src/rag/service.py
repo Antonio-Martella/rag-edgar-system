@@ -81,7 +81,7 @@ class RAGService:
         then generating an answer using the LLM, and finally evaluating the completeness of the answer with respect to the query and retrieved context. 
         It returns a dictionary containing both the generated answer and its evaluation.
         """
-        # Gestione Errori: Ritorna un dizionario compatibile con la UI
+        # Check if the retriever has data loaded before attempting to search
         if not self.retriever:
             return {
                 "answer": "❌ Error: You must upload company data first.",
@@ -96,13 +96,13 @@ class RAGService:
                 "evaluation": {"score": 1, "reasoning": "Nessun contesto pertinente trovato nei documenti SEC."}
             }
             
-        # 1. Generazione della risposta finale (IL TUO CODICE ORIGINALE)
+        # Generation of the answer (THE ANALYST)
         answer = self.generator.generate_answer(query, top_chunks, history=history)
         
-        # 2. Valutazione della risposta (IL GIUDICE)
+        # Evaluation of the answer's completeness (THE JUDGE)
         evaluation = self.evaluate_completeness(query, top_chunks, answer)
         
-        # 3. Ritorna entrambi i risultati
+        # Return both the generated answer and its evaluation as a dictionary
         return {
             "answer": answer,
             "evaluation": evaluation
