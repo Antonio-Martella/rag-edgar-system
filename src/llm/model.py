@@ -5,15 +5,15 @@ from src.utils import config
 def get_quantization_config() -> BitsAndBytesConfig:
     """
     Returns the quantization configuration for loading the LLM model based on the QUANTIZATION_SWITCH in the config.
-    If QUANTIZATION_SWITCH is True, it returns a BitsAndBytesConfig for 4-bit quantization. 
+    If QUANTIZATION_SWITCH is True, it returns a BitsAndBytesConfig for 8-bit quantization. 
     If False, it returns None, which means the model will be loaded in its original precision.
     """
     if config.QUANTIZATION_SWITCH:
         return BitsAndBytesConfig(
-            load_in_4bit=True,  # <-- Enable 4-bit loading
-            bnb_4bit_compute_dtype=torch.float16,  # <-- Use float16 for computations (can also be float32 if you have more VRAM)
-            bnb_4bit_use_double_quant=True,  # <-- Use double quantization for better accuracy (optional, but recommended)
-            bnb_4bit_quant_type="nf4"  # <-- Use NormalFloat4 quantization (can also be "fp4" or "int8" depending on the model and your needs)
+            load_in_8bit=True,                      # <-- Enable 8-bit loading
+            bnb_8bit_compute_dtype=torch.float16,   # <-- Use float16 for computations (can also be float32 if you have more VRAM)
+            bnb_8bit_use_double_quant=True,         # <-- Use double quantization for better accuracy (optional, but recommended)
+            bnb_8bit_quant_type="nf4"               # <-- Use NormalFloat4 quantization (can also be "fp4" or "int8" depending on the model and your needs)
             )
     else:
         return None 

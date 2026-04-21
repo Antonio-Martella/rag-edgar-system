@@ -23,8 +23,8 @@ LLM_MODEL_ID = "mistralai/Mistral-7B-Instruct-v0.2"
 LEN_CHUNKS = 4000
 OVERLAP_CHUNKS = 800
 
-# Quantization switch for the LLM (set to True to enable 4-bit quantization, which reduces VRAM usage but may slightly impact performance)
-QUANTIZATION_SWITCH = False  
+# Quantization switch for the LLM (set to True to enable 8-bit quantization, which reduces VRAM usage but may slightly impact performance)
+QUANTIZATION_SWITCH = True  
 
 # Local Models Folder
 MODELS_DIR = PROJECT_ROOT / "models"
