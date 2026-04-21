@@ -49,12 +49,10 @@ rag-edgar-system/
 
 ## 🚀 Installation Guide
 **Clone the repository:**
-
-    ```bash
-    git clone https://github.com/Antonio-Martella/rag-edgar-system.git
-    cd rag-edgar-system
-    ```
-    
+```bash
+git clone https://github.com/Antonio-Martella/rag-edgar-system.git
+cd rag-edgar-system
+```
 **Option 1: Local Installation**
 1. **Install dependencies:**
     It is recommended to use a virtual environment (e.g. venv or conda).
