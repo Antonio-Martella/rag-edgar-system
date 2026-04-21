@@ -1,69 +1,69 @@
-# 🛠️ Scripts Directory (La Sala Macchine)
+# 🛠️ Scripts Directory 
 
-Questa directory contiene tutti gli script eseguibili per orchestrare il ciclo di vita dell'applicazione: dal download dei modelli di Intelligenza Artificiale, all'elaborazione dei bilanci finanziari (Form 10-K), fino all'esecuzione della chat e ai test di qualità.
+This directory contains all the executable scripts to orchestrate the application lifecycle: from downloading AI models, to preparing financial statements (Form 10-K), to running chat and quality testing.
 
-Tutti gli script sono progettati per essere eseguiti dalla **root principale** del progetto (non da dentro la cartella `scripts/`).
-
----
-
-## 🛤️ Ordine di Esecuzione (Pipeline)
-
-Se stai avviando il progetto per la prima volta, l'ordine logico di esecuzione è il seguente:
-1. `run_setup_models.py` (Setup AI)
-2. `run_ingestion.py` (Download Dati)
-3. `run_indexing.py` (Creazione Vettori)
-4. `run_rag.py` (Chat) o `run_evaluate_rag.py` (Test)
+All scripts are designed to be run from the **main root** of the project (not from inside the `scripts/` folder).
 
 ---
 
-## 📄 Dettaglio degli Script
+## 🛤️ Execution Order (Pipeline)
 
-### 1. `run_setup_models.py` (Inizializzazione AI)
-* **Cosa fa:** Legge le variabili in `src/utils/config.py` e scarica i pesi dei modelli (LLM, Reranker, Embedding) da Hugging Face, salvandoli in locale nella cartella `models/`.
-* **⚙️ Personalizzazione e Ottimizzazione VRAM:** Questo script è strettamente legato al file `src/utils/config.py`, dove puoi modificare radicalmente il comportamento del sistema prima del download:
-  * **Cambio ID Modelli:** Puoi sostituire le stringhe `LLM_MODEL_ID`, `EMBEDDING_MODEL_ID` e `RERANKER_MODEL_ID` per scaricare e testare qualsiasi altro modello Open Source disponibile su Hugging Face (es. passare da Mistral a Llama-3).
-  * **Switch di Quantizzazione:** Impostando `QUANTIZATION_SWITCH = True` nel config, istruirai lo script (e l'intera architettura RAG) a utilizzare tecniche di quantizzazione (8-bit). Questo comprime drasticamente il peso dell'LLM, permettendoti di farlo girare su GPU consumer con meno di 16GB di VRAM, sacrificando solo una percentuale di precisione.
-* **Quando usarlo:** La prima volta che avvii il progetto, o ogni volta che modifichi i parametri in `config.py` per testare un nuovo setup AI.
-* **Esecuzione:** 
+If you're starting the project for the first time, the logical order of execution is as follows:
+1. `run_setup_models.py` (AI Setup)
+2. `run_ingestion.py` (Data Download)
+3. `run_indexing.py` (Vector Creation)
+4. `run_rag.py` (Chat) or `run_evaluate_rag.py` (Test)
+
+---
+
+## 📄 Script Details
+
+### 1. `run_setup_models.py` (AI Initialization)
+* **What it does:** Reads the variables in `src/utils/config.py` and downloads the model weights (LLM, Reranker, Embedding) from Hugging Face, saving them locally in the `models/` folder.
+* **⚙️ VRAM Customization and Optimization:** This script is closely tied to the `src/utils/config.py` file, where you can radically modify the system behavior before downloading:
+  * **Model ID Change:** You can replace the `LLM_MODEL_ID`, `EMBEDDING_MODEL_ID`, and `RERANKER_MODEL_ID` strings to download and test any other open-source model available on Hugging Face (e.g., switching from Mistral to Llama-3).
+  * **Quantization Switch:** By setting `QUANTIZATION_SWITCH = True` in the config, you instruct the script (and the entire RAG architecture) to use quantization techniques (8-bit). This dramatically reduces the size of the LLM, allowing you to run it on consumer GPUs with less than 16GB of VRAM, while only sacrificing a percentage of precision.
+* **When to use it:** The first time you run the project, or whenever you change the parameters in `config.py` to test a new AI setup.
+* **Execution:**
 ```bash
 python scripts/run_setup_models.py
 ```
-* *Nota: Richiede una buona connessione internet (scarica fino a ~16GB di dati se la quantizzazione è disattivata).*
+* *Note: Requires a good internet connection (downloads up to ~16GB of data if quantization is disabled).*
 
-### 2. `run_ingestion.py` (Estrazione Dati e Chunking)
-* **Cosa fa:** Si collega al database EDGAR della SEC (Securities and Exchange Commission), cerca il Ticker aziendale richiesto (es. TSLA) e scarica il testo del bilancio finanziario (Form 10-K). Oltre al download, si occupa del **Chunking**: "taglia" il documento grezzo in segmenti logici e navigabili, salvando i file elaborati (solitamente in formato `.json`) nella cartella `data/chunks/`.
-* **Quando usarlo:** Quando vuoi analizzare una nuova azienda o aggiungere un nuovo anno fiscale al tuo database locale.
-* **Esecuzione:** 
+### 2. `run_ingestion.py` (Data Extraction and Chunking)
+* **What it does:** Connects to the SEC (Securities and Exchange Commission) EDGAR database, searches for the requested company ticker (e.g., TSLA), and downloads the financial statement text (Form 10-K). In addition to downloading, it also performs **Chunking**: it "cuts" the raw document into logical, navigable segments, saving the processed files (usually in .json format) in the `data/chunks/` folder.
+* **When to use it:** When you want to analyze a new company or add a new fiscal year to your local database.
+* **Execution:**
 ```bash
 python scripts/run_ingestion.py
 ```
 
-### 3. `run_indexing.py` (Creazione del "Cervello" Vettoriale)
-* **Cosa fa:** Prende i segmenti di testo (chunk) precedentemente preparati e salvati in `data/chunks/`, li converte in vettori matematici utilizzando il modello di Embedding (es. Nomic) e costruisce l'indice di ricerca ad altissima velocità (FAISS). Salva il database vettoriale finale nella cartella `data/embeddings/`.
-* **Quando usarlo:** Subito dopo aver eseguito l'ingestion di un nuovo documento, o se decidi di cambiare il tuo modello di Embedding e hai bisogno di ricreare i database vettoriali partendo dai chunk esistenti.
-* **Esecuzione:** 
+### 3. `run_indexing.py` (Creating the Vector "Brain")
+* **What it does:** Takes previously prepared text segments (chunks) saved in `data/chunks/`, converts them into mathematical vectors using the Embedding model (e.g., Nomic), and builds the ultra-high-speed search index (FAISS). Saves the final vector database in the `data/embeddings/` folder.
+* **When to use it:** Immediately after ingesting a new document, or if you decide to change your embedding model and need to recreate the vector databases from existing chunks.
+* **Execution:**
 ```bash
 python scripts/run_indexing.py
 ```
 
-### 4. `run_rag.py` (Interfaccia a riga di comando - CLI)
-* **Cosa fa:** Avvia l'esperienza interattiva direttamente nel terminale, senza l'interfaccia web di Streamlit. Carica i modelli in VRAM (~21 GB), permette di scegliere l'azienda indicizzata e avvia il motore conversazionale. Include il **Self-Evaluating RAG**, mostrando in diretta il ragionamento e il punteggio (1-5) del Giudice interno per ogni risposta generata.
-* **Quando usarlo:** Per chattare rapidamente con l'Analista o per il debugging del backend.
-* **Esecuzione:** 
+### 4. `run_rag.py` (Command Line Interface - CLI)
+* **What it does:** Launches the interactive experience directly in the terminal, without the Streamlit web interface. It loads the models into VRAM, allows you to choose the indexed company, and starts the conversational engine. Includes the **Self-Evaluating RAG**, displaying the internal Judge's reasoning and score (1-5) for each generated response live.
+* **When to use it:** For a quick chat with the Analyst or for backend debugging.
+* **Execution:**
 ```bash
 python scripts/run_rag.py
 ```
 
-### 5. `run_evaluate_rag.py` (Suite di Test Enterprise)
-* **Cosa fa:** È il banco di prova definitivo dell'architettura. Esegue un test automatizzato (Regression Testing) passando in rassegna dozzine di domande preimpostate per verificare l'accuratezza del sistema sui bilanci 10-K di Tesla degli anni 2023, 2024 e 2025.
-* **Struttura dei Test:** Lo script legge e scrive all'interno della cartella `evaluation/`, che è strutturata rigorosamente in sottocartelle per anno (es. `eval_tsla_10-k_2023`, `eval_tsla_10-k_2024`, ecc.). Ogni cartella contiene:
-  * `test_queries_202X.json`: Il file di input che contiene la *ground truth* (le domande e le risposte esatte attese).
-  * `eval_report_202X.json`: Il file di output generato automaticamente da questo script a fine esecuzione, contenente il report dettagliato e la percentuale di accuratezza finale.
-* **Caratteristiche Tecniche:** * Usa un'architettura a **Front-Loading**: carica l'artiglieria pesante (Modelli) una sola volta in VRAM.
-  * Esegue uno **Swap Istantaneo** dei database FAISS passando da un anno all'altro in pochi millisecondi.
-  * Utilizza un **Doppio Giudice**: registra il voto di completezza (1-5) del Giudice Interno e usa l'LLM come "Giudice Esterno" per verificare l'accuratezza dei numeri generati contro la *ground truth*.
-* **Quando usarlo:** Per certificare le prestazioni del sistema, o per verificare che le modifiche al codice (es. un cambio di LLM o di chunking) non abbiano degradato la qualità delle risposte.
-* **Esecuzione:**
+### 5. `run_evaluate_rag.py` (Enterprise Test Suite)
+* **What it does:** It's the ultimate architectural testbed. It runs an automated test (Regression Testing) by running dozens of predefined questions to verify the system's accuracy on Tesla's 10-K financial statements for 2023, 2024, and 2025.
+* **Test Structure:** The script reads and writes to the `evaluation/` folder, which is strictly structured into subfolders by year (e.g., `eval_tsla_10-k_2023`, `eval_tsla_10-k_2024`, etc.). Each folder contains:
+  * `test_queries_202X.json`: The input file containing the *ground truth* (the questions and expected correct answers).
+  * `eval_report_202X.json`: The output file automatically generated by this script at the end of execution, containing the detailed report and the final accuracy percentage.
+* **Technical Features:** * Uses a **Front-Loading** architecture: loads the heavy artillery (Models) only once into VRAM.
+  * Performs an **Instant Swap** of the FAISS databases from one year to the next in a few milliseconds.
+  * Uses a **Dual Judge**: records the completeness rating (1-5) of the Internal Judge and uses the LLM as an "External Judge" to verify the accuracy of the generated numbers against the *ground truth*.
+* **When to use it:** To certify system performance, or to verify that code changes (e.g., a change in LLM or chunking) have not degraded the quality of the responses.
+* **Execution:**
 ```bash 
 python scripts/run_evaluate_rag.py
 ```
