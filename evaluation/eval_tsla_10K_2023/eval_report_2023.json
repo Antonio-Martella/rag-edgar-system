@@ -53,9 +53,9 @@
         {
             "question": "How much revenue did Tesla generate specifically from automotive leasing in 2023?",
             "expected": "$2,120 million (or $2.12 billion).",
-            "generated": "The revenue generated specifically from automotive leasing in 2023 was $2,120 million. (From the table in the context provided, under \"Automotive Segment\" section, \"Automotive Leasing\" column, for the year ended December 31, 2023).",
+            "generated": "The revenue generated specifically from automotive leasing in 2023 was $1,860 million. (Reference the Consolidated Statements of Operations table in the provided context, under the column for the year ended December 31, 2023, look for the row labeled 'Automotive leasing' to find the revenue figure.)",
             "completeness_score_1_to_5": 5,
-            "verdict": "PASS"
+            "verdict": "FAIL"
         },
         {
             "question": "How much cash did Tesla generate from operating activities in 2023?",
@@ -74,9 +74,9 @@
         {
             "question": "What was Tesla's free cash flow in 2023?",
             "expected": "$4.36 billion (or $4,359 million).",
-            "generated": "To calculate free cash flow, you need to subtract capital expenditures from operating cash flow. According to the provided context, net cash provided by operating activities was $13,256 million and net cash used in investing activities was $(15,584) million. Therefore, free cash flow was $(2,328) million ($13,256 - $15,584).",
+            "generated": "To calculate free cash flow, we need to adjust net cash provided by operating activities for capital expenditures. According to the provided information, net cash provided by operating activities was $13,256 million in 2023, and capital expenditures were $(8,898) million. Therefore, free cash flow in 2023 was:\n\n$13,256 million (net cash provided by operating activities) - $(8,898) million (capital expenditures) = $4,358 million.",
             "completeness_score_1_to_5": 5,
-            "verdict": "FAIL"
+            "verdict": "PASS"
         },
         {
             "question": "What was the total balance of cash, cash equivalents, and investments at the end of 2023?",
@@ -88,15 +88,15 @@
         {
             "question": "What was the basic earnings per share (EPS) attributable to common stockholders in 2023?",
             "expected": "$4.73.",
-            "generated": "To find the basic earnings per share (EPS) attributable to common stockholders in 2023, you need to look for the net income attributable to common stockholders and divide it by the weighted-average shares of common stock outstanding for the period. According to the document, the net income attributable to common stockholders in 2023 was $14,999 million. The weighted-average shares of common stock outstanding for the period can be found in the table titled \"Reconciliation of net income attributable to common stockholders to net income used in computing basic and diluted net income per share of common stock\" under the column labeled \"Weighted average shares used in computing net income per share of common stock, basic\". The value for 2023 was 3,174 million. Therefore, the basic EPS attributable to common stockholders in 2023 is:\n\n$14,999 million / $3,174 million = $4.71 per share",
+            "generated": "To find the basic earnings per share (EPS) attributable to common stockholders in 2023, you need to look for the net income attributable to common stockholders and divide it by the weighted-average shares of common stock outstanding for the period. According to the document, the net income attributable to common stockholders for the year ended December 31, 2023, was $14,999 million. The weighted-average shares of common stock used in computing net income per share of common stock, basic, were 3,174 million. Therefore, the basic EPS attributable to common stockholders in 2023 is:\n\n$14,999 million / $3,174 million = $4.71 per share",
             "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
         {
             "question": "What was the diluted earnings per share (EPS) attributable to common stockholders in 2023?",
             "expected": "$4.30.",
-            "generated": "The diluted earnings per share (EPS) attributable to common stockholders in 2023 was $5.533.",
-            "completeness_score_1_to_5": 5,
+            "generated": "The document does not provide the diluted earnings per share (EPS) attributable to common stockholders in 2023. The document only provides the net income used in computing diluted net income per share of common stock attributable to common stockholders, which was $14,999 million. To find the diluted EPS, you would need to divide this number by the diluted weighted average shares used in computing net income per share of common stock, which was 3,485 million according to the document. However, the document does not provide this information.",
+            "completeness_score_1_to_5": 3,
             "verdict": "FAIL"
         },
         {

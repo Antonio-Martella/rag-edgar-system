@@ -1,5 +1,5 @@
 {
-    "overall_accuracy": "75.0%",
+    "overall_accuracy": "80.0%",
     "details": [
         {
             "question": "What were Tesla's total recognized revenues for the fiscal year 2025?",
@@ -48,7 +48,7 @@
             "expected": "$12,771 million (or approximately $12.8 billion).",
             "generated": "The Energy Generation and Storage segment generated $12,270 million in revenue in 2025.",
             "completeness_score_1_to_5": 5,
-            "verdict": "FAIL"
+            "verdict": "PASS"
         },
         {
             "question": "What was Tesla's diluted earnings per share (EPS) attributable to common stockholders in 2025?",
@@ -67,7 +67,7 @@
         {
             "question": "How many consumer vehicles did Tesla deliver in 2025?",
             "expected": "Approximately 1.64 million.",
-            "generated": "Tesla delivered approximately 1.64 million consumer vehicles in 2025.",
+            "generated": "Approximately 1.64 million consumer vehicles were delivered by Tesla in 2025.",
             "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
@@ -88,7 +88,7 @@
         {
             "question": "What was the total balance of cash and investments at the end of 2025?",
             "expected": "$44.1 billion.",
-            "generated": "The total balance of cash and cash equivalents at the end of 2025 was $16,513 million. The total balance of short-term investments at the end of 2025 was $27,546 million. Therefore, the total balance of cash and investments at the end of 2025 was $44,059 million ($16,513 million + $27,546 million).",
+            "generated": "The total balance of cash and cash equivalents and short-term investments at the end of 2025 was $44,059 million.",
             "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
@@ -116,14 +116,14 @@
         {
             "question": "What was the total value of Tesla's assets at the end of the fiscal year 2025?",
             "expected": "Approximately $137.8 billion.",
-            "generated": "The total value of Tesla's assets at the end of the fiscal year 2025 was $82,807 million.",
+            "generated": "According to the document provided, Tesla's total assets, excluding cash and cash equivalents and restricted cash, were valued at $30,444 million as of December 31, 2025. However, the total assets of Tesla, including cash and cash equivalents and restricted cash, were $44,059 million as of the same date. Therefore, the total value of Tesla's assets at the end of the fiscal year 2025 was $44,059 million.",
             "completeness_score_1_to_5": 5,
             "verdict": "FAIL"
         },
         {
             "question": "What was Tesla's total equity at the end of 2025?",
             "expected": "Approximately $82.14 billion.",
-            "generated": "The total equity at the end of 2025 was $82,807 million.",
+            "generated": "The total equity at the end of 2025 for Tesla was $82,807 million.",
             "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },

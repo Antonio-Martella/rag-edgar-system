@@ -25,7 +25,7 @@
         {
             "question": "Which primary manufacturing facilities are owned by Tesla rather than leased?",
             "expected": "Tesla owns Gigafactory Texas, Fremont Factory, Gigafactory Nevada, and Gigafactory Berlin-Brandenburg.",
-            "generated": "The primary manufacturing facilities that are owned by Tesla are:\n\n1. Gigafactory Texas, located in Austin, Texas\n2. Fremont Factory, located in Fremont, California\n3. Gigafactory Nevada, located in Sparks, Nevada\n4. Gigafactory Berlin-Brandenburg, located in Grunheide, Germany\n5. Gigafactory Shanghai, located in Shanghai, China (ownership status unknown from the provided context)\n\nAll other manufacturing facilities listed in the context are leased.",
+            "generated": "The primary manufacturing facilities that are owned by Tesla are:\n\n1. Gigafactory Texas, located in Austin, Texas\n2. Fremont Factory, located in Fremont, California\n3. Gigafactory Nevada, located in Sparks, Nevada\n4. Gigafactory Berlin-Brandenburg, located in Grunheide, Germany\n5. Gigafactory Shanghai, located in Shanghai, China (ownership status unknown)\n6. Megafactory Shanghai, located in Shanghai, China (ownership status unknown)\n7. Gigafactory New York, located in Buffalo, New York (leased)\n8. Megafactory Lathrop, located in Lathrop, California (leased)\n\nOnly the first five facilities listed above are confirmed to be owned by Tesla. The ownership status of Gigafactory Shanghai and Megafactory Shanghai is unknown according to the provided context.",
             "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
@@ -46,8 +46,8 @@
         {
             "question": "What percentage of Tesla's US employees identified as individuals with disabilities as of December 31, 2024?",
             "expected": "3.3% of Tesla's US employees identified as individuals with disabilities.",
-            "generated": "The text states that as of December 31, 2024, 1.2% of Tesla's employees in the US identified as veterans or active-duty military personnel with disabilities. However, it does not provide the percentage of Tesla's US employees who identified as individuals with disabilities in general.",
-            "completeness_score_1_to_5": 3,
+            "generated": "The text states that as of December 31, 2024, 1.2% of Tesla's employees in the US identified as individuals with disabilities.",
+            "completeness_score_1_to_5": 5,
             "verdict": "FAIL"
         },
         {
@@ -67,7 +67,7 @@
         {
             "question": "What is the name of Tesla's semiannual employee survey and what was its global participation rate?",
             "expected": "The survey is called Pulse, and it generated 86% global participation.",
-            "generated": "Pulse, Tesla's semiannual employee survey, had an 86% global participation rate.",
+            "generated": "Pulse, the semiannual employee survey of Tesla, had an 86% global participation rate.",
             "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
@@ -88,7 +88,7 @@
         {
             "question": "Under the SUNY Foundation agreement, how much is Tesla obligated to spend or incur in the State of New York over an initial 10-year period?",
             "expected": "Tesla is obligated to spend or incur $5.00 billion in combined capital, operational expenses, costs of goods sold and other costs in the State of New York.",
-            "generated": "Tesla is obligated to spend or incur $5.00 billion in the State of New York over an initial 10-year period.",
+            "generated": "Tesla is obligated to spend or incur $5.00 billion in the State of New York during an initial 10-year period.",
             "completeness_score_1_to_5": 5,
             "verdict": "PASS"
         },
