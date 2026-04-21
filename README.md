@@ -4,6 +4,7 @@
 ![AI](https://img.shields.io/badge/AI-Local_LLM-orange.svg)
 ![RAG](https://img.shields.io/badge/Architecture-Two_Stage_RAG-success.svg)
 ![Streamlit](https://img.shields.io/badge/UI-Streamlit-red.svg)
+![NVIDIA](https://img.shields.io/badge/Hardware-NVIDIA_GPU-76B900.svg)
 
 An advanced, 100% on-premises **Retrieval-Augmented Generation (RAG) system**, designed for complex financial document analysis (SEC Form 10-K) without compromising data privacy.
 
@@ -99,6 +100,17 @@ The system lays solid foundations, but there are several areas of evolution alre
 2. **Agentic Loop (Self-Correction)**: Evolve the “Internal Judge” from a passive role (which alerts the user if a piece of data is missing) to an active role, instructing the LLM to repeat the search in the background until the score reaches 5/5.
 
 3. **Multimodal RAG**: Expand the ingestion pipeline to support the recognition and analysis of graphs and charts in annual reports using Vision-Language (VLM) models.
+
+---
+
+## 🖥️ Hardware Requirements (Important)
+This project makes heavy use of **PyTorch** and CUDA acceleration.
+
+To run the models locally (LLM, Embedder, Reranker) in a reasonable time, an NVIDIA GPU is **strictly required**.
+
+* **Development and Test Environment:** The system was developed, optimized, and certified on a **Google Colab Pro environment (NVIDIA L4 GPU - 24GB VRAM)**.
+* **Minimum Requirements:** Thanks to the 8-bit quantization option, the system can run on consumer NVIDIA GPUs with at least 16GB of VRAM.
+* *Note for Mac/AMD users:* Running purely on CPUs or via MPS (Apple Silicon) is not currently supported or optimized and would result in extremely long inference times.
 
 ---
 
