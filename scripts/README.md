@@ -22,7 +22,7 @@ Se stai avviando il progetto per la prima volta, l'ordine logico di esecuzione �
 * **Cosa fa:** Legge le variabili in `src/utils/config.py` e scarica i pesi dei modelli (LLM, Reranker, Embedding) da Hugging Face, salvandoli in locale nella cartella `models/`.
 * **⚙️ Personalizzazione e Ottimizzazione VRAM:** Questo script è strettamente legato al file `src/utils/config.py`, dove puoi modificare radicalmente il comportamento del sistema prima del download:
   * **Cambio ID Modelli:** Puoi sostituire le stringhe `LLM_MODEL_ID`, `EMBEDDING_MODEL_ID` e `RERANKER_MODEL_ID` per scaricare e testare qualsiasi altro modello Open Source disponibile su Hugging Face (es. passare da Mistral a Llama-3).
-  * **Switch di Quantizzazione:** Impostando `QUANTIZATION_SWITCH = True` nel config, istruirai lo script (e l'intera architettura RAG) a utilizzare tecniche di quantizzazione (4-bit o 8-bit). Questo comprime drasticamente il peso dell'LLM, permettendoti di farlo girare su GPU consumer con meno di 16GB di VRAM, sacrificando solo una percentuale di precisione.
+  * **Switch di Quantizzazione:** Impostando `QUANTIZATION_SWITCH = True` nel config, istruirai lo script (e l'intera architettura RAG) a utilizzare tecniche di quantizzazione (8-bit). Questo comprime drasticamente il peso dell'LLM, permettendoti di farlo girare su GPU consumer con meno di 16GB di VRAM, sacrificando solo una percentuale di precisione.
 * **Quando usarlo:** La prima volta che avvii il progetto, o ogni volta che modifichi i parametri in `config.py` per testare un nuovo setup AI.
 * **Esecuzione:** 
 ```bash
