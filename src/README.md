@@ -1,57 +1,57 @@
 # 🧩 Source Directory (`src/`)
 
-Benvenuto nel cuore pulsante dell'Edgar RAG Multi-Analyst. Questa directory contiene tutto il codice sorgente (backend) dell'applicazione. 
+Welcome to the beating heart of Edgar RAG Multi-Analyst. This directory contains all the application's source code (backend).
 
-Il sistema è stato architettato con un approccio **Modulare ed Enterprise-Grade**: i processi di estrazione dati, vettorializzazione, ricerca e generazione sono rigorosamente separati in sottomoduli. Questo garantisce un codice pulito, facilmente testabile e altamente scalabile.
-
----
-
-## 🗺️ Mappa dell'Architettura
-
-La directory è divisa in 6 moduli principali. Ognuno gestisce un passaggio specifico della pipeline RAG.
-
-### 📥 1. `ingestion/` (Acquisizione Dati)
-Questo modulo si occupa di prelevare i dati grezzi dal mondo esterno e prepararli per il sistema.
-* **`downloader.py`**: Interagisce con le API della SEC (EDGAR) per scaricare i Form 10-K ufficiali dell'azienda richiesta.
-* **`parser.py`**: Pulisce i documenti grezzi, rimuovendo tag HTML/XML o rumore inutile per estrarre solo il testo finanziario puro e linearizza le tabelle (essenziale!).
-* **`chuncking.py`**: Applica algoritmi di text-splitting per tagliare il testo in "chunk" navigabili e compatibili con la finestra di contesto dei modelli AI.
-* **`pipeline.py`**: Orchestra l'intero flusso di ingestion (Download -> Parse -> Chunk).
-
-### 🧮 2. `embedding/` (Vettorializzazione)
-Trasforma il testo umano in un formato comprensibile alle macchine (vettori matematici).
-* **`embedder.py`**: Gestisce il modello di embedding (es. Nomic) per tradurre i chunk in vettori densi ad alta dimensionalità.
-* **`storage.py`**: Gestisce il database vettoriale locale (FAISS). Crea, salva e carica l'indice per la ricerca ultra-rapida (`.bin`).
-* **`pipeline.py`**: Orchestra il processo di indicizzazione (Prende i chunk -> Li embedda -> Salva il database FAISS).
-
-### 🔎 3. `retrieval/` (Motore di Ricerca)
-Implementa l'architettura **Two-Stage Retrieval** per garantire la massima precisione nell'estrazione dei documenti.
-* **`retriever.py`**: Il "Cercatore". Interroga il database FAISS per recuperare velocemente i top-K documenti più simili (ricerca approssimata).
-* **`reranker.py`**: Il "Revisore". Utilizza un modello Cross-Encoder (es. BAAI) per ri-analizzare i risultati di FAISS incrociandoli con la domanda dell'utente, riordinandoli e filtrando i falsi positivi con precisione.
-
-### 🧠 4. `llm/` (Intelligenza Artificiale)
-Gestisce l'inizializzazione e l'inferenza dei Large Language Models locali.
-* **`model.py`**: Gestisce il caricamento fisico dei pesi in VRAM, configurando hardware, device map e opzioni di quantizzazione (4-bit, 8-bit).
-* **`prompt.py`**: Custodisce i template di sistema (System Prompts). Struttura i messaggi RAG combinando history, contesto estratto e istruzioni della personalità (L'Analista Finanziario).
-* **`generator.py`**: La classe esecutiva. Esegue il modello, applica i chat-template e genera il testo finale. Include metodi per l'inferenza standard e per query "nude" (raw prompts).
-
-### ⚙️ 5. `rag/` (L'Orchestratore)
-Il punto di convergenza di tutti i moduli precedenti.
-* **`service.py`**: La classe `RAGService` funge da API interna per il frontend. Gestisce il **Front-Loading** dei modelli pesanti (evitando crash della GPU) e lo Swap istantaneo dei database. Soprattutto, ospita la logica del **Self-Evaluating RAG (LLM-as-a-Judge)**, valutando la completezza delle proprie risposte prima di inviarle all'utente.
-
-### 🛠️ 6. `utils/` (Utility Generali)
-* **`config.py`**: Il pannello di controllo dell'applicazione. Contiene le variabili globali, i path dinamici (risoluzione dei percorsi assoluti), gli ID dei modelli Hugging Face e gli interruttori (switch) per attivare o disattivare feature come la quantizzazione.
+The system was architected with a **Modular and Enterprise-Grade** approach: the data extraction, vectorization, search, and generation processes are strictly separated into submodules. This ensures clean, easily testable, and highly scalable code.
 
 ---
 
-## 🌊 Flusso di Esecuzione (Il "Viaggio" di una Domanda)
+## 🗺️ Architecture Map
 
-Quando un utente fa una domanda dal frontend (es. *"Quali sono i ricavi di Tesla nel 2023?"*), ecco cosa succede dietro le quinte in `src/`:
+The directory is divided into six main modules. Each manages a specific step in the RAG pipeline.
 
-1. **`rag.service`** riceve la query e la passa a **`retrieval.retriever`**.
-2. Il retriever usa **`embedding.embedder`** per vettorializzare la domanda.
-3. La domanda vettoriale viene cercata in **`embedding.storage`** (FAISS) che restituisce 20 documenti grezzi.
-4. Questi 20 documenti passano per **`retrieval.reranker`**, che restituisce i 5 documenti assolutamente perfetti.
-5. I 5 documenti e la domanda viaggiano verso **`llm.generator`**, passando per **`llm.prompt`** che li formatta elegantemente.
-6. L'LLM genera la risposta finanziaria.
-7. Prima di consegnarla, **`rag.service`** usa un metodo isolato di **`llm.generator`** per agire da *Giudice*, valutando la risposta da 1 a 5.
-8. La risposta + il punteggio tornano al frontend.
+### 📥 1. `ingestion/` (Data Acquisition)
+This module is responsible for taking raw data from the outside world and preparing it for the system.
+* **`downloader.py`**: Interacts with the SEC (EDGAR) API to download the requested company's official Form 10-K.
+* **`parser.py`**: It cleans raw documents, removing HTML/XML tags or unnecessary noise to extract only pure financial text and linearizes tables (essential!).
+* **`chuncking.py`**: It applies text-splitting algorithms to cut text into navigable "chunks" that are compatible with the context window of AI models.
+* **`pipeline.py`**: Orchestrate the entire ingestion flow (Download -> Parse -> Chunk).
+
+### 🧮 2. `embedding/` (Vectorization)
+Transform human text into machine-readable format (mathematical vectors).
+* **`embedder.py`**: It manages the embedding model (e.g. Nomic) to translate chunks into dense high-dimensional vectors.
+* **`storage.py`**: Manages the local vector database (FAISS). Creates, saves, and loads the ultra-fast search index (`.bin`).
+* **`pipeline.py`**: Orchestrates the indexing process (Gets chunks -> Embeds them -> Saves to FAISS database).
+
+### 🔎 3. `retrieval/` (Search Engine)
+It implements **Two-Stage Retrieval** architecture to ensure maximum accuracy in document extraction.
+* **`retriever.py`**: The "Seeker". Query the FAISS database to quickly retrieve the top-K most similar documents (approximate search).
+* **`reranker.py`**: The "Reviewer". It uses a Cross-Encoder model (e.g., BAAI) to reanalyze the FAISS results by cross-referencing them with the user's query, reordering them, and accurately filtering out false positives.
+
+### 🧠 4. `llm/` (Artificial intelligence)
+Handles the initialization and inference of local Large Language Models.
+* **`model.py`**: Manages the physical loading of weights into VRAM, configuring hardware, device map and quantization options (4-bit).
+* **`prompt.py`**: Stores system templates (System Prompts). Structures RAG messages by combining history, extracted context, and personality instructions (The Financial Analyst).
+* **`generator.py`**: The executive class. It executes the model, applies chat templates, and generates the final text. It includes methods for standard inference and "naked" queries (raw prompts).
+
+### ⚙️ 5. `rag/` (The Orchestrator)
+The point of convergence of all the previous modules.
+* **`service.py`**: The RAGService class serves as an internal API for the frontend. It handles front-loading of large models (avoiding GPU crashes) and instant database swapping. Most importantly, it hosts the RAG Self-Evaluating (LLM-as-a-Judge) logic, evaluating the completeness of its responses before sending them to the user.
+
+### 🛠️ 6. `utils/` (General Utilities)
+* **`config.py`**: The application control panel. It contains global variables, dynamic paths (absolute path resolution), Hugging Face model IDs, and switches to enable or disable features like quantization.
+
+---
+
+## 🌊 Execution Flow (The "Journey" of a Question)
+
+When a user asks a question from the frontend (e.g. *"What are Tesla's revenues in 2023?"*), here's what happens behind the scenes in `src/`:
+
+1. **`rag.service`** receives the query and passes it to **`retrieval.retriever`**.
+2. The retriever uses **`embedding.embedder`** to vectorize the query.
+3. The vector query is looked up in **`embedding.storage`** (FAISS), which returns 20 raw documents.
+4. These 20 documents are passed to **`retrieval.reranker`**, which returns the 5 absolutely perfect documents.
+5. The 5 documents and the query travel to **`llm.generator`**, passing through **`llm.prompt`**, which formats them elegantly.
+6. The LLM generates the financial answer.
+7. Before submitting it, **`rag.service`** uses an isolated method of **`llm.generator`** to act as a *Judge*, evaluating the answer from 1 to 5.
+8. The answer + score are returned to the frontend.
