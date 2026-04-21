@@ -59,12 +59,13 @@ cd rag-edgar-system
     ```bash
     pip install -r requirements.txt
     ```
-2. Initialize Models:
+2. **Initialize Models:**
     Download the required models. You can configure quantization usage in the `src/utils/config.py` file before running this command.
     ```bash
     python scripts/run_setup_models.py
     ```
 **Option 2: Docker (Recommended)**
+
 To avoid dependency issues (especially with PyTorch and CUDA), you can build the provided Docker image:
 ```bash
 docker build -t edgar-rag-system -f Dockerfile .
@@ -72,38 +73,36 @@ docker run --gpus all -p 8501:8501 edgar-rag-system
 ```
 ---
 
-## 💻 Utilizzo Rapido (Pipeline)
-Per iniziare a interrogare un bilancio basta avviare l'interfaccia web con il comando:
+## 💻 Quick Use (Pipeline)
+To start querying a balance sheet, simply launch the web interface with the command:
 ```bash
 streamlit run frontend/app.py
 ```
-da li è possibile selezionare il report (10-K) della società di interesse e il relativo anno.
+from there you can select the report (10-K) of the company of interest and of a specific year.
 
 ---
 
 ## 📊 Valutazione e Benchmark
-Il sistema include una suite di test automatizzata (`scripts/run_evaluate_rag.py`) che utilizza la tecnica LLM-as-a-Judge contro una Ground Truth verificata manualmente.
+The system includes an automated test suite (`scripts/run_evaluate_rag.py`) that uses the *LLM-as-a-Judge* technique against a manually verified Ground Truth.
 
-Negli stress-test sui Form 10-K di Tesla (2023-2025), operando con modelli quantizzati a 8-bit, **l'architettura ha mantenuto un'accuratezza media di superamento (PASS rate) superiore all'81%**, dimostrando un'eccellente capacità di estrarre e calcolare metriche finanziarie esatte da testo e tabelle non strutturate.
+In stress tests on Tesla’s Form 10-K (2023-2025), operating with 8-bit quantized models, **the architecture maintained an average pass rate above 81%**, demonstrating excellent ability to extract and calculate accurate financial metrics from text and unstructured tables.
 
-(Per i log dettagliati, consulta la directory `evaluation/`).
-
----
-
-## 🔮 Sviluppi Futuri (Roadmap)
-Il sistema getta basi solide, ma ci sono diverse aree di evoluzione già pianificate:
-
-1. **Migliore Linearizzazione delle Tabelle**: Attualmente i PDF/HTML complessi vengono parsati in modo standard. L'integrazione di parser semantici avanzati (es. LlamaParse o layout-parser) permetterà una lettura spaziale delle tabelle finanziarie, riducendo le allucinazioni sui dati incollonnati.
-
-2. **Iniezione di Metadati Avanzati**: Arricchire ogni chunk testuale con metadati dinamici (es. `{"Sezione": "MD&A", "Anno": 2023, "Topic": "Risk Factors"}`). Questo permetterà al Retriever di fare pre-filtraggio hard-coded prima della ricerca vettoriale, aumentando drasticamente la precisione.
-
-3. **Agentic Loop (Self-Correction)**: Evolvere il "Giudice Interno" da un ruolo passivo (che avvisa l'utente se manca un dato) a un ruolo attivo, istruendo l'LLM a reiterare la ricerca in background finché il punteggio non raggiunge il 5/5.
-
-4. **Multimodal RAG**: Espandere la pipeline di ingestion per supportare il riconoscimento e l'analisi dei grafici e dei chart presenti nei report annuali tramite modelli Vision-Language (VLM).
+(For detailed logs, see the `evaluation/` directory.)
 
 ---
 
-## 🤝 Contributi e Licenza
-I contributi sono benvenuti! Se hai idee per migliorare il chunking finanziario o ottimizzare la pipeline, apri una Issue o invia una Pull Request.
+## 🔮 Future Developments (Roadmap)
+The system lays solid foundations, but there are several areas of evolution already planned:
 
-Distribuito con licenza MIT. Vedi il file `LICENSE` per maggiori informazioni.
+1. **Hybrid Search (Metadata Pre-filtering):** Currently, the *ingestion* process already surgically enriches each document with structured metadata and in-text tags (e.g., `[COMPANY: AAPL | FY: 2023 | SECTION: MD&A]`). The next architectural step involves actively using these fields to enable **Hybrid Search**: applying precise deterministic filters (e.g., searching *only* in chunks where `year == 2023` and `section == "Risk Factors"`) *before* launching the vector search on FAISS. This will further reduce calculation times and eliminate the risk of cross-contamination between different years.
+
+2. **Agentic Loop (Self-Correction)**: Evolve the “Internal Judge” from a passive role (which alerts the user if a piece of data is missing) to an active role, instructing the LLM to repeat the search in the background until the score reaches 5/5.
+
+3. **Multimodal RAG**: Expand the ingestion pipeline to support the recognition and analysis of graphs and charts in annual reports using Vision-Language (VLM) models.
+
+---
+
+## 🤝 Contributions and License
+Contributions are welcome! If you have ideas for improving financial chunking or optimizing the pipeline, open an Issue or submit a Pull Request.
+
+Distributed under the MIT License. See the `LICENSE` file for more information.
