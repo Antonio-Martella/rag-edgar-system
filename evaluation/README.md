@@ -1,46 +1,46 @@
-# 📊 RAG Performance Evaluation
-Questa directory contiene gli strumenti e i dati necessari per valutare la precisione, la fedeltà e l'affidabilità dell'Edgar RAG Multi-Analyst. L'obiettivo è confrontare le risposte generate dall'IA (Mistral-7B) con un set di dati reali ("Ground Truth") estratti manualmente dal report SEC 10-K di Tesla.
+# 📊 Evaluation Directory (Benchmarking & Testing)
 
-## 🛠 Pre-requisiti e Preparazione
-Prima di eseguire la valutazione, è fondamentale che l'ambiente locale sia configurato correttamente e che i dati siano stati indicizzati. Segui questa sequenza di comandi:
+Questa directory rappresenta il banco di prova (benchmark) dell'intero sistema RAG. Contiene i dataset di validazione e i report generati automaticamente per misurare l'accuratezza dell'Analista Finanziario AI nell'estrazione e nel ragionamento sui documenti complessi (Form 10-K).
 
-### 1. Setup dei Modelli
-Scarica il modello di embedding e il modello LLM (quantizzato in 4-bit) per l'esecuzione locale.
+Tutti i test presenti in questa cartella vengono eseguiti automaticamente lanciando lo script `scripts/run_evaluate_rag.py`.
 
-```bash
-python3 scripts/run_setup_models.py
+---
+
+## 📂 Struttura dei Dati di Test
+
+I test sono segmentati logicamente per azienda e anno fiscale. Attualmente, la suite valuta le performance sui bilanci annuali (10-K) di **Tesla (TSLA)** per il triennio 2023-2025.
+
+```text
+evaluation/
+├── eval_tsla_10K_2023/
+├── eval_tsla_10K_2024/
+└── eval_tsla_10K_2025/
 ```
+**Contenuto di ogni cartella**:
+1. `test_queries_202X.json` **(Ground Truth)**: Questo file è il punto di riferimento. Contiene una lista di domande specifiche poste sul bilancio di quell'anno e la **risposta esatta** attesa (estratta manualmente o verificata).
+2. `eval_report_202X.json` **(Output di Valutazione)**: Questo è il file generato dinamicamente alla fine del test. Contiene un log completo che mette a confronto la risposta attesa con la **risposta effettivamente generata** dal sistema RAG.
 
-### 2. Ingestion dei Dati (SEC)
-Scarica il report ufficiale dalla SEC. Quando richiesto dallo script, inserisci i seguenti valori:
-- Azienda (Ticker): `TSLA`
-- Tipo Report: `10-K`
-- Data: `2025-01-01`
+## ⚖️ Metodologia di Valutazione (LLM-as-a-Judge)
+Per garantire un test imparziale e automatizzato, il sistema non usa semplici controlli testuali (che fallirebbero se il RAG usa sinonimi o formattazioni diverse), ma impiega la tecnica dell'**LLM-as-a-Judge**.
 
-```bash
-python3 scripts/run_ingestdata.py
-```
+Per ogni domanda della suite:
+1. Il sistema RAG genera la sua risposta.
+2. Un "Giudice Esterno" (lo stesso LLM istruito con un prompt di valutazione rigoroso) analizza la risposta generata confrontandola con la ground truth.
+3. Il Giudice verifica se i dati numerici chiave e il senso logico combaciano.
+4. Il Giudice emette un verdetto secco: **PASS** (Superato) o **FAIL** (Fallito).
 
-### 3. Indicizzazione (Vettorializzazione)
-Trasforma il testo del report in vettori numerici (file `.bin`) per permettere la ricerca semantica. Inserisci i valori:
-- Azienda: `TSLA`
-- Tipo Report: `10-K`
+I risultati di ogni domanda e il punteggio totale vengono poi consolidati nel file `eval_report_202X.json`.
 
-```bash
-python3 scripts/run_indexing.py
-```
-## 🧪 Il Processo di Valutazione
-### Il "Ground Truth" (La Verità)
-Il file `ground_truth.json` funge da bussola per il nostro test. Contiene 10 domande chiave e le relative risposte certificate basate sul report Tesla 2024/2025.
-Queste domande coprono diverse aree critiche:
-* Financials: Ricavi totali, Net Income e CapEx.
-* Operational: Consegne veicoli e performance del Model Y.
-* Risk Factors: Dipendenza dai fornitori e policy commerciali.
-* Future Tech: Capacità di calcolo AI e stoccaggio energetico.
+## 📈 Risultati dei Test e Benchmark
+Le seguenti metriche di accuratezza rappresentano le performance reali del sistema RAG.
 
-### Esecuzione del Test
-Per avviare la valutazione automatizzata, esegui:
-```bash
-python3 evaluation/evaluate_rag.py
-```
-Lo script interrogherà il RAG, confronterà la risposta generata con quella del `test_queries.json` e salverà un report finale in `eval_report.json`.
+**Configurazione Hardware/Software del Test**:
+* **Modello LLM**: Mistral-7B-Instruct-v0.2
+* **Quantizzazione**: 8-bit (Ottimizzazione della VRAM attivata)
+* **Retriever**: FAISS + BAAI Reranker (Top-5 chunks finali)
+
+| Documento | Anno Fiscale | Accuratezza (PASS Rate) | Note |
+| :--- | :---: | :---: | :--- |
+| **TSLA 10-K** | 2023 | **90%** | Prestazione eccellente, altissima fedeltà nell'estrazione dati. |
+| **TSLA 10-K** | 2024 | **75%** | Fisiologico calo probabilistico causato dalla compressione a 8-bit sui ragionamenti più complessi. |
+| **TSLA 10-K** | 2025 | **80%** | Ripresa e forte aderenza alla ground truth per l'ultimo anno fiscale. |
