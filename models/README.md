@@ -1,59 +1,59 @@
 # 🧠 Models Directory
 
-Questa directory funge da "cervello locale" per l'Edgar RAG Multi-Analyst. Ospita i pesi (weights) e le configurazioni dei modelli di Intelligenza Artificiale necessari per far funzionare la pipeline di Retrieval-Augmented Generation (RAG) interamente offline e sulla tua macchina.
+This directory serves as the "local brain" for Edgar RAG Multi-Analyst. It hosts the weights and configurations of the AI ​​models needed to run the Retrieval-Augmented Generation (RAG) pipeline entirely offline and on your machine.
 
-Per motivi di spazio, i file dei modelli **non sono tracciati su Git** (sono inclusi nel `.gitignore`). Vanno scaricati localmente tramite l'apposito script di setup.
+Due to space constraints, the model files are not tracked on Git (they are included in `.gitignore`). They must be downloaded locally using the appropriate setup script.
 
-## 📂 Struttura della Directory
+## 📂 Directory Structure
 
 ```text
 models/
-├── EMBEDDING/   # Modelli per la vettorializzazione del testo (Prima fase di ricerca)
-├── LLM/         # Large Language Models per la generazione delle risposte
-└── RERANKER/    # Modelli Cross-Encoder per il riordino semantico (Seconda fase di ricerca)
+├── EMBEDDING/   
+├── LLM/        
+└── RERANKER/    
 ```
-## ⚙️ Come scaricare e configurare i modelli
-Il download dei modelli è completamente automatizzato tramite la libreria Hugging Face.
+## ⚙️ How to download and configure models
+Model downloading is fully automated using the Hugging Face library.
 
-1. **Scaricare i modelli**: Esegui lo script di setup dalla cartella principale del progetto:
+1. **Download models**: Run the setup script from the project's root folder:
     ```bash
     python scripts/run_setup_model.py
     ```
-    Nota: Il download iniziale può richiedere del tempo e scaricherà circa 16-17 GB se si sceglie di non quantizzare il modello LLM.
+    Note: The initial download may take some time and will download approximately 16-17 GB if you choose not to quantize the LLM model.
 
-2. **Cambiare i modelli**: I modelli da utilizzare non sono hard-coded, ma centralizzati. Se desideri testare un nuovo modello, ti basta modificare le seguenti variabili nel file `src/utils/config.py`:
+2. **Changing Models**: The models to be used are not hard-coded, but centralized. If you want to test a new model, simply change the following variables in the `src/utils/config.py` file:
     ```python
     EMBEDDING_MODEL_ID = "nomic-ai/nomic-embed-text-v1.5"
     RERANKER_MODEL_ID = "BAAI/bge-reranker-v2-m3"
     LLM_MODEL_ID = "mistralai/Mistral-7B-Instruct-v0.2"
     ```
 
-## 🔬 Architettura dell'AI: I modelli di Default
-Il sistema utilizza un'architettura **Two-Stage Retrieval** (Ricerca a due fasi) supportata da un LLM generativo. Ecco cosa fa ciascun componente e perché sono stati scelti questi specifici modelli di default.
-1. **Il Modello di Embedding**
-    * **Il Ruolo**: L'Embedding è il "traduttore matematico". Prende i paragrafi di testo (chunk) dei bilanci aziendali e li converte in vettori (liste di migliaia di numeri) posizionandoli in uno spazio multidimensionale. Quando l'utente fa una domanda, anche questa viene vettorializzata per trovare i testi semanticamente più "vicini" usando algoritmi veloci come FAISS.
+## 🔬 AI Architecture: Default Models
+The system uses a **Two-Stage Retrieval** architecture supported by a generative LLM. Here's what each component does and why these specific default models were chosen.
+1. **The Embedding Model**
+    * **The Role**: The Embedding is the "mathematical translator." It takes paragraphs of text (chunks) from company financial statements and converts them into vectors (lists of thousands of numbers), positioning them in a multidimensional space. When the user asks a question, it is also vectorized to find the semantically closest texts using fast algorithms like FAISS.
 
-    * **Il Modello di Default** (`nomic-embed-text-v1.5`): Un modello open-source altamente efficiente basato su architettura transformer.
+    * **The Default Template** (`nomic-embed-text-v1.5`): A highly efficient open-source template based on a transformer architecture.
 
-        * **Punto di forza**: A differenza dei modelli standard che supportano solo 512 token, Nomic gestisce nativamente una finestra di contesto di **8192 token**. Questo lo rende eccezionale per documenti finanziari lunghi, catturando il contesto di intere pagine senza tagliare informazioni cruciali.
+        * **Strength**: Unlike standard templates that only support 512 tokens, Nomic natively handles a context window of **8192 tokens**. This makes it exceptional for long financial documents, capturing the context of entire pages without cutting off crucial information.
 
-        * **Peso**: Estremamente leggero (~0.5 GB).
+        * **Weight**: Extremely lightweight (~0.5 GB).
 
-2. **Il Modello di Reranking**
-    * **Il Ruolo**: Il Reranker agisce come un "revisore al microscopio". Mentre l'Embedding estrae velocemente decine di documenti "probabilmente utili", il Reranker usa un'architettura *Cross-Encoder* per leggere simultaneamente la domanda dell'utente e ogni singolo documento estratto, assegnando un punteggio di pertinenza chirurgico e scartando i falsi positivi.
+2. **The Reranking Model**
+    * **The Role**: The Reranker acts as a "microscopic reviewer." While the Embedding quickly extracts dozens of "likely useful" documents, the Reranker uses a *Cross-Encoder* architecture to simultaneously read the user's query and each individual extracted document, assigning a surgical relevance score and discarding false positives.
 
-    * **Il Modello di Default** (`BAAI/bge-reranker-v2-m3`): Creato dalla Beijing Academy of Artificial Intelligence (BAAI), è attualmente uno dei modelli di reranking state-of-the-art a livello mondiale.
-        
-        * **Punto di forza**: Il suffisso "M3" indica la sua incredibile natura **Multi-lingua**. È capace di capire sfumature logiche complesse (es. la differenza causale in una sezione MD&A di un bilancio) con una precisione spaventosa.
+    * **The Default Model** (`BAAI/bge-reranker-v2-m3`): Created by the Beijing Academy of Artificial Intelligence (BAAI), it is currently one of the world's state-of-the-art reranking models.
 
-        * **Peso**: Un modello denso e "pesante" per la sua categoria (~2.5 GB di VRAM), giustificato dalle sue prestazioni eccellenti.
+        * **Strength**: The "M3" suffix indicates its incredible **Multilingual** nature. It is capable of understanding complex logical nuances (e.g., the causal difference in an MD&A section of a balance sheet) with frightening accuracy.
 
-3. **Il Large Language Model (LLM)**
-    * **Il Ruolo**: L'LLM è "L'Analista e il Giudice". Riceve la domanda dell'utente e i documenti esatti filtrati dal Reranker. Non cerca su internet: utilizza esclusivamente i documenti forniti per ragionare, sintetizzare e formulare una risposta discorsiva chiara e finanziariamente accurata. Nel nostro sistema, agisce anche da Giudice Interno (Self-Evaluating RAG) per valutare se la propria risposta è completa rispetto alla domanda.
+        * **Weight**: A dense and "heavy" model for its category (~2.5 GB of VRAM), justified by its excellent performance.
 
-    * **Il Modello di Default** (`Mistral-7B-Instruct-v0.2`):
-        * Sviluppato da Mistral AI in Francia, è un modello da 7 miliardi di parametri ottimizzato per seguire istruzioni (Instruct).
+3. **The Large Language Model (LLM)**
+    * **The Role**: The LLM is "The Analyst and Judge." It receives the user's question and the exact documents filtered by the Reranker. It does not search the internet: it uses exclusively the documents provided to reason, synthesize, and formulate a clear and financially accurate discursive response. In our system, it also acts as an Internal Judge (Self-Evaluating RAG) to assess whether its response is complete with respect to the question.
 
-        * **Punto di forza**: Oltre alla finestra di contesto di 32k token, questa versione (v0.2) ha rimosso i vecchi limiti di sliding window attention, risultando in un ragionamento logico di livello superiore. Batte molti modelli di dimensioni doppie sulla precisione numerica ed è fenomenale nel formattare l'output in JSON per i task del nostro Giudice interno.
+    * **The Default Model** (`Mistral-7B-Instruct-v0.2`):
+        * Developed by Mistral AI in France, it is a 7 billion parameter model optimized for following instructions (Instructs).
 
-        * **Peso**: Richiede circa 14-15 GB di memoria per i pesi, arrivando a consumare fino a 21 GB di VRAM operativa (insieme agli altri modelli) durante l'inferenza e il calcolo della KV Cache. Questo spazio puo essere diminuito enormemente applicando in `src/utils/config.py` la quantizzazione a `4 bit` in `QUANTIZATION_SWITCH = True`.
+        * **Strength**: In addition to the 32k token context window, this version (v0.2) has removed the old sliding window attention limitations, resulting in higher-level logical reasoning. It beats many double-sized models on numerical precision and is phenomenal at formatting output into JSON for our internal Adjudicator tasks.
+
+        * **Weight**: Requires approximately 14-15 GB of memory for weights, consuming up to 21 GB of operational VRAM (together with other models) during inference and KV Cache calculation. This space can be significantly reduced by applying 8-bit quantization in `src/utils/config.py` with `QUANTIZATION_SWITCH = True` (the results in this repository are with quantization enabled).
