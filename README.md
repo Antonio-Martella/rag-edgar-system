@@ -75,11 +75,16 @@ docker run --gpus all -p 8501:8501 edgar-rag-system
 ---
 
 ## 💻 Quick Use (Pipeline)
-To start querying a balance sheet, simply launch the web interface with the command:
+
+Before you begin querying a financial statement, you need to download the models (editable in the src/utils/config.py file) by running:
+```bash
+python3 scripts/run_setup_models.py
+```
+Then you can launch the web interface with the command:
 ```bash
 streamlit run frontend/app.py
 ```
-from there you can select the report (10-K) of the company of interest and of a specific year.
+From there, you can select the report (10-K) for the company of interest and for a specific year.
 
 ---
 
