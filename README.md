@@ -78,7 +78,7 @@ docker run --gpus all -p 8501:8501 edgar-rag-system
 
 Before you begin querying a financial statement, you need to download the models (editable in the src/utils/config.py file) by running:
 ```bash
-python3 scripts/run_setup_models.py
+python scripts/run_setup_models.py
 ```
 Then you can launch the web interface with the command:
 ```bash
