@@ -19,7 +19,7 @@ This project demonstrates that **you don't need giant language models in the clo
 2. **Master Complex Documents:** Use **SEC EDGAR (Form 10-K)** reports as a test bed. These documents are notoriously difficult to process due to their length, legal jargon, and complex financial tables.
 3. **Optimize Hardware:** Leveraging 8-bit quantization and an optimized architecture, the system runs smoothly on consumer hardware or budget cloud instances (<24GB VRAM).
 
-## ✨ Caratteristiche Principali
+## ✨ Main Features
 
 * **Two-Stage Retrieval:** Combines the speed of vector search (FAISS + Nomic Embeddings) with the surgical precision of semantic reordering (BAAI Cross-Encoder Reranker).
 * **Self-Evaluating RAG (LLM-as-a-Judge):** The system not only responds, but internally evaluates (from 1 to 5) the completeness of its response before displaying it to the user, ensuring transparency on information gaps.
